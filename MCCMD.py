@@ -1,6 +1,7 @@
 # imports the libaries used within Totems+ 
 import os
 import shutil
+import getpass
 from tkinter.constants import S
 import PySimpleGUI as sg
 from DOC import DOC
@@ -11,7 +12,7 @@ def CMD():
     # defines how the main window will be displayed/layed-out
     layout = [ 
         [
-            sg.Image(filename='AppData/Roaming/Totems +/windowlogo.png', key='-IMAGE-'),
+            sg.Image(filename='img/windowlogo.png', key='-IMAGE-'),
             sg.Text("You've selected Totems+ CMD Integration!\n" + 
             'This integration will generate:\n' + 
             'A Custom Resource Pack\n' + 
@@ -25,7 +26,7 @@ def CMD():
         [
             sg.Text('World:  '),
             sg.Input(size=(25, 1), disabled=False, key="WORLD"),
-            sg.FolderBrowse(initial_folder="AppData/Roaming/.minecraft/saves", disabled=False, key='worldBrowse'),
+            sg.FolderBrowse(initial_folder="C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/saves", disabled=False, key='worldBrowse'),
             sg.Button('Confirm', disabled=False, key='worldConfirm'),
         ],
         [
@@ -61,7 +62,7 @@ def CMD():
     ]
 
     # creates the window
-    window = sg.Window("CMD", layout, icon="AppData/Roaming/Totems +/totems.ico")
+    window = sg.Window("CMD", layout, icon="img/totems.ico")
 
     # while window (GUI) is open
     while True:
@@ -77,7 +78,7 @@ def CMD():
         if event == 'worldConfirm':
 
             # popup confirms if the user wishes to continue
-            cmdconfirm = sg.popup_ok_cancel('Are you sure? Once confirmed datapack files will be created in your chosen world. This world then cannot be changed and cancelling will delete any data/resourcepack files', title='Are you sure?', icon="AppData/Roaming/Totems +/totems.ico")
+            cmdconfirm = sg.popup_ok_cancel('Are you sure? Once confirmed datapack files will be created in your chosen world. This world then cannot be changed and cancelling will delete any data/resourcepack files', title='Are you sure?', icon="img/totems.ico")
 
             # if they agree then
             if cmdconfirm == 'OK':
@@ -86,7 +87,7 @@ def CMD():
                 counter = 0
 
                 # extract the textureList from the config file
-                config = open("AppData/Roaming/Totems +/cmdconfig.txt", "r")
+                config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/cmdconfig.txt", "r")
                 textureList = config.readline()
                 config.close() 
                 textureList = textureList.split(";")
@@ -108,28 +109,28 @@ def CMD():
                 window.Element('loreCheck').update(disabled=False)
 
                 # pre-makes the resource pack directory in the minecraft resource pack folder
-                os.mkdir("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD")
-                os.mkdir("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets")
-                os.mkdir("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft")
-                os.mkdir("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models")
-                os.mkdir("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item")
-                os.mkdir("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/totems")
-                os.mkdir("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/textures")
-                os.mkdir("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/textures/totems")
+                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD")
+                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets")
+                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft")
+                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models")
+                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item")
+                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/totems")
+                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/textures")
+                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/textures/totems")
 
                 # sets the pack.png original location & destination as variables
-                originalPng = "AppData/Roaming/Totems +/pack.png"
-                targetPng = "AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD"
+                originalPng = "img/pack.png"
+                targetPng = "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD"
 
                 # copys the pack.png file into place
                 shutil.copy(originalPng, targetPng)
 
                 # creates the pack.mcmeta file
-                packMeta = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/pack.mcmeta", "x")
+                packMeta = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/pack.mcmeta", "x")
                 packMeta.close()
 
                 # adds the needed meta data to the pack.mcmeta file
-                packMeta = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/pack.mcmeta", "a")
+                packMeta = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/pack.mcmeta", "a")
                 packMeta.writelines(['{',
                 '  "pack": {',
                 '    "pack_format": 7,',
@@ -140,11 +141,11 @@ def CMD():
                 packMeta.close()
 
                 # creates the totem_of_undying.json file
-                totemJSON = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "x")
+                totemJSON = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "x")
                 totemJSON.close()
 
                 # adds the needed meta data to the totem_of_undying.json file
-                totemJSON = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
+                totemJSON = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
                 totemJSON.writelines(['{\n',
                 '  "parent": "minecraft:item/generated",\n',
                 '  "textures": {\n',
@@ -165,7 +166,7 @@ def CMD():
                 os.mkdir(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities")
 
                 # TEMPORARY sets the pack.png original location & destination as variables
-                originalPng = "AppData/Roaming/Totems +/pack.png"
+                originalPng = "img/pack.png"
                 targetPng = worldLocation + "/datapacks/Totems+ CMD"
 
                 # copys the pack.png file into place
@@ -224,13 +225,13 @@ def CMD():
             renameTexture = rename.replace(" ", "_")
 
             # adds new CustomModel line to the totem_of_undying.json file (with comma)
-            totemJSON = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
+            totemJSON = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
             totemJSON.write("\n")
-            totemJSON.write('	  {"predicate": {"custom_model_data":91034'+ str(counter) +'}, "model": "totems/'+ str(renameTexture.lower()) +'"},')
+            totemJSON.write('	  {"predicate": {"custom_model_data":' + str(910340 + counter) +'}, "model": "totems/'+ str(renameTexture.lower()) +'"},')
             totemJSON.close()
 
             # creates a file for the individual totem
-            individualTotem = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/totems/" + str(renameTexture.lower()) + ".json", "x")
+            individualTotem = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/totems/" + str(renameTexture.lower()) + ".json", "x")
             individualTotem.close()
 
             # deduces the file name from its location
@@ -239,7 +240,7 @@ def CMD():
             substring = split_string[count]
                 
             # adds needed meta data to the individual totem file
-            individualTotem = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/totems/" + str(renameTexture.lower()) + ".json", "a")
+            individualTotem = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/totems/" + str(renameTexture.lower()) + ".json", "a")
             individualTotem.writelines(['{\n',
             '	"parent": "minecraft:item/generated",\n',
             '	"textures": {\n'])
@@ -250,7 +251,7 @@ def CMD():
 
             # copys the image into the resource pack
             original = textureList[counter]
-            target = "AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/textures/totems"
+            target = "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/textures/totems"
             shutil.copy(original, target)
 
             # weight is equal to the user input
@@ -264,7 +265,7 @@ def CMD():
             evokerJSON.writelines(['		  "functions": [\n',
             '            {\n',
             '              "function": "minecraft:set_nbt",\n'])
-            evokerJSON.write('              "tag": "' + '{' + 'CustomModelData:' + '91034'+ str(counter) + '}' + '"\n')
+            evokerJSON.write('              "tag": "' + '{' + 'CustomModelData:' + str(910340 + counter) + '}' + '"\n')
             evokerJSON.write('            }')
 
             if values['in-game'] == True:
@@ -318,13 +319,13 @@ def CMD():
             renameTexture = rename.replace(" ", "_")
 
             # adds new CustomModel line to the totem_of_undying.json file (without comma)
-            totemJSON = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
+            totemJSON = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
             totemJSON.write("\n")
-            totemJSON.write('	  {"predicate": {"custom_model_data":91034'+ str(counter) +'}, "model": "totems/'+ str(renameTexture.lower()) +'"}\n')
+            totemJSON.write('	  {"predicate": {"custom_model_data":' + str(910340 + counter) + '}, "model": "totems/'+ str(renameTexture.lower()) +'"}\n')
             totemJSON.close()
 
             # creates a file for the individual totem
-            individualTotem = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/totems/" + str(renameTexture.lower()) + ".json", "x")
+            individualTotem = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/totems/" + str(renameTexture.lower()) + ".json", "x")
             individualTotem.close()
 
             # deduces the file name from its location
@@ -333,7 +334,7 @@ def CMD():
             substring = split_string[count]
                 
             # adds needed meta data to the individual totem file
-            individualTotem = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/totems/" + str(renameTexture.lower()) + ".json", "a")
+            individualTotem = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/totems/" + str(renameTexture.lower()) + ".json", "a")
             individualTotem.writelines(['{\n',
             '	"parent": "minecraft:item/generated",\n',
             '	"textures": {\n'])
@@ -344,7 +345,7 @@ def CMD():
 
             # copys the image into the resource pack
             original = textureList[counter]
-            target = "AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/textures/totems"
+            target = "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/textures/totems"
             shutil.copy(original, target)
 
             # weight is equal to the user input
@@ -359,7 +360,7 @@ def CMD():
             evokerJSON.writelines(['		  "functions": [\n',
             '            {\n',
             '              "function": "minecraft:set_nbt",\n'])
-            evokerJSON.write('              "tag": "' + '{' + 'CustomModelData:' + '91034'+ str(counter) + '}' + '"\n')
+            evokerJSON.write('              "tag": "' + '{' + 'CustomModelData:' + str(910340 + counter) +'}' + '"\n')
             evokerJSON.write('            }')
 
             if values['in-game'] == True:
@@ -435,23 +436,23 @@ def CMD():
             evokerJSON.close()
 
             # finishes the totem_of_undying.json file
-            totemJSON = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
+            totemJSON = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
             totemJSON.writelines([']\n',
             '}'])
             totemJSON.close()
 
             if values['documentation'] == True:
 
-                file_exists = os.path.exists('AppData/Roaming/Totems +/docconfig.txt')
+                file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/docconfig.txt')
 
                 if file_exists == True:
                 
-                    os.remove("AppData/Roaming/Totems +/docconfig.txt")
+                    os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/docconfig.txt")
 
-                docconfig = open('AppData/Roaming/Totems +/docconfig.txt', 'x')
+                docconfig = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/docconfig.txt', 'x')
                 docconfig.close()
 
-                docconfig = open("AppData/Roaming/Totems +/docconfig.txt", "a")
+                docconfig = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/docconfig.txt", "a")
 
                 docconfig.write(worldLocation)
                 docconfig.write('\n')
@@ -467,13 +468,14 @@ def CMD():
 
                 DOC()
 
-            os.remove("AppData/Roaming/Totems +/cmdconfig.txt")
+            os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/cmdconfig.txt")
 
             # prints completion message to user
-            sg.popup_ok("Pack creation complete! Load up Minecraft and you Totems+ pack will appear in your resourcepack folder!", title = "Pack Completion", icon="AppData/Roaming/Totems +/totems.ico")
+            sg.popup_ok("Pack creation complete! Load up Minecraft and you Totems+ pack will appear in your resourcepack folder!", title = "Pack Completion", icon="img/totems.ico")
             
             # breaks the loop (hence closing all windows)
             break
 
     # closes window if called
     window.close()
+    

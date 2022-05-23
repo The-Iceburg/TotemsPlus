@@ -2,6 +2,7 @@
 import os.path
 from tkinter.constants import S
 import PySimpleGUI as sg
+import getpass
 from OFCIT import CIT
 from MCCMD import CMD
 
@@ -11,13 +12,19 @@ sg.theme('DarkTeal10')
 # declares the accepted texture file types
 textureFileTypes = [("JPEG, PNG, TGA (.jpg , .png , .tga)", ".jpg , .png , .tga")]
 
+file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+')
+
+if file_exists == False:
+
+    os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+")
+
 # defines the main window
 def main():
 
     # defines how the main window will be displayed/layed-out
     layout = [
         [
-            sg.Image(filename='AppData/Roaming/Totems +/windowlogo.png', key='-LOGO-'),
+            sg.Image(filename='img/windowlogo.png', key='-LOGO-'),
             sg.Text('Totems + is a new and unique way to intergrate custom totems into Minecraft!\n' + 
             'This program currently provides support for:\n' + 
             'Minecraft CMD\n' + 
@@ -52,7 +59,7 @@ def main():
     ]
 
     # creates the window
-    window = sg.Window("Totems+", layout, icon="AppData/Roaming/Totems +/totems.ico")
+    window = sg.Window("Totems+", layout, icon="img/totems.ico")
 
     down = True
 
@@ -78,18 +85,18 @@ def main():
         # if compile and toggle false then
         elif event == 'Compile' and down == False:
 
-            file_exists = os.path.exists('AppData/Roaming/Totems +/cmdconfig.txt')
+            file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/cmdconfig.txt')
 
             if file_exists == True:
                 
-                os.remove("AppData/Roaming/Totems +/cmdconfig.txt")
+                os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/cmdconfig.txt")
             
             # creates config file
-            config = open('AppData/Roaming/Totems +/cmdconfig.txt', 'x')
+            config = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/cmdconfig.txt', 'x')
             config.close()
 
             # writes file locations into config file
-            config = open("AppData/Roaming/Totems +/cmdconfig.txt", "a")
+            config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/cmdconfig.txt", "a")
             config.write(values["-TEXTURES-"])
             config.close()
 
@@ -102,18 +109,18 @@ def main():
         # if compile and toggle true then
         elif event == 'Compile' and down == True:
 
-            file_exists = os.path.exists('AppData/Roaming/Totems +/citconfig.txt')
+            file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/citconfig.txt')
 
             if file_exists == True:
                 
-                os.remove("AppData/Roaming/Totems +/citconfig.txt")
+                os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/citconfig.txt")
 
             # creates config file
-            config = open('AppData/Roaming/Totems +/citconfig.txt', 'x')
+            config = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/citconfig.txt', 'x')
             config.close()
 
             # writes file locations into config file
-            config = open("AppData/Roaming/Totems +/citconfig.txt", "a")
+            config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/citconfig.txt", "a")
             config.write(values["-TEXTURES-"])
             config.close()
 

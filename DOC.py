@@ -1,8 +1,9 @@
 from os import name
+import getpass
 
 def DOC():
 
-    docconfig = open("AppData/Roaming/Totems +/docconfig.txt", "r")
+    docconfig = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/docconfig.txt", "r")
     docconfigread = docconfig.readlines()
     docconfig.close()
 
@@ -26,7 +27,7 @@ def DOC():
     
     while len(nameList) != counter + 1:
 
-        doc.write('Totem Name: ' + nameList[counter] + '   Custom Model Data ID: 91034'+ str(counter) + '\n')
+        doc.write('Totem Name: ' + nameList[counter] + '   Custom Model Data ID: ' + str(910340 + counter) +'\n')
 
         counter += 1
 
@@ -37,7 +38,7 @@ def DOC():
     
     while len(nameList) != counter + 1:
 
-        doc.write(nameList[counter] + ':   /give @s minecraft:totem_of_undying{CustomModelData:91034' + str(counter) + '} 1\n')
+        doc.write(nameList[counter] + ':   /give @s minecraft:totem_of_undying{CustomModelData:' + str(910340 + counter) +'} 1\n')
 
         counter += 1
 
