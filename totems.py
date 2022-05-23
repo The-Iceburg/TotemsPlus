@@ -84,19 +84,13 @@ def main():
 
             # adds the needed meta data to the pack.mcmeta file
             packMeta = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ OFCIT/pack.mcmeta", "a")
-            packMeta.write('{')
-            packMeta.write("\n")
-            packMeta.write('  "pack": {')
-            packMeta.write("\n")
-            packMeta.write('    "pack_format": 7,')
-            packMeta.write("\n")
-            packMeta.write('	"description": "Optifine CIT Integration')
-            packMeta.write("\n")
-            packMeta.write('Made By: The Totems+ Team"')
-            packMeta.write("\n")
-            packMeta.write('  }')
-            packMeta.write("\n")
-            packMeta.write('}')
+            packMeta.writelines(['{\n',
+            '  "pack": {\n',
+            '    "pack_format": 7,\n',
+            '	"description": "Optifine CIT Integration\n',
+            'Made By: The Totems+ Team"\n',
+            '  }\n',
+            '}'])
             packMeta.close()
 
             # starts a counter at 0 (variable is used)
@@ -121,13 +115,10 @@ def main():
 
                 # adds the needed meta to the totem_of_undying.properties file
                 totemProperties = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ OFCIT/assets/minecraft/optifine/cit/totems/" + str(renameTexture.lower()) + "/totem_of_undying.properties", "a")
-                totemProperties.write("type=item")
-                totemProperties.write("\n")
-                totemProperties.write("matchItems=totem_of_undying")
-                totemProperties.write("\n")
-                totemProperties.write("texture=")
-                totemProperties.write(substring)
-                totemProperties.write("\n")
+                totemProperties.writelines(["type=item\n",
+                "matchItems=totem_of_undying\n",
+                "texture="])
+                totemProperties.write(substring + "\n")
                 totemProperties.write("nbt.display.Name=ipattern:")
                 totemProperties.write(rename)
                 totemProperties.close()
@@ -211,20 +202,25 @@ def main():
                 rename = sg.popup_get_text("Enter your Totem name here:", title = "Item Renaming", image=textureList[counter], icon="D:/Totems + Download/totems.ico")
                 renameTexture = rename.replace(" ", "_")
 
+                # if counter != length of the texture list (-1) then
                 if counter != len(textureList) - 1:
 
+                    # adds new CustomModel line to the totem_of_undying.json file (with comma)
                     totemJSON = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
                     totemJSON.write("\n")
                     totemJSON.write('	  {"predicate": {"custom_model_data":91034'+ str(counter) +'}, "model": "totems/'+ str(renameTexture.lower()) +'"},')
                     totemJSON.close
 
+                # else then
                 else:
 
+                    # adds new CustomModel line to the totem_of_undying.json file (without comma)
                     totemJSON = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
                     totemJSON.write("\n")
                     totemJSON.write('	  {"predicate": {"custom_model_data":91034'+ str(counter) +'}, "model": "totems/'+ str(renameTexture.lower()) +'"}')
                     totemJSON.close
 
+                # creates a file for the individual totem
                 individualTotem = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/totems/" + str(renameTexture.lower()) + ".json", "x")
                 individualTotem.close()
 
@@ -233,6 +229,7 @@ def main():
                 split_string = textureList[counter].split("/", count)
                 substring = split_string[count]
                 
+                # adds needed meta data to the individual totem file
                 individualTotem = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/totems/" + str(renameTexture.lower()) + ".json", "a")
                 individualTotem.writelines(['{\n',
                 '	"parent": "minecraft:item/generated",\n',
@@ -250,13 +247,16 @@ def main():
                 # increases counter by 1
                 counter = counter + 1
 
+            # finishes the totem_of_undying.json file
             totemJSON = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
             totemJSON.writelines([']\n',
             '}'])
             totemJSON.close()
 
+            # selecta world for the datapack
             folderLocation = sg.popup_get_folder("Select your world:", title = "World Selection", icon="D:/Totems + Download/totems.ico", initial_folder="AppData/Roaming/.minecraft/saves")
 
+            # makes datapack directories
             os.mkdir(folderLocation + "/datapacks/Totems+ CMD")
             os.mkdir(folderLocation + "/datapacks/Totems+ CMD/data")
             os.mkdir(folderLocation + "/datapacks/Totems+ CMD/data/minecraft")
@@ -285,9 +285,11 @@ def main():
             '}'])
             packMeta.close()
 
+            # creates the evoker.json loot_table file
             evokerJSON = open(folderLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities/evoker.json", "x")
             evokerJSON.close()
 
+            # adds non-repatative starting data to the evoker.json file
             evokerJSON = open(folderLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities/evoker.json", "a")
             evokerJSON.writelines(['{\n',
             '  "type": "minecraft:entity",\n',
@@ -297,15 +299,19 @@ def main():
             '      "bonus_rolls": 0.0,\n',
             '      "entries": [\n'])
 
+            # sets counter to 0
             counter = 0
             
             # while the length of list (Number of uploaded files) != the counter (which increases after every loop) runs the indent
             while len(textureList) != counter:
                 
+                # if counter != length of the texture list (-1) then
                 if counter != len(textureList) - 1:
                     
+                    # gets the weight for the current totems drop chance
                     weight = sg.popup_get_text("Enter the weight of your Totem here:", title = "Item Weighting", image=textureList[counter], icon="D:/Totems + Download/totems.ico")
 
+                    # writes the repetative data to the evoker.josn file (with comma)
                     evokerJSON.writelines(['        {\n',
                     '          "type": "minecraft:item",\n',
                     '          "name": "minecraft:totem_of_undying",\n'])
@@ -318,10 +324,13 @@ def main():
                     '          ]\n',
                     '        },\n'])
 
+                # else then
                 else:
-
+                    
+                    # gets the weight for the current totem drop chance
                     weight = sg.popup_get_text("Enter the weight of your Totem here:", title = "Item Weighting", image=textureList[counter], icon="D:/Totems + Download/totems.ico")
                     
+                    # writes the repetative data to the evoker.josn file (without comma)
                     evokerJSON.writelines(['        {\n',
                     '          "type": "minecraft:item",\n',
                     '          "name": "minecraft:totem_of_undying",\n'])
@@ -334,8 +343,10 @@ def main():
                     '          ]\n',
                     '        }\n'])
 
+                # increases the counter by one
                 counter = counter + 1
-                
+            
+            # adds non-repatative ending data to the evoker.json file
             evokerJSON.writelines(['      ]\n',
             '    },\n',
             '    {\n',
@@ -379,6 +390,7 @@ def main():
             # prints completion message to user
             sg.popup_ok("Pack creation complete! Load up Minecraft and you Totems+ pack will appear in your resourcepack folder!", title = "Pack Completion", icon="D:/Totems + Download/totems.ico")
 
+            # breaks the loop (hence closing all windows)
             break
 
     # closes window if while loop broken
