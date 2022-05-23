@@ -35,7 +35,7 @@ def main():
     ]
 
     # creates the window
-    window = sg.Window("Totems+", layout, icon="D:/Totems + Download/totems.ico")
+    window = sg.Window("Totems+", layout, icon="Desktop/Python/TOTEMS +/totems.ico")
 
     down = True
 
@@ -71,7 +71,7 @@ def main():
             os.mkdir("AppData/Roaming/.minecraft/resourcepacks/Totems+ OFCIT/assets/minecraft/optifine/cit/totems")
 
             # TEMPORARY sets the pack.png original location & destination as variables
-            originalPng = "D:/Totems + Download/pack.png" # NEEDS UPDATING
+            originalPng = "Desktop/Python/TOTEMS +/pack.png" # NEEDS UPDATING
             targetPng = "AppData/Roaming/.minecraft/resourcepacks/Totems+ OFCIT"
 
             # copys the pack.png file into place
@@ -105,7 +105,7 @@ def main():
             while len(textureList) != counter:
 
                 # asks for the rename value for each file and replaceing any " " with "_"
-                rename = sg.popup_get_text("Enter your Totem name here:", title = "Item Renaming", image=textureList[counter], icon="D:/Totems + Download/totems.ico")
+                rename = sg.popup_get_text("Enter your Totem name here:", title = "Item Renaming", image=textureList[counter], icon="Desktop/Python/TOTEMS +/totems.ico")
                 renameTexture = rename.replace(" ", "_")
 
                 # makes custom directory for each file and curates a .properties file 
@@ -140,7 +140,7 @@ def main():
                 counter = counter + 1
 
             # prints completion message to user
-            sg.popup_ok("Pack creation complete! Load up Minecraft and you Totems+ pack will appear in your resourcepack folder!", title = "Pack Completion", icon="D:/Totems + Download/totems.ico")
+            sg.popup_ok("Pack creation complete! Load up Minecraft and you Totems+ pack will appear in your resourcepack folder!", title = "Pack Completion", icon="Desktop/Python/TOTEMS +/totems.ico")
 
             break
 
@@ -164,7 +164,7 @@ def main():
             os.mkdir("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/textures/totems")
 
             # TEMPORARY sets the pack.png original location & destination as variables
-            originalPng = "D:/Totems + Download/pack.png" # NEEDS UPDATING
+            originalPng = "Desktop/Python/TOTEMS +/pack.png" # NEEDS UPDATING
             targetPng = "AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD"
 
             # copys the pack.png file into place
@@ -218,13 +218,22 @@ def main():
             while len(textureList) != counter:
                 
                  # asks for the rename value for each file and replaceing any " " with "_"
-                rename = sg.popup_get_text("Enter your Totem name here:", title = "Item Renaming", image=textureList[counter], icon="D:/Totems + Download/totems.ico")
+                rename = sg.popup_get_text("Enter your Totem name here:", title = "Item Renaming", image=textureList[counter], icon="Desktop/Python/TOTEMS +/totems.ico")
                 renameTexture = rename.replace(" ", "_")
 
-                totemJSON = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
-                totemJSON.write("\n")
-                totemJSON.write('	  {"predicate": {"custom_model_data":91034'+ str(counter) +'}, "model": "totems/'+ str(renameTexture.lower()) +'"},')
-                totemJSON.close
+                if counter != len(textureList) - 1:
+
+                    totemJSON = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
+                    totemJSON.write("\n")
+                    totemJSON.write('	  {"predicate": {"custom_model_data":91034'+ str(counter) +'}, "model": "totems/'+ str(renameTexture.lower()) +'"},')
+                    totemJSON.close
+
+                else:
+
+                    totemJSON = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
+                    totemJSON.write("\n")
+                    totemJSON.write('	  {"predicate": {"custom_model_data":91034'+ str(counter) +'}, "model": "totems/'+ str(renameTexture.lower()) +'"}')
+                    totemJSON.close
 
                 individualTotem = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/totems/" + str(renameTexture.lower()) + ".json", "x")
                 individualTotem.close()
@@ -247,6 +256,11 @@ def main():
                 individualTotem.write("\n")
                 individualTotem.write('}')
 
+                # copys the image into the resource pack
+                original = textureList[counter]
+                target = "AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/textures/totems"
+                shutil.copy(original, target)
+
                 # increases counter by 1
                 counter = counter + 1
 
@@ -255,6 +269,201 @@ def main():
             totemJSON.write(']')
             totemJSON.write("\n")
             totemJSON.write('}')
+
+            folderLocation = sg.popup_get_folder("Select your world:", title = "World Selection", icon="Desktop/Python/TOTEMS +/totems.ico", initial_folder="AppData/Roaming/.minecraft/saves")
+
+            os.mkdir(folderLocation + "/datapacks/Totems+ CMD")
+            os.mkdir(folderLocation + "/datapacks/Totems+ CMD/data")
+            os.mkdir(folderLocation + "/datapacks/Totems+ CMD/data/minecraft")
+            os.mkdir(folderLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables")
+            os.mkdir(folderLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities")
+
+            # TEMPORARY sets the pack.png original location & destination as variables
+            originalPng = "Desktop/Python/TOTEMS +/pack.png" # NEEDS UPDATING
+            targetPng = folderLocation + "/datapacks/Totems+ CMD"
+
+            # copys the pack.png file into place
+            shutil.copy(originalPng, targetPng)
+
+            # creates the pack.mcmeta file
+            packMeta = open(folderLocation + "/datapacks/Totems+ CMD/pack.mcmeta", "x")
+            packMeta.close()
+
+            # adds the needed meta data to the pack.mcmeta file
+            packMeta = open(folderLocation + "/datapacks/Totems+ CMD/pack.mcmeta", "a")
+            packMeta.write('{')
+            packMeta.write("\n")
+            packMeta.write('  "pack": {')
+            packMeta.write("\n")
+            packMeta.write('    "pack_format": 7,')
+            packMeta.write("\n")
+            packMeta.write('	"description": "Minecraft CMD Integration')
+            packMeta.write("\n")
+            packMeta.write('Made By: The Totems+ Team"')
+            packMeta.write("\n")
+            packMeta.write('  }')
+            packMeta.write("\n")
+            packMeta.write('}')
+            packMeta.close()
+
+            evokerJSON = open(folderLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities/evoker.json", "x")
+            evokerJSON.close()
+
+            evokerJSON = open(folderLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities/evoker.json", "a")
+            evokerJSON.write('{')
+            evokerJSON.write("\n")
+            evokerJSON.write('  "type": "minecraft:entity",')
+            evokerJSON.write("\n")
+            evokerJSON.write('  "pools": [')
+            evokerJSON.write("\n")
+            evokerJSON.write('    {')
+            evokerJSON.write("\n")
+            evokerJSON.write('      "rolls": 1.0,')
+            evokerJSON.write("\n")
+            evokerJSON.write('      "bonus_rolls": 0.0,')
+            evokerJSON.write("\n")
+            evokerJSON.write('      "entries": [')
+
+            counter = 0
+            
+            # while the length of list (Number of uploaded files) != the counter (which increases after every loop) runs the indent
+            while len(textureList) != counter:
+                
+                if counter != len(textureList) - 1:
+                    
+                    weight = sg.popup_get_text("Enter the weight of your Totem here:", title = "Item Weighting", image=textureList[counter], icon="Desktop/Python/TOTEMS +/totems.ico")
+
+                    evokerJSON.write("\n")
+                    evokerJSON.write('        {')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('          "type": "minecraft:item",')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('          "name": "minecraft:totem_of_undying",')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('		  "weight": ' + weight +',')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('		  "functions": [')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('            {')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('              "function": "minecraft:set_nbt",')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('              "tag": "' + '{' + 'CustomModelData:' + '91034'+ str(counter) + '}' + '"')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('            }')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('          ]')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('        },')
+
+                else:
+
+                    weight = sg.popup_get_text("Enter the weight of your Totem here:", title = "Item Weighting", image=textureList[counter], icon="Desktop/Python/TOTEMS +/totems.ico")
+                    
+                    evokerJSON.write("\n")
+                    evokerJSON.write('        {')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('          "type": "minecraft:item",')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('          "name": "minecraft:totem_of_undying",')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('		  "weight": ' + weight +',')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('		  "functions": [')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('            {')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('              "function": "minecraft:set_nbt",')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('              "tag": "' + '{' + 'CustomModelData:' + '91034'+ str(counter) + '}' + '"')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('            }')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('          ]')
+                    evokerJSON.write("\n")
+                    evokerJSON.write('        }')
+
+                counter = counter + 1
+                
+            evokerJSON.write("\n")
+            evokerJSON.write('      ]')
+            evokerJSON.write("\n")
+            evokerJSON.write('    },')
+            evokerJSON.write("\n")
+            evokerJSON.write('    {')
+            evokerJSON.write("\n")
+            evokerJSON.write('      "rolls": 1.0,')
+            evokerJSON.write("\n")
+            evokerJSON.write('      "bonus_rolls": 0.0,')
+            evokerJSON.write("\n")
+            evokerJSON.write('      "entries": [')
+            evokerJSON.write("\n")
+            evokerJSON.write('        {')
+            evokerJSON.write("\n")
+            evokerJSON.write('          "type": "minecraft:item",')
+            evokerJSON.write("\n")
+            evokerJSON.write('          "functions": [')
+            evokerJSON.write("\n")
+            evokerJSON.write('            {')
+            evokerJSON.write("\n")
+            evokerJSON.write('              "function": "minecraft:set_count",')
+            evokerJSON.write("\n")
+            evokerJSON.write('              "count": {')
+            evokerJSON.write("\n")
+            evokerJSON.write('                "type": "minecraft:uniform",')
+            evokerJSON.write("\n")
+            evokerJSON.write('                "min": 0.0,')
+            evokerJSON.write("\n")
+            evokerJSON.write('                "max": 1.0')
+            evokerJSON.write("\n")
+            evokerJSON.write('              },')
+            evokerJSON.write("\n")
+            evokerJSON.write('              "add": false')
+            evokerJSON.write("\n")
+            evokerJSON.write('            },')
+            evokerJSON.write("\n")
+            evokerJSON.write('            {')
+            evokerJSON.write("\n")
+            evokerJSON.write('              "function": "minecraft:looting_enchant",')
+            evokerJSON.write("\n")
+            evokerJSON.write('              "count": {')
+            evokerJSON.write("\n")
+            evokerJSON.write('                "type": "minecraft:uniform",')
+            evokerJSON.write("\n")
+            evokerJSON.write('                "min": 0.0,')
+            evokerJSON.write("\n")
+            evokerJSON.write('                "max": 1.0')
+            evokerJSON.write("\n")
+            evokerJSON.write('              }')
+            evokerJSON.write("\n")
+            evokerJSON.write('            }')
+            evokerJSON.write("\n")
+            evokerJSON.write('          ],')
+            evokerJSON.write("\n")
+            evokerJSON.write('          "name": "minecraft:emerald"')
+            evokerJSON.write("\n")
+            evokerJSON.write('        }')
+            evokerJSON.write("\n")
+            evokerJSON.write('      ],')
+            evokerJSON.write("\n")
+            evokerJSON.write('      "conditions": [')
+            evokerJSON.write("\n")
+            evokerJSON.write('        {')
+            evokerJSON.write("\n")
+            evokerJSON.write('          "condition": "minecraft:killed_by_player"')
+            evokerJSON.write("\n")
+            evokerJSON.write('        }')
+            evokerJSON.write("\n")
+            evokerJSON.write('      ]')
+            evokerJSON.write("\n")
+            evokerJSON.write('    }')
+            evokerJSON.write("\n")
+            evokerJSON.write('  ]')
+            evokerJSON.write("\n")
+            evokerJSON.write('}')
+            
+            # prints completion message to user
+            sg.popup_ok("Pack creation complete! Load up Minecraft and you Totems+ pack will appear in your resourcepack folder!", title = "Pack Completion", icon="Desktop/Python/TOTEMS +/totems.ico")
 
             break
 
