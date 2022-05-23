@@ -2,8 +2,11 @@
 import os
 import shutil
 from tkinter.constants import S
-
 import PySimpleGUI as sg
+
+packPNGlocation = 'pack.png'
+totemsICO = 'totems.ico'
+windowlogoPNG = 'windowslogo.png'
 
 # declares the accepted file types
 file_types = [("JPEG, PNG, TGA (.jpg , .png , .tga)", ".jpg , .png , .tga")]
@@ -19,7 +22,7 @@ def main():
             sg.Image()
         ],
         [
-            sg.Image(filename='D:/Totems + Download/windowlogo.png', key='-IMAGE-'),
+            sg.Image(filename='AppData/Roaming/Totems +/windowlogo.png', key='-IMAGE-'),
             sg.Text('Totems + is a new and unique way to intergrate custom totems into Minecraft!\n' + 
             'This program currently provides support for:\n' + 
             'Minecraft CMD\n' + 
@@ -28,7 +31,7 @@ def main():
             ' ', font=('Helvetica', 10), justification='left'),
         ],
         [
-            sg.Text('⚫ You will want to start be choosing your integration type here:\n' + 
+            sg.Text('⚫ You will want to start by choosing your integration type here:\n' + 
             ' \n' + 
             'Optifine CIT - Allows for existing Totems to be renamed to a given string\n' + 
             '                    e.g "Totem of Axolotl" and have its texture change.\n' + 
@@ -54,7 +57,7 @@ def main():
     ]
 
     # creates the window
-    window = sg.Window("Totems+", layout, icon="D:/Totems + Download/totems.ico")
+    window = sg.Window("Totems+", layout, icon="AppData/Roaming/Totems +/totems.ico")
 
     down = True
 
@@ -90,7 +93,7 @@ def main():
             os.mkdir("AppData/Roaming/.minecraft/resourcepacks/Totems+ OFCIT/assets/minecraft/optifine/cit/totems")
 
             # TEMPORARY sets the pack.png original location & destination as variables
-            originalPng = "D:/Totems + Download/pack.png" # NEEDS UPDATING
+            originalPng = "AppData/Roaming/Totems +/pack.png" # NEEDS UPDATING
             targetPng = "AppData/Roaming/.minecraft/resourcepacks/Totems+ OFCIT"
 
             # copys the pack.png file into place
@@ -118,7 +121,7 @@ def main():
             while len(textureList) != counter:
 
                 # asks for the rename value for each file and replaceing any " " with "_"
-                rename = sg.popup_get_text("Enter your Totem name here:", title = "Item Renaming", image=textureList[counter], icon="D:/Totems + Download/totems.ico")
+                rename = sg.popup_get_text("Enter your Totem name here:", title = "Item Renaming", image=textureList[counter], icon="AppData/Roaming/Totems +/totems.ico")
                 renameTexture = rename.replace(" ", "_")
 
                 # makes custom directory for each file and curates a .properties file 
@@ -130,7 +133,7 @@ def main():
                 count = textureList[counter].count("/")
                 split_string = textureList[counter].split("/", count)
                 substring = split_string[count]
-
+                
                 # adds the needed meta to the totem_of_undying.properties file
                 totemProperties = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ OFCIT/assets/minecraft/optifine/cit/totems/" + str(renameTexture.lower()) + "/totem_of_undying.properties", "a")
                 totemProperties.writelines(["type=item\n",
@@ -150,7 +153,7 @@ def main():
                 counter = counter + 1
 
             # prints completion message to user
-            sg.popup_ok("Pack creation complete! Load up Minecraft and you Totems+ pack will appear in your resourcepack folder!", title = "Pack Completion", icon="D:/Totems + Download/totems.ico")
+            sg.popup_ok("Pack creation complete! Load up Minecraft and you Totems+ pack will appear in your resourcepack folder!", title = "Pack Completion", icon="AppData/Roaming/Totems +/totems.ico")
 
             break
 
@@ -174,7 +177,7 @@ def main():
             os.mkdir("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/textures/totems")
 
             # TEMPORARY sets the pack.png original location & destination as variables
-            originalPng = "D:/Totems + Download/pack.png" # NEEDS UPDATING
+            originalPng = "AppData/Roaming/Totems +/pack.png" # NEEDS UPDATING
             targetPng = "AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD"
 
             # copys the pack.png file into place
@@ -217,7 +220,7 @@ def main():
             while len(textureList) != counter:
                 
                  # asks for the rename value for each file and replaceing any " " with "_"
-                rename = sg.popup_get_text("Enter your Totem name here:", title = "Item Renaming", image=textureList[counter], icon="D:/Totems + Download/totems.ico")
+                rename = sg.popup_get_text("Enter your Totem name here:", title = "Item Renaming", image=textureList[counter], icon="AppData/Roaming/Totems +/totems.ico")
                 renameTexture = rename.replace(" ", "_")
 
                 # if counter != length of the texture list (-1) then
@@ -272,7 +275,7 @@ def main():
             totemJSON.close()
 
             # selecta world for the datapack
-            folderLocation = sg.popup_get_folder("Select your world:", title = "World Selection", icon="D:/Totems + Download/totems.ico", initial_folder="AppData/Roaming/.minecraft/saves")
+            folderLocation = sg.popup_get_folder("Select your world:", title = "World Selection", icon="AppData/Roaming/Totems +/totems.ico", initial_folder="AppData/Roaming/.minecraft/saves")
 
             # makes datapack directories
             os.mkdir(folderLocation + "/datapacks/Totems+ CMD")
@@ -282,7 +285,7 @@ def main():
             os.mkdir(folderLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities")
 
             # TEMPORARY sets the pack.png original location & destination as variables
-            originalPng = "D:/Totems + Download/pack.png" # NEEDS UPDATING
+            originalPng = "AppData/Roaming/Totems +/pack.png" # NEEDS UPDATING
             targetPng = folderLocation + "/datapacks/Totems+ CMD"
 
             # copys the pack.png file into place
@@ -327,7 +330,7 @@ def main():
                 if counter != len(textureList) - 1:
                     
                     # gets the weight for the current totems drop chance
-                    weight = sg.popup_get_text("Enter the weight of your Totem here:", title = "Item Weighting", image=textureList[counter], icon="D:/Totems + Download/totems.ico")
+                    weight = sg.popup_get_text("Enter the weight of your Totem here:", title = "Item Weighting", image=textureList[counter], icon="AppData/Roaming/Totems +/totems.ico")
 
                     # writes the repetative data to the evoker.josn file (with comma)
                     evokerJSON.writelines(['        {\n',
@@ -346,7 +349,7 @@ def main():
                 else:
                     
                     # gets the weight for the current totem drop chance
-                    weight = sg.popup_get_text("Enter the weight of your Totem here:", title = "Item Weighting", image=textureList[counter], icon="D:/Totems + Download/totems.ico")
+                    weight = sg.popup_get_text("Enter the weight of your Totem here:", title = "Item Weighting", image=textureList[counter], icon="AppData/Roaming/Totems +/totems.ico")
                     
                     # writes the repetative data to the evoker.josn file (without comma)
                     evokerJSON.writelines(['        {\n',
@@ -406,7 +409,7 @@ def main():
             evokerJSON.close()
             
             # prints completion message to user
-            sg.popup_ok("Pack creation complete! Load up Minecraft and you Totems+ pack will appear in your resourcepack folder!", title = "Pack Completion", icon="D:/Totems + Download/totems.ico")
+            sg.popup_ok("Pack creation complete! Load up Minecraft and you Totems+ pack will appear in your resourcepack folder!", title = "Pack Completion", icon="AppData/Roaming/Totems +/totems.ico")
 
             # breaks the loop (hence closing all windows)
             break
