@@ -29,13 +29,27 @@ def CMD():
             sg.Button('Confirm', disabled=False, key='worldConfirm'),
         ],
         [
+            sg.Text('Rolls:'),
+            sg.Spin(values=[i for i in range(1, 100)], initial_value=1, size=(3, 1), disabled=False, key='rolls'),
+            sg.Text('BonusRolls:'),
+            sg.Spin(values=[i for i in range(1, 100)], initial_value=0, size=(3, 1), disabled=False, key='bonusrolls'),
+            sg.Checkbox('Include Original', default=True, disabled=False, key='inc-orig', tooltip='Includes the original totem in the loot-table'),
+            sg.Text('Weight:'),
+            sg.Spin(values=[i for i in range(1, 100)], initial_value=1, size=(3, 1), disabled=False, key='orig-wei')
+        ],
+        [
             sg.Text('Name:  '),
             sg.InputText(size=(25, 1), disabled=True, key='itemName'),
-            sg.Checkbox('In-Game', default=False, disabled=True, key='in-game',tooltip='Changes the dropped totem name in-game')
+            sg.Checkbox('In-Game', default=False, disabled=True, key='in-game', tooltip='Changes the dropped totem name in-game')
         ],
         [
             sg.Text('Weight:'),
-            sg.InputText(size=(25, 1), disabled=True, key='itemWeight'),
+            sg.Spin(values=[i for i in range(1, 100)], initial_value=1, size=(25, 1), disabled=True, key='itemWeight'),
+        ],
+        [
+            sg.Text('Lore:    '),
+            sg.InputText(size=(25, 1), disabled=True, key='lore'),
+            sg.Checkbox('Lore', default=False, disabled=True, key='loreCheck',tooltip='Add custom lore to the totem item in-game')
         ],
         [
             sg.Checkbox('Documentation', default=True, disabled=True, key='documentation',tooltip='Generates a custom documentation file!')
@@ -81,12 +95,17 @@ def CMD():
                 window.Element('worldBrowse').update(disabled=True)
                 window.Element('WORLD').update(disabled=True)
                 window.Element('worldConfirm').update(disabled=True)
+                window.Element('inc-orig').update(disabled=True)
+                window.Element('orig-wei').update(disabled=True)
+                window.Element('rolls').update(disabled=True)
+                window.Element('bonusrolls').update(disabled=True)
                 window.Element('itemName').update(disabled=False)
                 window.Element('itemWeight').update(disabled=False)
                 window.Element('next').update(disabled=False)
                 window.Element('documentation').update(disabled=False)
                 window.Element('in-game').update(disabled=False)
-
+                window.Element('lore').update(disabled=False)
+                window.Element('loreCheck').update(disabled=False)
 
                 # pre-makes the resource pack directory in the minecraft resource pack folder
                 os.mkdir("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD")
@@ -176,10 +195,19 @@ def CMD():
                 evokerJSON.writelines(['{\n',
                 '  "type": "minecraft:entity",\n',
                 '  "pools": [\n',
-                '    {\n',
-                '      "rolls": 1.0,\n',
-                '      "bonus_rolls": 0.0,\n',
-                '      "entries": [\n']),
+                '    {\n'])
+                evokerJSON.write('      "rolls": ' + str(values['rolls']) + '.0,\n')
+                evokerJSON.write('      "bonus_rolls": ' + str(values['bonusrolls']) + '.0,\n')
+                evokerJSON.write('      "entries": [\n')
+
+                if values['inc-orig'] == True:
+
+                    evokerJSON.writelines(['        {\n',
+                    '          "type": "minecraft:item",\n',
+                    '          "name": "minecraft:totem_of_undying",\n'])
+                    evokerJSON.write('		  "weight": ' + str(values['orig-wei']) +'\n')
+                    evokerJSON.write('        },\n')
+
                 evokerJSON.close()
 
                 nameList = []
@@ -232,30 +260,41 @@ def CMD():
             evokerJSON.writelines(['        {\n',
             '          "type": "minecraft:item",\n',
             '          "name": "minecraft:totem_of_undying",\n'])
-            evokerJSON.write('		  "weight": ' + weight +',\n')
+            evokerJSON.write('		  "weight": ' + str(weight) +',\n')
             evokerJSON.writelines(['		  "functions": [\n',
             '            {\n',
             '              "function": "minecraft:set_nbt",\n'])
             evokerJSON.write('              "tag": "' + '{' + 'CustomModelData:' + '91034'+ str(counter) + '}' + '"\n')
+            evokerJSON.write('            }')
 
             if values['in-game'] == True:
 
-                evokerJSON.writelines(['            },\n',
+                evokerJSON.write(',')
+                evokerJSON.writelines(['\n',
                 '			{\n',
                 '              "function": "minecraft:set_name",\n',
                 '              "entity": "this",\n'])
                 evokerJSON.write('              "name": "' + values["itemName"] + '"\n')
-                evokerJSON.writelines(['			}\n',
-                '          ]\n',
-                '        },\n'])
-                evokerJSON.close()
+                evokerJSON.write('			}')
 
-            else:
+            if values['loreCheck'] == True:
 
-                evokerJSON.writelines(['            }\n',
-                '          ]\n',
-                '        },\n'])
-                evokerJSON.close()
+                evokerJSON.write(',')
+                evokerJSON.writelines(['\n',
+                '			{\n',
+                '              "function": "minecraft:set_lore",\n',
+                '              "entity": "this",\n',
+                '              "lore": [\n',
+                '                {\n'])
+                evokerJSON.write('                  "text": "' + values['lore'] + '"\n')
+                evokerJSON.writelines(['                }\n',
+                '              ]\n',
+                '            }'])
+
+            evokerJSON.writelines(['\n',
+            '          ]\n',
+            '        },\n'])
+            evokerJSON.close()
 
             nameList.append(values["itemName"])
             weightList.append(values["itemWeight"])
@@ -265,7 +304,8 @@ def CMD():
 
             # clears the text boxes
             window.Element('itemName').update('')
-            window.Element('itemWeight').update('')
+            window.Element('itemWeight').update('1')
+            window.Element('lore').update('')
 
             # increases counter by 1
             counter += 1
@@ -315,12 +355,38 @@ def CMD():
             evokerJSON.writelines(['        {\n',
             '          "type": "minecraft:item",\n',
             '          "name": "minecraft:totem_of_undying",\n'])
-            evokerJSON.write('		  "weight": ' + weight +',\n')
+            evokerJSON.write('		  "weight": ' + str(weight) +',\n')
             evokerJSON.writelines(['		  "functions": [\n',
             '            {\n',
             '              "function": "minecraft:set_nbt",\n'])
             evokerJSON.write('              "tag": "' + '{' + 'CustomModelData:' + '91034'+ str(counter) + '}' + '"\n')
-            evokerJSON.writelines(['            }\n',
+            evokerJSON.write('            }')
+
+            if values['in-game'] == True:
+
+                evokerJSON.write(',')
+                evokerJSON.writelines(['\n',
+                '			{\n',
+                '              "function": "minecraft:set_name",\n',
+                '              "entity": "this",\n'])
+                evokerJSON.write('              "name": "' + values["itemName"] + '"\n')
+                evokerJSON.write('			}')
+
+            if values['loreCheck'] == True:
+
+                evokerJSON.write(',')
+                evokerJSON.writelines(['\n',
+                '			{\n',
+                '              "function": "minecraft:set_lore",\n',
+                '              "entity": "this",\n',
+                '              "lore": [\n',
+                '                {\n'])
+                evokerJSON.write('                  "text": "' + values['lore'] + '"\n')
+                evokerJSON.writelines(['                }\n',
+                '              ]\n',
+                '            }'])
+
+            evokerJSON.writelines(['\n',
             '          ]\n',
             '        }\n'])
 
@@ -395,7 +461,7 @@ def CMD():
                     docconfig.write(';')
                 docconfig.write('\n')
                 for i in weightList:
-                    docconfig.write(i)
+                    docconfig.write(str(i))
                     docconfig.write(';')
                 docconfig.close()
 

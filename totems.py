@@ -33,14 +33,14 @@ def main():
             ' \n' +
             'Minecraft CMD - Allows for custom totems using custom model data and adds\n' + 
             '                    these with a given weight to the evoker loot_tabel.'),
-            sg.Button('Optifine CIT', size=(20,1), button_color=('white','orange'), key='-TOGGLE-')
+            sg.Button('Optifine CIT', size=(15,1), button_color=('white','orange'), key='-TOGGLE-')
         ],
         [
             sg.Text("⚫ Select your totem image files here:")
         ],
         [
-            sg.Text("Image File"),
-            sg.Input(size=(58, 1), key="-TEXTURES-"),
+            sg.Text("Image File :"),
+            sg.Input(size=(57, 1), key="-TEXTURES-"),
             sg.FilesBrowse(file_types=textureFileTypes),
         ],
         [
