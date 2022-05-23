@@ -3,6 +3,7 @@ import os
 import shutil
 from tkinter.constants import S
 import PySimpleGUI as sg
+from DOC import DOC
 
 # defines the CMD function
 def CMD():
@@ -30,10 +31,14 @@ def CMD():
         [
             sg.Text('Name:  '),
             sg.InputText(size=(25, 1), disabled=True, key='itemName'),
+            sg.Checkbox('In-Game', default=False, disabled=True, key='in-game',tooltip='Changes the dropped totem name in-game')
         ],
         [
             sg.Text('Weight:'),
             sg.InputText(size=(25, 1), disabled=True, key='itemWeight'),
+        ],
+        [
+            sg.Checkbox('Documentation', default=True, disabled=True, key='documentation',tooltip='Generates a custom documentation file!')
         ],
         [
             sg.Button('Next', disabled=True, key='next'),
@@ -79,6 +84,9 @@ def CMD():
                 window.Element('itemName').update(disabled=False)
                 window.Element('itemWeight').update(disabled=False)
                 window.Element('next').update(disabled=False)
+                window.Element('documentation').update(disabled=False)
+                window.Element('in-game').update(disabled=False)
+
 
                 # pre-makes the resource pack directory in the minecraft resource pack folder
                 os.mkdir("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD")
@@ -138,7 +146,7 @@ def CMD():
                 os.mkdir(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities")
 
                 # TEMPORARY sets the pack.png original location & destination as variables
-                originalPng = "AppData/Roaming/Totems +/pack.png" # NEEDS UPDATING
+                originalPng = "AppData/Roaming/Totems +/pack.png"
                 targetPng = worldLocation + "/datapacks/Totems+ CMD"
 
                 # copys the pack.png file into place
@@ -174,33 +182,24 @@ def CMD():
                 '      "entries": [\n']),
                 evokerJSON.close()
 
+                nameList = []
+                weightList = []
+
                 # cycles the image to the first image
                 window.Element('-IMAGE-').update(filename=textureList[0])
 
         # else if the next button and the length of the texture list isn't equal to the counter + 1
-        elif event == 'next' and len(textureList) != int(counter + 1):
+        elif event == 'next' and len(textureList) != counter + 1:
 
             # asks for the rename value for each file and replaceing any " " with "_"
             rename = values["itemName"]
             renameTexture = rename.replace(" ", "_")
 
-            # if counter != length of the texture list (-1) then
-            if counter != len(textureList) - 1:
-
-                # adds new CustomModel line to the totem_of_undying.json file (with comma)
-                totemJSON = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
-                totemJSON.write("\n")
-                totemJSON.write('	  {"predicate": {"custom_model_data":91034'+ str(counter) +'}, "model": "totems/'+ str(renameTexture.lower()) +'"},')
-                totemJSON.close
-
-            # else then
-            else:
-
-                # adds new CustomModel line to the totem_of_undying.json file (without comma)
-                totemJSON = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
-                totemJSON.write("\n")
-                totemJSON.write('	  {"predicate": {"custom_model_data":91034'+ str(counter) +'}, "model": "totems/'+ str(renameTexture.lower()) +'"}')
-                totemJSON.close
+            # adds new CustomModel line to the totem_of_undying.json file (with comma)
+            totemJSON = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
+            totemJSON.write("\n")
+            totemJSON.write('	  {"predicate": {"custom_model_data":91034'+ str(counter) +'}, "model": "totems/'+ str(renameTexture.lower()) +'"},')
+            totemJSON.close()
 
             # creates a file for the individual totem
             individualTotem = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/totems/" + str(renameTexture.lower()) + ".json", "x")
@@ -226,45 +225,40 @@ def CMD():
             target = "AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/textures/totems"
             shutil.copy(original, target)
 
-            # if counter != length of the texture list (-1) then
-            if counter != len(textureList) - 1:
-                
-                # weight is equal to the user input
-                weight = values['itemWeight']
+            # weight is equal to the user input
+            weight = values['itemWeight']
+            # writes the repetative data to the evoker.josn file (with comma)
+            evokerJSON = open(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities/evoker.json", "a")
+            evokerJSON.writelines(['        {\n',
+            '          "type": "minecraft:item",\n',
+            '          "name": "minecraft:totem_of_undying",\n'])
+            evokerJSON.write('		  "weight": ' + weight +',\n')
+            evokerJSON.writelines(['		  "functions": [\n',
+            '            {\n',
+            '              "function": "minecraft:set_nbt",\n'])
+            evokerJSON.write('              "tag": "' + '{' + 'CustomModelData:' + '91034'+ str(counter) + '}' + '"\n')
 
-                # writes the repetative data to the evoker.josn file (with comma)
-                evokerJSON = open(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities/evoker.json", "a")
-                evokerJSON.writelines(['        {\n',
-                '          "type": "minecraft:item",\n',
-                '          "name": "minecraft:totem_of_undying",\n'])
-                evokerJSON.write('		  "weight": ' + weight +',\n')
-                evokerJSON.writelines(['		  "functions": [\n',
-                '            {\n',
-                '              "function": "minecraft:set_nbt",\n'])
-                evokerJSON.write('              "tag": "' + '{' + 'CustomModelData:' + '91034'+ str(counter) + '}' + '"\n')
+            if values['in-game'] == True:
+
+                evokerJSON.writelines(['            },\n',
+                '			{\n',
+                '              "function": "minecraft:set_name",\n',
+                '              "entity": "this",\n'])
+                evokerJSON.write('              "name": "' + values["itemName"] + '"\n')
+                evokerJSON.writelines(['			}\n',
+                '          ]\n',
+                '        },\n'])
+                evokerJSON.close()
+
+            else:
+
                 evokerJSON.writelines(['            }\n',
                 '          ]\n',
                 '        },\n'])
+                evokerJSON.close()
 
-            # else then
-            else:
-                
-                # weight is equal to the user input
-                weight = values['itemWeight']
-                    
-                # writes the repetative data to the evoker.josn file (without comma)
-                evokerJSON = open(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities/evoker.json", "a")
-                evokerJSON.writelines(['        {\n',
-                '          "type": "minecraft:item",\n',
-                '          "name": "minecraft:totem_of_undying",\n'])
-                evokerJSON.write('		  "weight": ' + weight +',\n')
-                evokerJSON.writelines(['		  "functions": [\n',
-                '            {\n',
-                '              "function": "minecraft:set_nbt",\n'])
-                evokerJSON.write('              "tag": "' + '{' + 'CustomModelData:' + '91034'+ str(counter) + '}' + '"\n')
-                evokerJSON.writelines(['            }\n',
-                '          ]\n',
-                '        }\n'])
+            nameList.append(values["itemName"])
+            weightList.append(values["itemWeight"])
 
             # cycles the image to the next in the list
             window.Element('-IMAGE-').update(filename=textureList[counter + 1])
@@ -278,6 +272,60 @@ def CMD():
 
         # else if the next button and the length of the texture list is equal to the counter + 1
         elif event == 'next' and len(textureList) == counter + 1:
+
+            # asks for the rename value for each file and replaceing any " " with "_"
+            rename = values["itemName"]
+            renameTexture = rename.replace(" ", "_")
+
+            # adds new CustomModel line to the totem_of_undying.json file (without comma)
+            totemJSON = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/item/totem_of_undying.json", "a")
+            totemJSON.write("\n")
+            totemJSON.write('	  {"predicate": {"custom_model_data":91034'+ str(counter) +'}, "model": "totems/'+ str(renameTexture.lower()) +'"}\n')
+            totemJSON.close()
+
+            # creates a file for the individual totem
+            individualTotem = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/totems/" + str(renameTexture.lower()) + ".json", "x")
+            individualTotem.close()
+
+            # deduces the file name from its location
+            count = textureList[counter].count("/")
+            split_string = textureList[counter].split("/", count)
+            substring = split_string[count]
+                
+            # adds needed meta data to the individual totem file
+            individualTotem = open("AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/models/totems/" + str(renameTexture.lower()) + ".json", "a")
+            individualTotem.writelines(['{\n',
+            '	"parent": "minecraft:item/generated",\n',
+            '	"textures": {\n'])
+            individualTotem.write('	  "layer0": "minecraft:totems/' + substring + '"')
+            individualTotem.writelines(['	}\n',
+            '}\n'])
+            individualTotem.close()
+
+            # copys the image into the resource pack
+            original = textureList[counter]
+            target = "AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/assets/minecraft/textures/totems"
+            shutil.copy(original, target)
+
+            # weight is equal to the user input
+            weight = values['itemWeight']
+                
+            # writes the repetative data to the evoker.josn file (without comma)
+            evokerJSON = open(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities/evoker.json", "a")
+            evokerJSON.writelines(['        {\n',
+            '          "type": "minecraft:item",\n',
+            '          "name": "minecraft:totem_of_undying",\n'])
+            evokerJSON.write('		  "weight": ' + weight +',\n')
+            evokerJSON.writelines(['		  "functions": [\n',
+            '            {\n',
+            '              "function": "minecraft:set_nbt",\n'])
+            evokerJSON.write('              "tag": "' + '{' + 'CustomModelData:' + '91034'+ str(counter) + '}' + '"\n')
+            evokerJSON.writelines(['            }\n',
+            '          ]\n',
+            '        }\n'])
+
+            nameList.append(values["itemName"])
+            weightList.append(values["itemWeight"])
 
             # adds non-repatative ending data to the evoker.json file
             evokerJSON.writelines(['      ]\n',
@@ -325,6 +373,34 @@ def CMD():
             totemJSON.writelines([']\n',
             '}'])
             totemJSON.close()
+
+            if values['documentation'] == True:
+
+                file_exists = os.path.exists('AppData/Roaming/Totems +/docconfig.txt')
+
+                if file_exists == True:
+                
+                    os.remove("AppData/Roaming/Totems +/docconfig.txt")
+
+                docconfig = open('AppData/Roaming/Totems +/docconfig.txt', 'x')
+                docconfig.close()
+
+                docconfig = open("AppData/Roaming/Totems +/docconfig.txt", "a")
+
+                docconfig.write(worldLocation)
+                docconfig.write('\n')
+
+                for i in nameList:
+                    docconfig.write(i)
+                    docconfig.write(';')
+                docconfig.write('\n')
+                for i in weightList:
+                    docconfig.write(i)
+                    docconfig.write(';')
+                docconfig.close()
+
+                DOC()
+
             os.remove("AppData/Roaming/Totems +/cmdconfig.txt")
 
             # prints completion message to user

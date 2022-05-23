@@ -1,4 +1,5 @@
 # imports the libaries used within Totems+ 
+import os.path
 from tkinter.constants import S
 import PySimpleGUI as sg
 from OFCIT import CIT
@@ -76,6 +77,12 @@ def main():
 
         # if compile and toggle false then
         elif event == 'Compile' and down == False:
+
+            file_exists = os.path.exists('AppData/Roaming/Totems +/cmdconfig.txt')
+
+            if file_exists == True:
+                
+                os.remove("AppData/Roaming/Totems +/cmdconfig.txt")
             
             # creates config file
             config = open('AppData/Roaming/Totems +/cmdconfig.txt', 'x')
@@ -94,6 +101,12 @@ def main():
 
         # if compile and toggle true then
         elif event == 'Compile' and down == True:
+
+            file_exists = os.path.exists('AppData/Roaming/Totems +/citconfig.txt')
+
+            if file_exists == True:
+                
+                os.remove("AppData/Roaming/Totems +/citconfig.txt")
 
             # creates config file
             config = open('AppData/Roaming/Totems +/citconfig.txt', 'x')
