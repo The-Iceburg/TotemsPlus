@@ -16,23 +16,41 @@ def main():
     # defines how the main window will be displayed/layed-out
     layout = [
         [
-            sg.Text("Toggle your intergration type here:")
+            sg.Image()
         ],
         [
+            sg.Image(filename='D:/Totems + Download/windowlogo.png', key='-IMAGE-'),
+            sg.Text('Totems + is a new and unique way to intergrate custom totems into Minecraft!\n' + 
+            'This program currently provides support for:\n' + 
+            'Minecraft CMD\n' + 
+            'Optifine CIT\n' + 
+            'To get started follow the instructions below \/\n' + 
+            ' ', font=('Helvetica', 10), justification='left'),
+        ],
+        [
+            sg.Text('⚫ You will want to start be choosing your integration type here:\n' + 
+            ' \n' + 
+            'Optifine CIT - Allows for existing Totems to be renamed to a given string\n' + 
+            '                    e.g "Totem of Axolotl" and have its texture change.\n' + 
+            ' \n' +
+            'Minecraft CMD - Allows for custom totems using custom model data and adds\n' + 
+            '                    these with a given weight to the evoker loot_tabel.'),
             sg.Button('Optifine CIT', size=(20,1), button_color=('white','orange'), key='B')
         ],
         [
-            sg.Text("Select your totem images here:")
+            sg.Text("⚫ Select your totem image files here:")
         ],
         [
             sg.Text("Image File"),
-            sg.Input(size=(10, 1), key="-FILE-"),
+            sg.Input(size=(58, 1), key="-FILE-"),
             sg.FilesBrowse(file_types=file_types),
-            sg.Button("Compile"),
         ],
         [
-            sg.Text("Then hit Compile to generate your pack(s)!")
-        ]
+            sg.Text("(Remember they will need to be in the following formats: .jpg , .png , .tga)")
+        ],
+        [
+            sg.Text("⚫ Finally hit Compile and follow any further instructions to generate your pack(s):"),sg.Button("Compile")
+        ],
     ]
 
     # creates the window
