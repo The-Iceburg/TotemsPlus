@@ -1,4 +1,4 @@
-from os import name
+import os
 import getpass
 
 def DOC():

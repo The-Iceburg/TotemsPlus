@@ -5,6 +5,7 @@ import getpass
 from tkinter.constants import S
 import PySimpleGUI as sg
 from DOC import DOC
+from FUNC import FUN
 
 # defines the CMD function
 def CMD():
@@ -54,7 +55,7 @@ def CMD():
         ],
         [
             sg.Checkbox('Documentation', default=True, disabled=True, key='documentation',tooltip='Generates a custom documentation file!'),
-            sg.Checkbox('TotemLoad Function', default=True, disabled=True, key='totemload',tooltip='Generates a totem load function to summon all your totems!')
+            sg.Checkbox('Functions', default=True, disabled=True, key='functions',tooltip='Generates functions to access all your totems!')
         ],
         [
             sg.Button('Next', disabled=True, key='next'),
@@ -105,7 +106,7 @@ def CMD():
                 window.Element('itemWeight').update(disabled=False)
                 window.Element('next').update(disabled=False)
                 window.Element('documentation').update(disabled=False)
-                window.Element('totemload').update(disabled=False)
+                window.Element('functions').update(disabled=False)
                 window.Element('in-game').update(disabled=False)
                 window.Element('lore').update(disabled=False)
                 window.Element('loreCheck').update(disabled=False)
@@ -470,25 +471,27 @@ def CMD():
 
                 DOC()
 
-            if values['totemload'] == True:
+            if values['functions'] == True:
 
-                os.mkdir(worldLocation + "/datapacks/Totems+ CMD/data/totemsplus")
-                os.mkdir(worldLocation + "/datapacks/Totems+ CMD/data/totemsplus/functions")
+                file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/funconfig.txt')
 
-                mcfunction = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/functions/totemload.mcfunction', 'x')
-                mcfunction.close()
+                if file_exists == True:
+                
+                    os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/funconfig.txt")
 
-                mcfunction = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/functions/totemload.mcfunction', 'a')
-    
-                counter = 0
-    
-                while len(nameList) != counter:
+                funconfig = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/funconfig.txt', 'x')
+                funconfig.close()
 
-                    mcfunction.write('give @s minecraft:totem_of_undying{CustomModelData:' + str(910340 + counter) +'} 1\n')
+                funconfig = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/funconfig.txt", "a")
+                funconfig.write(worldLocation)
+                funconfig.write('\n')
 
-                    counter += 1
+                for i in nameList:
+                    funconfig.write(i)
+                    funconfig.write(';')
+                funconfig.close()
 
-                mcfunction.close()
+                FUN()
 
             os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/cmdconfig.txt")
 
