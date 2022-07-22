@@ -135,7 +135,7 @@ def CMD():
                 packMeta = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD/pack.mcmeta", "a")
                 packMeta.writelines(['{',
                 '  "pack": {',
-                '    "pack_format": 7,',
+                '    "pack_format": 9,',
                 '	"description": "Optifine CMD Integration',
                 'Made By: The Totems+ Team"',
                 '  }',
@@ -182,7 +182,7 @@ def CMD():
                 packMeta = open(worldLocation + "/datapacks/Totems+ CMD/pack.mcmeta", "a")
                 packMeta.writelines(['{\n',
                 '  "pack": {\n',
-                '    "pack_format": 7,\n',
+                '    "pack_format": 10,\n',
                 '	"description": "Minecraft CMD Integration\n',
                 'Made By: The Totems+ Team"\n',
                 '  }\n',

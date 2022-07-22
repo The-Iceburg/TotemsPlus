@@ -66,7 +66,7 @@ def CIT():
     packMeta = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/Totems+ OFCIT/pack.mcmeta", "a")
     packMeta.writelines(['{\n',
     '  "pack": {\n',
-    '    "pack_format": 7,\n',
+    '    "pack_format": 9,\n',
     '	"description": "Optifine CIT Integration\n',
     'Made By: The Totems+ Team"\n',
     '  }\n',
