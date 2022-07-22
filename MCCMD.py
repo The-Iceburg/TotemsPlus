@@ -10,7 +10,7 @@ from DOC import DOC
 def CMD():
 
     # defines how the main window will be displayed/layed-out
-    layout = [ 
+    layout = [
         [
             sg.Image(filename='img/windowlogo.png', key='-IMAGE-'),
             sg.Text("You've selected Totems+ CMD Integration!\n" + 
@@ -53,7 +53,8 @@ def CMD():
             sg.Checkbox('Lore', default=False, disabled=True, key='loreCheck',tooltip='Add custom lore to the totem item in-game')
         ],
         [
-            sg.Checkbox('Documentation', default=True, disabled=True, key='documentation',tooltip='Generates a custom documentation file!')
+            sg.Checkbox('Documentation', default=True, disabled=True, key='documentation',tooltip='Generates a custom documentation file!'),
+            sg.Checkbox('TotemLoad Function', default=True, disabled=True, key='totemload',tooltip='Generates a totem load function to summon all your totems!')
         ],
         [
             sg.Button('Next', disabled=True, key='next'),
@@ -104,6 +105,7 @@ def CMD():
                 window.Element('itemWeight').update(disabled=False)
                 window.Element('next').update(disabled=False)
                 window.Element('documentation').update(disabled=False)
+                window.Element('totemload').update(disabled=False)
                 window.Element('in-game').update(disabled=False)
                 window.Element('lore').update(disabled=False)
                 window.Element('loreCheck').update(disabled=False)
@@ -467,6 +469,26 @@ def CMD():
                 docconfig.close()
 
                 DOC()
+
+            if values['totemload'] == True:
+
+                os.mkdir(worldLocation + "/datapacks/Totems+ CMD/data/totemsplus")
+                os.mkdir(worldLocation + "/datapacks/Totems+ CMD/data/totemsplus/functions")
+
+                mcfunction = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/functions/totemload.mcfunction', 'x')
+                mcfunction.close()
+
+                mcfunction = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/functions/totemload.mcfunction', 'a')
+    
+                counter = 0
+    
+                while len(nameList) != counter:
+
+                    mcfunction.write('give @s minecraft:totem_of_undying{CustomModelData:' + str(910340 + counter) +'} 1\n')
+
+                    counter += 1
+
+                mcfunction.close()
 
             os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/cmdconfig.txt")
 
