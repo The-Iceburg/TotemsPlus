@@ -215,7 +215,10 @@ def CMD():
                 evokerJSON.close()
 
                 nameList = []
+                loreList = []
                 weightList = []
+                incnamelist = []
+                inclorelist = []
 
                 # cycles the image to the first image
                 window.Element('-IMAGE-').update(filename=textureList[0])
@@ -302,6 +305,9 @@ def CMD():
 
             nameList.append(values["itemName"])
             weightList.append(values["itemWeight"])
+            loreList.append(values["lore"])
+            incnamelist.append(values["in-game"])
+            inclorelist.append(values["loreCheck"])
 
             # cycles the image to the next in the list
             window.Element('-IMAGE-').update(filename=textureList[counter + 1])
@@ -395,7 +401,10 @@ def CMD():
             '        }\n'])
 
             nameList.append(values["itemName"])
+            loreList.append(values["lore"])
             weightList.append(values["itemWeight"])
+            incnamelist.append(values["in-game"])
+            inclorelist.append(values["loreCheck"])
 
             # adds non-repatative ending data to the evoker.json file
             evokerJSON.writelines(['      ]\n',
@@ -467,6 +476,18 @@ def CMD():
                 for i in weightList:
                     docconfig.write(str(i))
                     docconfig.write(';')
+                docconfig.write('\n')
+                for i in incnamelist:
+                    docconfig.write(str(i))
+                    docconfig.write(';')
+                docconfig.write('\n')
+                for i in inclorelist:
+                    docconfig.write(str(i))
+                    docconfig.write(';')
+                docconfig.write('\n')
+                for i in loreList:
+                    docconfig.write(i)
+                    docconfig.write(';')
                 docconfig.close()
 
                 DOC()
@@ -489,8 +510,19 @@ def CMD():
                 for i in nameList:
                     funconfig.write(i)
                     funconfig.write(';')
+                funconfig.write('\n')
+                for i in incnamelist:
+                    funconfig.write(str(i))
+                    funconfig.write(';')
+                funconfig.write('\n')
+                for i in inclorelist:
+                    funconfig.write(str(i))
+                    funconfig.write(';')
+                funconfig.write('\n')
+                for i in loreList:
+                    funconfig.write(i)
+                    funconfig.write(';')
                 funconfig.close()
-
                 FUN()
 
             os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/cmdconfig.txt")

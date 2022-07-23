@@ -10,10 +10,16 @@ def DOC():
     worldLocation = docconfigread[0]
     weightList = docconfigread[2]
     nameList = docconfigread[1]
+    loreList = docconfigread[5]
+    inGameName = docconfigread[3]
+    inGameLore = docconfigread[4]
 
     worldLocation = worldLocation.replace('\n','')
     weightList = weightList.split(';')
     nameList = nameList.split(';')
+    loreList = loreList.split(';')
+    inGameLore = inGameLore.split(';')
+    inGameName = inGameName.split(';')
 
     doc = open(worldLocation + "/datapacks/Totems+ CMD/documentation.txt", 'x')
     doc.close()
@@ -38,7 +44,22 @@ def DOC():
     
     while len(nameList) != counter + 1:
 
-        doc.write(nameList[counter] + ':   /give @s minecraft:totem_of_undying{CustomModelData:' + str(910340 + counter) +'} 1\n')
+        doc.write(nameList[counter] + ':   /give @s minecraft:totem_of_undying{')
+        
+        if inGameName[counter] == "True" and inGameLore[counter] == "True":
+
+            doc.write('''display:{Name:'[{"text":"''' + nameList[counter] + '''"}]',Lore:['[{"text":"''' + loreList[counter]+ '''"}]']},CustomModelData:''' + str(910340 + counter) +'} 1\n')
+
+        elif inGameName[counter] == "True":
+
+            doc.write('''display:{Name:'[{"text":"''' + nameList[counter] + '''"}]'},CustomModelData:''' + str(910340 + counter) +'} 1\n')
+
+        elif inGameLore[counter] == "True":
+
+            doc.write('''display:{Lore:['[{"text":"''' + loreList[counter] + '''"}]']},CustomModelData:''' + str(910340 + counter) +'} 1\n')
+
+        else:
+            doc.write('CustomModelData:' + str(910340 + counter) +'} 1\n')
 
         counter += 1
 
