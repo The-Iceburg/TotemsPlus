@@ -175,8 +175,6 @@ def CMD():
 
                     namedata = sg.PopupOKCancel("An MCCMD Integration datapack allready exists\nClick Ok to delete the existing pack", title = "Duplicate Pack")
 
-                    print(namedata)
-
                     if namedata == "OK":
 
                         shutil.rmtree(worldLocation + "/datapacks/Totems+ CMD")
@@ -226,11 +224,7 @@ def CMD():
 
                 if values['inc-orig'] == True:
 
-                    evokerJSON.writelines(['        {\n',
-                    '          "type": "minecraft:item",\n',
-                    '          "name": "minecraft:totem_of_undying",\n'])
-                    evokerJSON.write('		  "weight": ' + str(values['orig-wei']) +'\n')
-                    evokerJSON.write('        },\n')
+                    textureList.append("img/totem_of_undying.png")
 
                 evokerJSON.close()
 
