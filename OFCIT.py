@@ -5,6 +5,11 @@ import getpass
 from tkinter.constants import S
 import PySimpleGUI as sg
 
+# outlines the versions and there pack formats
+packformat4 = ["1.14","1.14.1","1.14.2","1.14.3","1.14.4"]
+packformat5 = ["1.15","1.15.1","1.15.2","1.16","1.16.1"]
+packformat6 = ["1.16.2","1.16.3","1.16.4","1.16.5"]
+
 # defines the CIT function
 def CIT():
 
@@ -14,7 +19,10 @@ def CIT():
     # extract the textureList from the config file
     config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/citconfig.txt", "r")
     textureList = config.readline()
-    config.close() 
+    config.close()
+    config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/versionconfig.txt", "r")
+    version = config.readline()
+    config.close()
     textureList = textureList.split(";")
 
     # defines how the main window will be displayed/layed-out
@@ -71,12 +79,25 @@ def CIT():
     packMeta = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/pack.mcmeta", "x")
     packMeta.close()
 
+    if version in packformat4:
+        packformat = 4
+    elif version in packformat5:
+        packformat = 5
+    elif version in packformat6:
+        packformat = 6
+    elif version.startswith("1.17"):
+        packformat = 7
+    elif version.startswith("1.18"):
+        packformat = 8
+    elif version.startswith("1.19"):
+        packformat = 9
+
     # adds the needed meta data to the pack.mcmeta file
     packMeta = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/pack.mcmeta", "a")
     packMeta.writelines(['{\n',
     '  "pack": {\n',
-    '    "pack_format": 9,\n',
-    '	"description": "Optifine CIT Integration\n',
+    '    "pack_format": ' + str(packformat) + ',\n',
+    '	"description": "Version: ' + version + '\n',
     'Made By: The Totems+ Team"\n',
     '  }\n',
     '}'])

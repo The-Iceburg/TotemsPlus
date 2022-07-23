@@ -51,7 +51,10 @@ def main():
             sg.FilesBrowse(file_types=textureFileTypes),
         ],
         [
-            sg.Text("(Remember they will need to be in the following formats: .jpg , .png , .tga)")
+            sg.Text("(Remember they will need to be in the following formats: .jpg , .png , .tga)\n" + "\n" + "⚫ Select which version of minecraft you wish to create the packs for:")
+        ],
+        [
+            sg.DropDown(["1.14","1.14.1","1.14.2","1.14.3","1.14.4","1.15","1.15.1","1.15.2","1.16","1.16.1","1.16.2","1.16.3","1.16.4","1.16.5","1.17","1.17.1","1.18","1.18.1","1.18.2","1.19","1.19.1"],default_value="1.19.1",key="-DROPDOWN-")
         ],
         [
             sg.Text("⚫ Finally hit Compile and follow any further instructions to generate your pack(s):"),sg.Button("Compile")
@@ -90,6 +93,12 @@ def main():
             if file_exists == True:
                 
                 os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/cmdconfig.txt")
+
+            file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/versionconfig.txt')
+
+            if file_exists == True:
+                
+                os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/versionconfig.txt")
             
             # creates config file
             config = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/cmdconfig.txt', 'x')
@@ -98,6 +107,13 @@ def main():
             # writes file locations into config file
             config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/cmdconfig.txt", "a")
             config.write(values["-TEXTURES-"])
+            config.close()
+
+            config = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/versionconfig.txt', 'x')
+            config.close()
+            
+            config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/versionconfig.txt", "a")
+            config.write(values["-DROPDOWN-"])
             config.close()
 
             # runs CMD function
@@ -115,6 +131,12 @@ def main():
                 
                 os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/citconfig.txt")
 
+            file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/versionconfig.txt')
+
+            if file_exists == True:
+                
+                os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/versionconfig.txt")
+
             # creates config file
             config = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/citconfig.txt', 'x')
             config.close()
@@ -122,6 +144,13 @@ def main():
             # writes file locations into config file
             config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/citconfig.txt", "a")
             config.write(values["-TEXTURES-"])
+            config.close()
+
+            config = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/versionconfig.txt', 'x')
+            config.close()
+            
+            config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/versionconfig.txt", "a")
+            config.write(values["-DROPDOWN-"])
             config.close()
 
             # runs CIT function

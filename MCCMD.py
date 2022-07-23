@@ -7,6 +7,16 @@ import PySimpleGUI as sg
 from DOC import DOC
 from FUNC import FUN
 
+# outlines the versions and there pack formats
+resourcepackformat4 = ["1.14","1.14.1","1.14.2","1.14.3","1.14.4"]
+resourcepackformat5 = ["1.15","1.15.1","1.15.2","1.16","1.16.1"]
+resourcepackformat6 = ["1.16.2","1.16.3","1.16.4","1.16.5"]
+
+datapackformat4 = ["1.14","1.14.1","1.14.2","1.14.3","1.14.4"]
+datapackformat5 = ["1.15","1.15.1","1.15.2","1.16","1.16.1"]
+datapackformat6 = ["1.16.2","1.16.3","1.16.4","1.16.5"]
+datapackformat8 = ["1.18","1.18.1"]
+
 # defines the CMD function
 def CMD():
 
@@ -89,7 +99,10 @@ def CMD():
                 # extract the textureList from the config file
                 config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/cmdconfig.txt", "r")
                 textureList = config.readline()
-                config.close() 
+                config.close()
+                config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/versionconfig.txt", "r")
+                version = config.readline()
+                config.close()
                 textureList = textureList.split(";")
 
                 # updates window elements to either be enabled or disabled
@@ -97,7 +110,6 @@ def CMD():
                 window.Element('WORLD').update(disabled=True)
                 window.Element('worldConfirm').update(disabled=True)
                 window.Element('inc-orig').update(disabled=True)
-                window.Element('orig-wei').update(disabled=True)
                 window.Element('rolls').update(disabled=True)
                 window.Element('bonusrolls').update(disabled=True)
                 window.Element('itemName').update(disabled=False)
@@ -138,12 +150,25 @@ def CMD():
                 packMeta = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/pack.mcmeta", "x")
                 packMeta.close()
 
+                if version in resourcepackformat4:
+                    packformat = 4
+                elif version in resourcepackformat5:
+                    packformat = 5
+                elif version in resourcepackformat6:
+                    packformat = 6
+                elif version.startswith("1.17"):
+                    packformat = 7
+                elif version.startswith("1.18"):
+                    packformat = 8
+                elif version.startswith("1.19"):
+                    packformat = 9
+
                 # adds the needed meta data to the pack.mcmeta file
                 packMeta = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/pack.mcmeta", "a")
                 packMeta.writelines(['{',
                 '  "pack": {',
-                '    "pack_format": 9,',
-                '	"description": "Optifine CMD Integration',
+                '    "pack_format": ' + str(packformat) + ',',
+                '	"description": "Version: ' + version + '\n',
                 'Made By: The Totems+ Team"',
                 '  }',
                 '}'])
@@ -195,12 +220,25 @@ def CMD():
                 packMeta = open(worldLocation + "/datapacks/Totems+ CMD/pack.mcmeta", "x")
                 packMeta.close()
 
+                if version in datapackformat4:
+                    datapackformat = 4
+                elif version in datapackformat5:
+                    datapackformat = 5
+                elif version in datapackformat6:
+                    datapackformat = 6
+                elif version.startswith("1.17"):
+                    datapackformat = 7
+                elif version in datapackformat8:
+                    datapackformat = 8
+                elif version.startswith("1.19"):
+                    datapackformat = 9
+
                 # adds the needed meta data to the pack.mcmeta file
                 packMeta = open(worldLocation + "/datapacks/Totems+ CMD/pack.mcmeta", "a")
                 packMeta.writelines(['{\n',
                 '  "pack": {\n',
-                '    "pack_format": 10,\n',
-                '	"description": "Minecraft CMD Integration\n',
+                '    "pack_format": ' + str(datapackformat) + ',\n',
+                '	"description": "Version: ' + version + '\n',
                 'Made By: The Totems+ Team"\n',
                 '  }\n',
                 '}'])
