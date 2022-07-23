@@ -1,5 +1,4 @@
-# TotemsPlus
-A new and unique way to integrate custom totems into Minecraft!
+# ![banner](https://user-images.githubusercontent.com/67003539/180610304-3dbce80c-c368-4fd4-aa59-124e04875284.png)
 # Install
   ComingSoon™
 # Usage
