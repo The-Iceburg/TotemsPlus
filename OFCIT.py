@@ -124,9 +124,6 @@ def CIT():
         # else if the next button and the length of the texture list is equal to the counter + 1
         elif event == 'next' and len(textureList) == int(counter + 1):
 
-            # deletes the config file
-            os.remove("C:/Users/" + getpass.getuser() + "/Roaming/Totems+/citconfig.txt")
-
             # prints completion message to user
             sg.popup_ok("Pack creation complete! Load up Minecraft and you Totems+ pack will appear in your resourcepack folder!", title = "Pack Completion", icon="img/totems.ico")
 
