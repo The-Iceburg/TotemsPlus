@@ -97,6 +97,6 @@ To test it out just kill an evoker or if you've generated functions run a functi
 
 # Conclusion
 
-Totems Plus was our very first project that we still hold very close to our heart. We like to come back and add to it every now and again with the hope that one day at least 1 person will find it usefull
+Totems Plus was our very first project that we still hold very close to our heart. We like to come back and add to it every now and again with the hope that one day at least 1 person will find it usefull. Also if you have any ideas for features we could add to keep us busy hit us up on twitter @theiceburg21
 
 Thanks - Ormatist + Dockuin
