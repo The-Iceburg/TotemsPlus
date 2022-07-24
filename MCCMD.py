@@ -6,6 +6,7 @@ from tkinter.constants import S
 import PySimpleGUI as sg
 from DOC import DOC
 from FUNC import FUN
+from ADVA import ADV
 
 # outlines the versions and there pack formats
 resourcepackformat4 = ["1.14","1.14.1","1.14.2","1.14.3","1.14.4"]
@@ -63,7 +64,8 @@ def CMD():
         ],
         [
             sg.Checkbox('Documentation', default=True, disabled=True, key='documentation',tooltip='Generates a custom documentation file!'),
-            sg.Checkbox('Functions', default=True, disabled=True, key='functions',tooltip='Generates functions to access all your totems!')
+            sg.Checkbox('Functions', default=True, disabled=True, key='functions',tooltip='Generates functions to access all your totems!'),
+            sg.Checkbox('Advancements', default=False, disabled=True, key='advancements',tooltip='Generates advancements to guide your totem experience.')
         ],
         [
             sg.Button('Next', disabled=True, key='next'),
@@ -120,6 +122,7 @@ def CMD():
                 window.Element('in-game').update(disabled=False)
                 window.Element('lore').update(disabled=False)
                 window.Element('loreCheck').update(disabled=False)
+                window.Element('advancements').update(disabled=False)
 
                 name = "Totems+ CMD"
 
@@ -574,6 +577,27 @@ def CMD():
                     funconfig.write(';')
                 funconfig.close()
                 FUN()
+
+            if values['advancements'] == True:
+
+                file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/advaconfig.txt')
+
+                if file_exists == True:
+                
+                    os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/advaconfig.txt")
+
+                advaconfig = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/advaconfig.txt', 'x')
+                advaconfig.close()
+
+                advaconfig = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/advaconfig.txt", "a")
+                advaconfig.write(worldLocation)
+                advaconfig.write('\n')
+                for i in nameList:
+                    advaconfig.write(i)
+                    advaconfig.write(';')
+                advaconfig.close()
+
+                ADV()
 
             os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/cmdconfig.txt")
 
