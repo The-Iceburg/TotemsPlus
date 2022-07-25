@@ -31,7 +31,47 @@ def ADV():
 
     ######
 
+    collectall = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/root.json', 'x')
+    collectall.close()
 
+    collectall = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/root.json', 'a')
+
+    collectall.writelines(['{\n',
+    '    "__comment": "Made by the Totems+ Team",\n',
+    '    "display": {\n',
+    '        "title": {\n',
+    '            "text": "Collect All Totems",\n',
+    '            "color": "gold",\n',
+    '            "bold": false\n',
+    '        },\n',
+    '        "description": {\n',
+    '            "text": "Collect your first totem!",\n',
+    '            "color": "yellow"\n',
+    '        },\n',
+    '        "icon": {\n',
+    '            "item": "minecraft:totem_of_undying"\n',
+    '        },\n',
+    '        "frame": "goal",\n',
+    '        "show_toast": true,\n',
+    '        "announce_to_chat": true,\n',
+    '        "hidden": false,\n',
+    '        "background": "minecraft:textures/gui/advancements/backgrounds/totemsbackground.png"\n',
+    '    },\n',
+    '    "criteria": {\n',
+    '        "totemget": {\n',
+    '            "trigger": "minecraft:inventory_changed",\n',
+    '            "conditions": {\n',
+    '                "items": [\n',
+    '                    {\n',
+    '                        "items": [\n',
+    '							"minecraft:totem_of_undying"\n',
+    '						]\n',
+    '                    }\n',
+    '                ]\n',
+    '            }\n',
+    '        }\n',
+    '    }\n',
+    '}'])
 
     ######
 
