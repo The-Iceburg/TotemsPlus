@@ -10,6 +10,7 @@ def ADV():
 
     worldLocation = advaconfigread[0]
     nameList = advaconfigread[1]
+    name = advaconfigread[2]
 
     worldLocation = worldLocation.replace('\n','')
     nameList = nameList.split(';')
@@ -24,10 +25,15 @@ def ADV():
 
     ######
 
-    #original = 'files/root.json'
-    #target = worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements'
+    original = 'img/totemsbackground.png'
 
-    #shutil.copyfile(original, target)
+    os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui")
+    os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui/advancements")
+    os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui/advancements/backgrounds")
+
+    target = "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui/advancements/backgrounds"
+
+    shutil.copyfile(original, target)
 
     ######
 
