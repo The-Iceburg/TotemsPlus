@@ -2,6 +2,11 @@ import os
 import getpass
 import shutil
 
+def get_size(fileobject):
+        fileobject.seek(0,2)
+        size = fileobject.tell()
+        return size
+
 def ADV():
 
     advaconfig = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/advaconfig.txt", "r")
@@ -24,8 +29,8 @@ def ADV():
     os.mkdir(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements')
 
     ######
-
-    original = 'img/totemsbackground.png'
+    
+    original = 'img/totemswave.png'
 
     os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui")
     os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui/advancements")
@@ -33,7 +38,7 @@ def ADV():
 
     target = "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui/advancements/backgrounds"
 
-    shutil.copyfile(original, target)
+    # shutil.copyfile(original, target)
 
     ######
 
@@ -46,7 +51,7 @@ def ADV():
     '    "__comment": "Made by the Totems+ Team",\n',
     '    "display": {\n',
     '        "title": {\n',
-    '            "text": "Collect All Totems",\n',
+    '            "text": "Totems+",\n',
     '            "color": "gold",\n',
     '            "bold": false\n',
     '        },\n',
@@ -61,7 +66,7 @@ def ADV():
     '        "show_toast": true,\n',
     '        "announce_to_chat": true,\n',
     '        "hidden": false,\n',
-    '        "background": "minecraft:textures/gui/advancements/backgrounds/totemsbackground.png"\n',
+    '        "background": "minecraft:textures/gui/advancements/backgrounds/totemswave.png"\n',
     '    },\n',
     '    "criteria": {\n',
     '        "totemget": {\n',
@@ -112,7 +117,7 @@ def ADV():
 
     while len(nameList) != counter + 1:
 
-        collectall.write('        "Collect' + nameList[counter] + '": {\n')
+        collectall.write('\n        "Collect' + nameList[counter] + '": {\n')
         collectall.writelines(['            "trigger": "minecraft:inventory_changed",\n',
         '            "conditions": {\n',
         '                "items": [\n',
@@ -122,19 +127,14 @@ def ADV():
         collectall.writelines(['                    }\n',
         '                ]\n',
         '            }\n',
-        '        },\n'])
+        '        },'])
 
         counter += 1
-
-    def get_size(fileobject):
-        fileobject.seek(0,2)
-        size = fileobject.tell()
-        return size
     
     fsize = get_size(collectall)
     collectall.truncate(fsize - 1)
 
-    collectall.writelines(['    },\n',
+    collectall.writelines(['\n    },\n',
     '    "parent": "totemsplus:root"\n',
     '}'])
 
@@ -171,29 +171,22 @@ def ADV():
 
     while len(nameList) != counter + 1:
 
-        useall.write('        "Use' + nameList[counter] + '": {\n')
-        useall.writelines(['            "trigger": "minecraft:use_totem",\n',
+        useall.write('\n        "Use' + nameList[counter] + '": {\n')
+        useall.writelines(['            "trigger": "minecraft:used_totem",\n',
         '            "conditions": {\n',
-        '                "items": [\n',
-        '                    {\n',
-        '                        "item": "minecraft:totem_of_undying",\n'])
-        useall.write('                        "nbt": "{CustomModelData:' + str(910340 + counter) + '}"\n')
-        useall.writelines(['                    }\n',
-        '                ]\n',
+        '                "items": {\n',
+        '                    "item": "minecraft:totem_of_undying",\n'])
+        useall.write('                    "nbt": "{CustomModelData:' + str(910340 + counter) + '}"\n')
+        useall.writelines(['                }\n',
         '            }\n',
-        '        },\n'])
+        '        },'])
 
         counter += 1
 
-    def get_size(fileobject):
-        fileobject.seek(0,2)
-        size = fileobject.tell()
-        return size
-    
     fsize = get_size(useall)
     useall.truncate(fsize - 1)
 
-    useall.writelines(['    },\n',
+    useall.writelines(['\n    },\n',
     '    "parent": "totemsplus:root"\n',
     '}'])
 
@@ -293,7 +286,7 @@ def ADV():
         '            }\n',
         '        }\n',
         '    },\n',
-        '    "parent": "totemsplus:collectall"\n',
+        '    "parent": "totemsplus:useall"\n',
         '}'])
         usetotem.close()
 
