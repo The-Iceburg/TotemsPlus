@@ -30,15 +30,14 @@ def ADV():
 
     ######
     
-    original = 'img/totemswave.png'
+    original = 'img/totemwave.png'
 
     os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui")
     os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui/advancements")
-    os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui/advancements/backgrounds")
 
-    target = "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui/advancements/backgrounds"
+    target = "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui/advancements"
 
-    # shutil.copyfile(original, target)
+    shutil.copy(original, target)
 
     ######
 
@@ -66,7 +65,7 @@ def ADV():
     '        "show_toast": true,\n',
     '        "announce_to_chat": true,\n',
     '        "hidden": false,\n',
-    '        "background": "minecraft:textures/gui/advancements/backgrounds/totemswave.png"\n',
+    '        "background": "minecraft:textures/gui/advancements/totemwave.png"\n',
     '    },\n',
     '    "criteria": {\n',
     '        "totemget": {\n',
