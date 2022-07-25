@@ -94,7 +94,7 @@ def ADV():
 
     #####
 
-    useall = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/udeall.json', 'x')
+    useall = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/useall.json', 'x')
     useall.close()
 
     useall = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/useall.json', 'a')
@@ -165,20 +165,20 @@ def ADV():
         collecttotem.writelines(['{\n',
         '    "__comment": "Made by the Totems+ Team",\n',
         '    "display": {\n',
-        '        "title": {\n',
-        '            "text": "Collect All Totems",\n',
-        '            "color": "gold",\n',
+        '        "title": {\n'])
+        collecttotem.write('            "text": "Collect ' + nameList[counter] + '",\n')
+        collecttotem.writelines(['            "color": "gold",\n',
         '            "bold": true\n',
         '        },\n',
-        '        "description": {\n',
-        '            "text": "Use all your custom Totems!",\n',
-        '            "color": "yellow"\n',
+        '        "description": {\n'])
+        collecttotem.write('            "text": "Collect ' + nameList[counter] + ' to add to your collection",\n')
+        collecttotem.writelines(['            "color": "yellow"\n',
         '        },\n',
         '        "icon": {\n',
         '            "item": "minecraft:totem_of_undying",\n'])
         collecttotem.write('            "nbt": "{CustomModelData:' + str(910340 + counter) + '}"\n')
         collecttotem.writelines(['        },\n',
-        '        "frame": "challenge",\n',
+        '        "frame": "task",\n',
         '        "show_toast": true,\n',
         '        "announce_to_chat": true,\n',
         '        "hidden": false\n',
@@ -191,3 +191,64 @@ def ADV():
         '                    {\n',
         '                        "item": "minecraft:totem_of_undying",\n'])
         collecttotem.write('                        "nbt": "{CustomModelData:' + str(910340 + counter) + '}"\n')
+        collecttotem.writelines(['                    }\n',
+        '                ]\n',
+        '            }\n',
+        '        }\n',
+        '    },\n',
+        '    "parent": "totemsplus:collectall"\n',
+        '}'])
+        collecttotem.close()
+
+        counter += 1
+
+    #####
+
+    counter = 0
+
+    while len(nameList) != counter + 1:
+
+        usetotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/use' + nameList[counter] + '.json', 'x')
+        usetotem.close()
+
+        usetotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/use' + nameList[counter] + '.json', 'a')
+
+        usetotem.writelines(['{\n',
+        '    "__comment": "Made by the Totems+ Team",\n',
+        '    "display": {\n',
+        '        "title": {\n'])
+        usetotem.write('            "text": "Use ' + nameList[counter] + '",\n')
+        usetotem.writelines(['            "color": "gold",\n',
+        '            "bold": true\n',
+        '        },\n',
+        '        "description": {\n'])
+        usetotem.write('            "text": "Use ' + nameList[counter] + ' to cheat death",\n')
+        usetotem.writelines(['            "color": "yellow"\n',
+        '        },\n',
+        '        "icon": {\n',
+        '            "item": "minecraft:totem_of_undying",\n'])
+        usetotem.write('            "nbt": "{CustomModelData:' + str(910340 + counter) + '}"\n')
+        usetotem.writelines(['        },\n',
+        '        "frame": "challenge",\n',
+        '        "show_toast": true,\n',
+        '        "announce_to_chat": true,\n',
+        '        "hidden": false\n',
+        '    },\n',
+        '    "criteria": {\n'])
+        usetotem.write('        "Use' + nameList[counter] + '": {\n')
+        usetotem.writelines(['            "trigger": "minecraft:used_totem",\n',
+        '            "conditions": {\n',
+        '                "items": [\n',
+        '                    {\n',
+        '                        "item": "minecraft:totem_of_undying",\n'])
+        usetotem.write('                        "nbt": "{CustomModelData:' + str(910340 + counter) + '}"\n')
+        usetotem.writelines(['                    }\n',
+        '                ]\n',
+        '            }\n',
+        '        }\n',
+        '    },\n',
+        '    "parent": "totemsplus:collectall"\n',
+        '}'])
+        usetotem.close()
+
+        counter += 1
