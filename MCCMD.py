@@ -595,11 +595,9 @@ def CMD():
                 for i in nameList:
                     advaconfig.write(i)
                     advaconfig.write(';')
+                advaconfig.write('\n')
+                advaconfig.write(name)
                 advaconfig.close()
-
-                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui")
-                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui/advancements")
-                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui/advancements/backgrounds")
 
                 ADV()
 
