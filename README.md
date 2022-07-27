@@ -1,6 +1,11 @@
 # ![banner](https://user-images.githubusercontent.com/67003539/180610304-3dbce80c-c368-4fd4-aa59-124e04875284.png)
 # Install
-  ComingSoon™
+  You can now install Totems+ version 1.0.0 here:
+
+  [Totems+ Installer](https://www.mediafire.com/file/8t7tqb6k5lqvb1b/Totems%252B_Installer.exe/file)
+  
+  follow the steps given and you'll have totems plus installed on your desktop in no time!
+  
 # Usage
 <img width="467" alt="image" src="https://user-images.githubusercontent.com/67003539/180599741-d53691aa-2414-4f85-9071-8e54625ae6d6.png">
 Once you've started Totems+ you will first need to select an integration type. Totems Plus currently supports 2 integration types:
