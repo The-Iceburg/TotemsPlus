@@ -615,8 +615,6 @@ def CMD():
 
                 ADV()
 
-            os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/cmdconfig.txt")
-
             # prints completion message to user
             sg.popup_ok("Pack creation complete! Load up Minecraft and you Totems+ pack will appear in your resourcepack folder!", title = "Pack Completion", icon="img/totems.ico")
             
