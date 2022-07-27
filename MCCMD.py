@@ -665,7 +665,7 @@ def CMD():
                 ADV()
 
             # prints completion message to user
-            sg.popup_ok("Pack creation complete! Load up Minecraft and you Totems+ pack will appear in your resourcepack folder!", title = "Pack Completion", icon="img/totems.ico")
+            sg.popup_ok("Pack creation complete! Load up Minecraft and your Totems+ pack will appear in your resourcepack folder!", title = "Pack Completion", icon="img/totems.ico")
             
             # breaks the loop (hence closing all windows)
             break
