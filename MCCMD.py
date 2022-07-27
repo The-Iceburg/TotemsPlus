@@ -9,6 +9,7 @@
 import os
 import shutil
 import getpass
+from PIL import Image
 from struct import pack
 from tkinter.constants import S
 import PySimpleGUI as sg
@@ -129,6 +130,55 @@ def CMD():
                 version = config.readline()
                 config.close()
                 textureList = textureList.split(";")
+                
+                # if the directory resized already exists, then delete it
+                dir_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/resized')
+                if dir_exists == True:
+                    shutil.rmtree('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/resized')
+
+                # make the resized folder
+                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/resized")
+                # new list to hold the new file names
+                pathList = []
+                # for loop for each image
+                for i in range(len(textureList)):
+                    # the first image gets opened
+                    origIMG = open(textureList[i])
+                    
+                    # converts to a string
+                    origIMG = str(origIMG)
+                    # removes the leading and prior words
+                    getridofme ="<_io.TextIOWrapper name='"
+                    getridofmetoo ="' mode='r' encoding='cp1252'>"
+
+                    origIMG = origIMG.replace(getridofme, "")
+                    origIMG = origIMG.replace(getridofmetoo, "")
+                    
+                    # finds only the names
+                    splitList = textureList[i].split("/")
+                    
+                    # the path for the resized folder
+                    targetIMG = "C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/resized"
+                    
+                    
+                    # copies the images to the resized folder
+                    shutil.copy(origIMG, targetIMG)
+                    IMGpath = targetIMG + "/" + splitList[2]
+
+                    # opens the new image path
+                    openIMG = Image.open(IMGpath)
+                    
+                    # resizes the image, and saves with a new name
+                    resizedIMG = openIMG.resize((128,128))
+                    fileName1 = "resize_" + str(splitList[2]) 
+                    resizedIMG.save(fileName1)
+                    movePathOrig = fileName1
+                    # moves to the resized folder and saves the path to the path list 
+                    shutil.move(movePathOrig, targetIMG)
+                    fileName2 = targetIMG + "/" + fileName1
+                    pathList.append(fileName2)
+
+
 
                 # updates window elements to either be enabled or disabled
                 window.Element('worldBrowse').update(disabled=True)
@@ -307,7 +357,8 @@ def CMD():
                 inclorelist = []
 
                 # cycles the image to the first image
-                window.Element('-IMAGE-').update(filename=textureList[0])
+                window.Element('-IMAGE-').update(filename=pathList[0])
+                counter = 1
 
         # else if the next button and the length of the texture list isn't equal to the counter + 1
         elif event == 'next' and len(textureList) != counter + 1:
@@ -402,7 +453,7 @@ def CMD():
             inclorelist.append(values["loreCheck"])
 
             # cycles the image to the next in the list
-            window.Element('-IMAGE-').update(filename=textureList[counter + 1])
+            window.Element('-IMAGE-').update(filename=pathList[counter])
 
             # clears the text boxes
             window.Element('itemName').update('')
