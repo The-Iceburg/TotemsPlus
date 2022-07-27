@@ -148,7 +148,7 @@ def ADV():
     '    "__comment": "Made by the Totems+ Team",\n',
     '    "display": {\n',
     '        "title": {\n',
-    '            "text": "Collect All Totems",\n',
+    '            "text": "Use All Totems",\n',
     '            "color": "gold",\n',
     '            "bold": true\n',
     '        },\n',
@@ -173,10 +173,12 @@ def ADV():
         useall.write('\n        "Use' + nameList[counter] + '": {\n')
         useall.writelines(['            "trigger": "minecraft:used_totem",\n',
         '            "conditions": {\n',
-        '                "items": {\n',
-        '                    "item": "minecraft:totem_of_undying",\n'])
-        useall.write('                    "nbt": "{CustomModelData:' + str(910340 + counter) + '}"\n')
-        useall.writelines(['                }\n',
+        '                "items": [\n',
+        '                    {\n',
+        '                        "item": "minecraft:totem_of_undying",\n'])
+        useall.write('                        "nbt": "{CustomModelData:' + str(910340 + counter) + '}"\n')
+        useall.writelines(['                    }\n',
+        '                ]\n',
         '            }\n',
         '        },'])
 
@@ -276,12 +278,10 @@ def ADV():
         usetotem.write('        "Use' + nameList[counter] + '": {\n')
         usetotem.writelines(['            "trigger": "minecraft:used_totem",\n',
         '            "conditions": {\n',
-        '                "items": [\n',
-        '                    {\n',
-        '                        "item": "minecraft:totem_of_undying",\n'])
-        usetotem.write('                        "nbt": "{CustomModelData:' + str(910340 + counter) + '}"\n')
-        usetotem.writelines(['                    }\n',
-        '                ]\n',
+        '                "item": {\n',
+        '                    "item": "minecraft:totem_of_undying",\n'])
+        usetotem.write('                    "nbt": "{CustomModelData:' + str(910340 + counter) + '}"\n')
+        usetotem.writelines(['                }\n',
         '            }\n',
         '        }\n',
         '    },\n',

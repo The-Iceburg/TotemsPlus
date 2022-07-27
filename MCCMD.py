@@ -2,6 +2,7 @@
 import os
 import shutil
 import getpass
+from struct import pack
 from tkinter.constants import S
 import PySimpleGUI as sg
 from DOC import DOC
@@ -233,8 +234,10 @@ def CMD():
                     datapackformat = 7
                 elif version in datapackformat8:
                     datapackformat = 8
-                elif version.startswith("1.19"):
+                elif version == "1.18.2":
                     datapackformat = 9
+                elif version.startswith("1.19"):
+                    datapackformat = 10
 
                 # adds the needed meta data to the pack.mcmeta file
                 packMeta = open(worldLocation + "/datapacks/Totems+ CMD/pack.mcmeta", "a")
