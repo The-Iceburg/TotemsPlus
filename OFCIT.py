@@ -1,3 +1,10 @@
+###################################################################
+#                             Totems+                             #
+# A new and unique way to integrate custom totems into Minecraft! #
+#    Learn More here:https://github.com/The-Iceburg/TotemsPlus    #
+#        Created By The Totems+ Team - Ormatist + Dockuin         #
+###################################################################
+
 # imports the libaries used within Totems+ 
 import os
 import shutil
@@ -20,9 +27,13 @@ def CIT():
     config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/citconfig.txt", "r")
     textureList = config.readline()
     config.close()
+
+    # extracts the version from the versionconfig file
     config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/versionconfig.txt", "r")
     version = config.readline()
     config.close()
+
+    # transforms texture list into a list
     textureList = textureList.split(";")
 
     # defines how the main window will be displayed/layed-out
@@ -51,8 +62,10 @@ def CIT():
     # creates the window
     window = sg.Window("CIT", layout, icon="img/totems.ico")
 
+    # sets the base name (for if it isn't changed)
     name = "Totems+ OFCIT"
 
+    # checks if the resource pack exists and if it does user is prompted to suggest a new name
     file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/.minecraft/resourcepacks/Totems+ OFCIT')
 
     if file_exists == True:
@@ -79,6 +92,7 @@ def CIT():
     packMeta = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/pack.mcmeta", "x")
     packMeta.close()
 
+    # derrives the resource pack format code from the version
     if version in packformat4:
         packformat = 4
     elif version in packformat5:
@@ -112,9 +126,11 @@ def CIT():
         # if window closed break while loop and end code
         if event == sg.WIN_CLOSED:
             break
-
+        
+        # if the cancel button is pressed
         if event == 'cancel':
-
+            
+            # a confirmation window is displayed and if the user agrees all files are removed
             result = sg.popup_ok_cancel("Are you sure? Cancelling now will remove any current progress/packs")
 
             if result == "OK":
@@ -124,6 +140,7 @@ def CIT():
         # else if the next button and the length of the texture list isn't equal to the counter + 1
         elif event == 'next' and len(textureList) != int(counter + 1):
 
+            # sets the rename value to the user input ensuring no spaces are included
             rename = values["itemName"]
             renameTexture = rename.replace(" ", "_")
 

@@ -1,25 +1,39 @@
+###################################################################
+#                             Totems+                             #
+# A new and unique way to integrate custom totems into Minecraft! #
+#    Learn More here:https://github.com/The-Iceburg/TotemsPlus    #
+#        Created By The Totems+ Team - Ormatist + Dockuin         #
+###################################################################
+
+# imports the libaries used within totems+
 import os
 import getpass
 import shutil
 
+# defines the get size subroutine
 def get_size(fileobject):
         fileobject.seek(0,2)
         size = fileobject.tell()
         return size
 
+# defines the advancement fucntion
 def ADV():
 
+    # grabs info from from the advaconfig file
     advaconfig = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/advaconfig.txt", "r")
     advaconfigread = advaconfig.readlines()
     advaconfig.close()
 
+    # sorts info into appropriate variables
     worldLocation = advaconfigread[0]
     nameList = advaconfigread[1]
     name = advaconfigread[2]
 
+    # creates lists with nessesary values
     worldLocation = worldLocation.replace('\n','')
     nameList = nameList.split(';')
 
+    # checks if the totems plus directory exists and if not creates one
     file_exists = os.path.exists(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus')
 
     if file_exists != True:
@@ -30,22 +44,28 @@ def ADV():
 
     ######
     
+    # sets the backround image to the original variable
     original = 'img/totemwave.png'
 
+    # creates the needed directories in the resource pack
     os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui")
     os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui/advancements")
 
+    # sets the target destination
     target = "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/gui/advancements"
 
+    # coppies the file
     shutil.copy(original, target)
 
     ######
 
+    # creates the root advancement
     collectall = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/root.json', 'x')
     collectall.close()
 
     collectall = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/root.json', 'a')
 
+    # writes needed json to the root file
     collectall.writelines(['{\n',
     '    "__comment": "Made by the Totems+ Team",\n',
     '    "display": {\n',
@@ -85,11 +105,13 @@ def ADV():
 
     ######
 
+    # creates the collect all advancement
     collectall = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/collectall.json', 'x')
     collectall.close()
 
     collectall = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/collectall.json', 'a')
 
+    # writes start un-varied meta to file
     collectall.writelines(['{\n',
     '    "__comment": "Made by the Totems+ Team",\n',
     '    "display": {\n',
@@ -112,10 +134,13 @@ def ADV():
     '    },\n',
     '    "criteria": {\n'])
 
+    # sets the counter to 0
     counter = 0
 
+    # loops through name list
     while len(nameList) != counter + 1:
 
+        # writes the varied meta to the file
         collectall.write('\n        "Collect' + nameList[counter] + '": {\n')
         collectall.writelines(['            "trigger": "minecraft:inventory_changed",\n',
         '            "conditions": {\n',
@@ -128,22 +153,27 @@ def ADV():
         '            }\n',
         '        },'])
 
+        # increases the counter by 1
         counter += 1
     
+    # removes the last "," cuz json
     fsize = get_size(collectall)
     collectall.truncate(fsize - 1)
 
+    # writes end un-varied meta to file
     collectall.writelines(['\n    },\n',
     '    "parent": "totemsplus:root"\n',
     '}'])
 
     #####
 
+    # creates the use all advancement
     useall = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/useall.json', 'x')
     useall.close()
 
     useall = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/useall.json', 'a')
 
+    # writes start un-varied meta to file
     useall.writelines(['{\n',
     '    "__comment": "Made by the Totems+ Team",\n',
     '    "display": {\n',
@@ -166,10 +196,13 @@ def ADV():
     '    },\n',
     '    "criteria": {\n'])
 
+    # re-sets counter to 0
     counter = 0
 
+    # loops through name list
     while len(nameList) != counter + 1:
 
+        # writes the varied meta to the file
         useall.write('\n        "Use' + nameList[counter] + '": {\n')
         useall.writelines(['            "trigger": "minecraft:used_totem",\n',
         '            "conditions": {\n',
@@ -180,26 +213,33 @@ def ADV():
         '            }\n',
         '        },'])
 
+        # increases the counter by 1
         counter += 1
 
+    # removes the last "," cuz json
     fsize = get_size(useall)
     useall.truncate(fsize - 1)
 
+    # writes end un-varied meta to file
     useall.writelines(['\n    },\n',
     '    "parent": "totemsplus:root"\n',
     '}'])
 
     #####
 
+    # re-sets the counter to 0
     counter = 0
 
+    # cycles throught the name list
     while len(nameList) != counter + 1:
 
+        # creates the collect totem advancement
         collecttotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/collect' + nameList[counter].lower().replace(" ","_") + '.json', 'x')
         collecttotem.close()
 
         collecttotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/collect' + nameList[counter].lower().replace(" ","_") + '.json', 'a')
 
+        # writes the varied meta to the file
         collecttotem.writelines(['{\n',
         '    "__comment": "Made by the Totems+ Team",\n',
         '    "display": {\n',
@@ -238,19 +278,24 @@ def ADV():
         '}'])
         collecttotem.close()
 
+        # increases the counter by 1
         counter += 1
 
     #####
 
+    # re-sets the counter to 0
     counter = 0
 
+    # cycles throught the name list
     while len(nameList) != counter + 1:
 
+        # creates the use totem advancement
         usetotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/use' + nameList[counter].lower().replace(" ","_") + '.json', 'x')
         usetotem.close()
 
         usetotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/use' + nameList[counter].lower().replace(" ","_") + '.json', 'a')
 
+        # writes the varied meta to the file
         usetotem.writelines(['{\n',
         '    "__comment": "Made by the Totems+ Team",\n',
         '    "display": {\n',
@@ -287,4 +332,5 @@ def ADV():
         '}'])
         usetotem.close()
 
+        # increases the counter by 1
         counter += 1

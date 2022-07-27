@@ -1,3 +1,10 @@
+###################################################################
+#                             Totems+                             #
+# A new and unique way to integrate custom totems into Minecraft! #
+#    Learn More here:https://github.com/The-Iceburg/TotemsPlus    #
+#        Created By The Totems+ Team - Ormatist + Dockuin         #
+###################################################################
+
 # imports the libaries used within Totems+ 
 import os.path
 from tkinter.constants import S
@@ -12,6 +19,7 @@ sg.theme('DarkTeal10')
 # declares the accepted texture file types
 textureFileTypes = [("JPEG, PNG, TGA (.jpg , .png , .tga)", ".jpg , .png , .tga")]
 
+# checks if the Totems+ roaming folder exists, if it doesn't one is created
 file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+')
 
 if file_exists == False:
@@ -64,6 +72,7 @@ def main():
     # creates the window
     window = sg.Window("Totems+", layout, icon="img/totems.ico")
 
+    # sets the toggle preset
     down = True
 
     # while window (GUI) is open
@@ -88,12 +97,14 @@ def main():
         # if compile and toggle false then
         elif event == 'Compile' and down == False:
 
+            # checks if the cmdconfig file exists, if it doesn't one is created
             file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/cmdconfig.txt')
 
             if file_exists == True:
                 
                 os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/cmdconfig.txt")
 
+            # checks if the versionconfig file exists, if it doesn't one is created
             file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/versionconfig.txt')
 
             if file_exists == True:
@@ -109,9 +120,11 @@ def main():
             config.write(values["-TEXTURES-"])
             config.close()
 
+            # creates versionconfig file
             config = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/versionconfig.txt', 'x')
             config.close()
             
+            # writes the selected version to the versionconfig file
             config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/versionconfig.txt", "a")
             config.write(values["-DROPDOWN-"])
             config.close()
@@ -125,12 +138,14 @@ def main():
         # if compile and toggle true then
         elif event == 'Compile' and down == True:
 
+            # checks if the citconfig file exists, if it doesn't one is created
             file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/citconfig.txt')
 
             if file_exists == True:
                 
                 os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/citconfig.txt")
 
+            # checks if the versionconfig file exists, if it doesn't one is created
             file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/versionconfig.txt')
 
             if file_exists == True:
@@ -146,9 +161,11 @@ def main():
             config.write(values["-TEXTURES-"])
             config.close()
 
+            # checks if the versionconfig file exists, if it doesn't one is created
             config = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/versionconfig.txt', 'x')
             config.close()
             
+            # writes the selected version to the versionconfig file
             config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/versionconfig.txt", "a")
             config.write(values["-DROPDOWN-"])
             config.close()

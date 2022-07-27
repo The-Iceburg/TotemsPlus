@@ -1,3 +1,10 @@
+###################################################################
+#                             Totems+                             #
+# A new and unique way to integrate custom totems into Minecraft! #
+#    Learn More here:https://github.com/The-Iceburg/TotemsPlus    #
+#        Created By The Totems+ Team - Ormatist + Dockuin         #
+###################################################################
+
 # imports the libaries used within Totems+ 
 import os
 import shutil
@@ -86,11 +93,14 @@ def CMD():
         # if window closed break while loop and end code
         if event == sg.WIN_CLOSED:
             break
-
+        
+        # if the cancel button is pressed
         if event == 'cancel':
-
+            
+            # user is asked if they are sure
             result = sg.popup_ok_cancel("Are you sure? Cancelling now will remove any current progress/packs")
 
+            # if they are sure all created files are deleted and program is closed
             if result == "OK":
                 shutil.rmtree("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name)
                 shutil.rmtree(worldLocation + "/datapacks/Totems+ CMD")
@@ -105,6 +115,7 @@ def CMD():
             # if they agree then
             if cmdconfirm == 'OK':
 
+                # updates the tooltip
                 window.Element('tooltip').update('Fill out the details for each totem as they cycle in the top right.')
                 
                 # set counter to 0
@@ -136,8 +147,10 @@ def CMD():
                 window.Element('loreCheck').update(disabled=False)
                 window.Element('advancements').update(disabled=False)
 
+                # sets the deafult foleder name
                 name = "Totems+ CMD"
 
+                # checks if the folder exists and if itdoes user is prompted to choose their own name
                 file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD')
 
                 if file_exists == True:
@@ -165,6 +178,7 @@ def CMD():
                 packMeta = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/pack.mcmeta", "x")
                 packMeta.close()
 
+                # derives the packformat code from
                 if version in resourcepackformat4:
                     packformat = 4
                 elif version in resourcepackformat5:
@@ -207,6 +221,7 @@ def CMD():
                 # sets the variable worldLocation to the avlues in the world selection box
                 worldLocation = values["WORLD"]
 
+                # checks if the datapack file exists and if it does promts user to delete it
                 file_exists = os.path.exists(worldLocation + "/datapacks/Totems+ CMD")
 
                 if file_exists == True:
@@ -235,6 +250,7 @@ def CMD():
                 packMeta = open(worldLocation + "/datapacks/Totems+ CMD/pack.mcmeta", "x")
                 packMeta.close()
 
+                # derives the packformat code from
                 if version in datapackformat4:
                     datapackformat = 4
                 elif version in datapackformat5:
@@ -275,12 +291,15 @@ def CMD():
                 evokerJSON.write('      "bonus_rolls": ' + str(values['bonusrolls']) + '.0,\n')
                 evokerJSON.write('      "entries": [\n')
 
+                # if the include original box is checked then the original totem is added to the list
                 if values['inc-orig'] == True:
 
                     textureList.append("img/totem_of_undying.png")
 
+                # closed the evoker loot tabel
                 evokerJSON.close()
 
+                # creates new lists for transfer of data to other files
                 nameList = []
                 loreList = []
                 weightList = []
@@ -341,8 +360,10 @@ def CMD():
             evokerJSON.write('              "tag": "' + '{' + 'CustomModelData:' + str(910340 + counter) + '}' + '"\n')
             evokerJSON.write('            }')
 
+            # if the name is chosen to be in-game then
             if values['in-game'] == True:
-
+                
+                # sets the item name to value the user entered
                 evokerJSON.write(',')
                 evokerJSON.writelines(['\n',
                 '			{\n',
@@ -351,8 +372,10 @@ def CMD():
                 evokerJSON.write('              "name": "' + values["itemName"] + '"\n')
                 evokerJSON.write('			}')
 
+            # if the lore is chosen to be in-game then
             if values['loreCheck'] == True:
 
+                # sets the lore to value the user entered
                 evokerJSON.write(',')
                 evokerJSON.writelines(['\n',
                 '			{\n',
@@ -365,11 +388,13 @@ def CMD():
                 '              ]\n',
                 '            }'])
 
+            # writes final info to evoker loot_tabel
             evokerJSON.writelines(['\n',
             '          ]\n',
             '        },\n'])
             evokerJSON.close()
 
+            # adds nessesary info to lists for file transfer later
             nameList.append(values["itemName"])
             weightList.append(values["itemWeight"])
             loreList.append(values["lore"])
@@ -439,8 +464,10 @@ def CMD():
             evokerJSON.write('              "tag": "' + '{' + 'CustomModelData:' + str(910340 + counter) +'}' + '"\n')
             evokerJSON.write('            }')
 
+            # if the name is chosen to be in-game then
             if values['in-game'] == True:
 
+                # sets the item name to value the user entered
                 evokerJSON.write(',')
                 evokerJSON.writelines(['\n',
                 '			{\n',
@@ -449,8 +476,10 @@ def CMD():
                 evokerJSON.write('              "name": "' + values["itemName"] + '"\n')
                 evokerJSON.write('			}')
 
+            # if the lore is chosen to be in-game then
             if values['loreCheck'] == True:
 
+                # sets the lore to value the user entered
                 evokerJSON.write(',')
                 evokerJSON.writelines(['\n',
                 '			{\n',
@@ -463,10 +492,12 @@ def CMD():
                 '              ]\n',
                 '            }'])
 
+            # writes final info to evoker loot_tabel
             evokerJSON.writelines(['\n',
             '          ]\n',
             '        }\n'])
 
+            # adds nessesary info to lists for file transfer later
             nameList.append(values["itemName"])
             loreList.append(values["lore"])
             weightList.append(values["itemWeight"])
@@ -520,19 +551,23 @@ def CMD():
             '}'])
             totemJSON.close()
 
+            # if the documentation box remains checked
             if values['documentation'] == True:
 
+                # checks if the docconfig file exists and if it does it removes
                 file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/docconfig.txt')
 
                 if file_exists == True:
                 
                     os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/docconfig.txt")
 
+                # creates the doc config file
                 docconfig = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/docconfig.txt', 'x')
                 docconfig.close()
 
                 docconfig = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/docconfig.txt", "a")
 
+                # writes the nessesary info for documentation
                 docconfig.write(worldLocation)
                 docconfig.write('\n')
 
@@ -556,21 +591,27 @@ def CMD():
                     docconfig.write(i)
                     docconfig.write(';')
                 docconfig.close()
-
+                
+                # runs the documentation subroutine
                 DOC()
 
+            # if the functions box remains checked
             if values['functions'] == True:
-
+                
+                # checks if the docconfig file exists and if it does it removes
                 file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/funconfig.txt')
 
                 if file_exists == True:
                 
                     os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/funconfig.txt")
 
+                # creates the funconfig gile
                 funconfig = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/funconfig.txt', 'x')
                 funconfig.close()
 
                 funconfig = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/funconfig.txt", "a")
+
+                # writes nessasary info to funconfig file
                 funconfig.write(worldLocation)
                 funconfig.write('\n')
 
@@ -590,20 +631,27 @@ def CMD():
                     funconfig.write(i)
                     funconfig.write(';')
                 funconfig.close()
+
+                # runs FUN subroutine
                 FUN()
 
+            # if advancements is checked
             if values['advancements'] == True:
-
+                
+                # checks if the advaconfig file exists and if it does it removes
                 file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/advaconfig.txt')
 
                 if file_exists == True:
                 
                     os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/advaconfig.txt")
 
+                # creates advaconfig file
                 advaconfig = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/advaconfig.txt', 'x')
                 advaconfig.close()
 
                 advaconfig = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/advaconfig.txt", "a")
+
+                # writes nessasary info to advaconfig file
                 advaconfig.write(worldLocation)
                 advaconfig.write('\n')
                 for i in nameList:
@@ -613,6 +661,7 @@ def CMD():
                 advaconfig.write(name)
                 advaconfig.close()
 
+                # writes adv subroutine
                 ADV()
 
             # prints completion message to user
