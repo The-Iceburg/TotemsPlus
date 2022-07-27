@@ -86,6 +86,15 @@ def CMD():
         # if window closed break while loop and end code
         if event == sg.WIN_CLOSED:
             break
+
+        if event == 'cancel':
+
+            result = sg.popup_ok_cancel("Are you sure? Cancelling now will remove any current progress/packs")
+
+            if result == "OK":
+                shutil.rmtree("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name)
+                shutil.rmtree(worldLocation + "/datapacks/Totems+ CMD")
+                break
         
         # if the confirm button (for worlds) is pressed
         if event == 'worldConfirm':

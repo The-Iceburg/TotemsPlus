@@ -112,6 +112,14 @@ def CIT():
         # if window closed break while loop and end code
         if event == sg.WIN_CLOSED:
             break
+
+        if event == 'cancel':
+
+            result = sg.popup_ok_cancel("Are you sure? Cancelling now will remove any current progress/packs")
+
+            if result == "OK":
+                shutil.rmtree("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name)
+                break
         
         # else if the next button and the length of the texture list isn't equal to the counter + 1
         elif event == 'next' and len(textureList) != int(counter + 1):
