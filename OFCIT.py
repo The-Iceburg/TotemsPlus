@@ -9,6 +9,8 @@
 import os
 import shutil
 import getpass
+from tkinter import Image
+from PIL import Image
 from tkinter.constants import S
 import PySimpleGUI as sg
 
@@ -36,10 +38,56 @@ def CIT():
     # transforms texture list into a list
     textureList = textureList.split(";")
 
+    # if the directory resized already exists, then delete it
+    dir_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/resized')
+    if dir_exists == True:
+        shutil.rmtree('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/resized')
+
+        # make the resized folder
+        os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/resized")
+        # new list to hold the new file names
+        pathList = []
+        # for loop for each image
+        for i in range(len(textureList)):
+            # the first image gets opened
+            origIMG = open(textureList[i])
+                    
+            # converts to a string
+            origIMG = str(origIMG)
+            # removes the leading and prior words
+            getridofme ="<_io.TextIOWrapper name='"
+            getridofmetoo ="' mode='r' encoding='cp1252'>"
+ 
+            origIMG = origIMG.replace(getridofme, "")
+            origIMG = origIMG.replace(getridofmetoo, "")
+            
+            # finds only the names
+            splitList = textureList[i].split("/")
+            
+            # the path for the resized folder
+            targetIMG = "C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/resized"
+            
+            
+            # copies the images to the resized folder
+            shutil.copy(origIMG, targetIMG)
+            IMGpath = targetIMG + "/" + splitList[2]
+ 
+            # opens the new image path
+            openIMG = Image.open(IMGpath)
+            
+            # resizes the image, and saves with a new name
+            resizedIMG = openIMG.resize((128,128))
+            fileName1 = "resize_" + str(splitList[2]) 
+            resizedIMG.save(fileName1)
+            movePathOrig = fileName1
+            # moves to the resized folder and saves the path to the path list 
+            shutil.move(movePathOrig, targetIMG)
+            fileName2 = targetIMG + "/" + fileName1
+            pathList.append(fileName2)
     # defines how the main window will be displayed/layed-out
     layout = [ 
         [
-            sg.Image(filename=textureList[0], key='-IMAGE-'),
+            sg.Image(filename=pathList[0], key='-IMAGE-'),
             sg.Text("You've selected Totems+ CIT Integration!\n" + 
             'This integration will generate:\n' + 
             'A Custom Resource Pack\n' + 
@@ -170,7 +218,7 @@ def CIT():
             shutil.copy(original, target)
 
             # cycles the image and clears the text box
-            window.Element('-IMAGE-').update(filename=textureList[counter + 1])
+            window.Element('-IMAGE-').update(filename=pathList[counter + 1])
             window.Element('itemName').update('')
 
             # increases the counter by 1
