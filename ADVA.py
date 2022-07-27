@@ -173,12 +173,10 @@ def ADV():
         useall.write('\n        "Use' + nameList[counter] + '": {\n')
         useall.writelines(['            "trigger": "minecraft:used_totem",\n',
         '            "conditions": {\n',
-        '                "items": [\n',
-        '                    {\n',
-        '                        "item": "minecraft:totem_of_undying",\n'])
-        useall.write('                        "nbt": "{CustomModelData:' + str(910340 + counter) + '}"\n')
-        useall.writelines(['                    }\n',
-        '                ]\n',
+        '                "item": {\n',
+        '                    "item": "minecraft:totem_of_undying",\n'])
+        useall.write('                    "nbt": "{CustomModelData:' + str(910340 + counter) + '}"\n')
+        useall.writelines(['                }\n',
         '            }\n',
         '        },'])
 
