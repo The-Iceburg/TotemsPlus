@@ -2,7 +2,7 @@
 # Install
   You can now install Totems+ version 1.0.0 here:
 
-  https://www.mediafire.com/file/j7zpea93gpnqxz6/Totems%252B_Installer.exe/file
+  [Totems+ Installer](https://www.mediafire.com/file/8t7tqb6k5lqvb1b/Totems%252B_Installer.exe/file)
   
   follow the steps given and you'll have totems plus installed on your desktop in no time!
   
