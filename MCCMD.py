@@ -34,7 +34,7 @@ def CMD():
             ' ', font=('Helvetica', 10), justification='left'),
         ],
         [
-            sg.Text('Select a world below to get started!\n', key='tooltip')
+            sg.Text('Select a world & decide to include the original Totem\n', key='tooltip')
         ],
         [
             sg.Text('World:  '),
@@ -104,6 +104,8 @@ def CMD():
 
             # if they agree then
             if cmdconfirm == 'OK':
+
+                window.Element('tooltip').update('Fill out the details for each totem as they cycle in the top right.')
                 
                 # set counter to 0
                 counter = 0
