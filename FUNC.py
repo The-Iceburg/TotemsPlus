@@ -56,10 +56,10 @@ def FUN():
 
     while len(nameList) != counter + 1:
 
-        mcfunction = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/functions/summon' + nameList[counter].lower() + '.mcfunction', 'x')
+        mcfunction = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/functions/summon' + nameList[counter].lower().replace(" ","_") + '.mcfunction', 'x')
         mcfunction.close()
 
-        mcfunction = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/functions/summon' + nameList[counter].lower() + '.mcfunction', 'a')
+        mcfunction = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/functions/summon' + nameList[counter].lower().replace(" ","_") + '.mcfunction', 'a')
 
         mcfunction.write('give @s minecraft:totem_of_undying{')
         

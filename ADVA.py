@@ -195,10 +195,10 @@ def ADV():
 
     while len(nameList) != counter + 1:
 
-        collecttotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/collect' + nameList[counter] + '.json', 'x')
+        collecttotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/collect' + nameList[counter].replace(" ","_") + '.json', 'x')
         collecttotem.close()
 
-        collecttotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/collect' + nameList[counter] + '.json', 'a')
+        collecttotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/collect' + nameList[counter].replace(" ","_") + '.json', 'a')
 
         collecttotem.writelines(['{\n',
         '    "__comment": "Made by the Totems+ Team",\n',
@@ -246,10 +246,10 @@ def ADV():
 
     while len(nameList) != counter + 1:
 
-        usetotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/use' + nameList[counter] + '.json', 'x')
+        usetotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/use' + nameList[counter].replace(" ","_") + '.json', 'x')
         usetotem.close()
 
-        usetotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/use' + nameList[counter] + '.json', 'a')
+        usetotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/use' + nameList[counter].replace(" ","_") + '.json', 'a')
 
         usetotem.writelines(['{\n',
         '    "__comment": "Made by the Totems+ Team",\n',
