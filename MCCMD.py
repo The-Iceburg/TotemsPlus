@@ -133,20 +133,26 @@ def CMD():
                 
                 # if the directory resized already exists, then delete it
                 dir_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/resized')
+
                 if dir_exists == True:
+
                     shutil.rmtree('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/resized')
 
                 # make the resized folder
                 os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/resized")
+
                 # new list to hold the new file names
                 pathList = []
+                
                 # for loop for each image
                 for i in range(len(textureList)):
+
                     # the first image gets opened
                     origIMG = open(textureList[i])
                     
                     # converts to a string
                     origIMG = str(origIMG)
+
                     # removes the leading and prior words
                     getridofme ="<_io.TextIOWrapper name='"
                     getridofmetoo ="' mode='r' encoding='cp1252'>"
@@ -160,25 +166,23 @@ def CMD():
                     # the path for the resized folder
                     targetIMG = "C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/resized"
                     
-                    
                     # copies the images to the resized folder
                     shutil.copy(origIMG, targetIMG)
-                    IMGpath = targetIMG + "/" + splitList[2]
+                    IMGpath = targetIMG + "/" + splitList[-1]
 
                     # opens the new image path
                     openIMG = Image.open(IMGpath)
                     
                     # resizes the image, and saves with a new name
                     resizedIMG = openIMG.resize((128,128))
-                    fileName1 = "resize_" + str(splitList[2]) 
+                    fileName1 = "resize_" + str(splitList[-1]) 
                     resizedIMG.save(fileName1)
                     movePathOrig = fileName1
+
                     # moves to the resized folder and saves the path to the path list 
                     shutil.move(movePathOrig, targetIMG)
                     fileName2 = targetIMG + "/" + fileName1
                     pathList.append(fileName2)
-
-
 
                 # updates window elements to either be enabled or disabled
                 window.Element('worldBrowse').update(disabled=True)
