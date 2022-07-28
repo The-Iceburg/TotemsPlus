@@ -6,10 +6,7 @@
 ###################################################################
 
 # imports the libaries used within Totems+ 
-import os.path
-from tkinter.constants import S
-import PySimpleGUI as sg
-import getpass
+import os.path, PySimpleGUI as sg, getpass
 from OFCIT import CIT
 from MCCMD import CMD
 
@@ -20,10 +17,7 @@ sg.theme('DarkTeal10')
 textureFileTypes = [("JPEG, PNG, TGA (.jpg , .png , .tga)", ".jpg , .png , .tga")]
 
 # checks if the Totems+ roaming folder exists, if it doesn't one is created
-file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+')
-
-if file_exists == False:
-
+if not os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+'):
     os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+")
 
 # defines the main window
@@ -96,7 +90,7 @@ def main():
 
         # if compile and toggle false then
         elif event == 'Compile' and down == False:
-
+            
             # checks if the cmdconfig file exists, if it doesn't one is created
             file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/cmdconfig.txt')
 
@@ -138,40 +132,8 @@ def main():
         # if compile and toggle true then
         elif event == 'Compile' and down == True:
 
-            # checks if the citconfig file exists, if it doesn't one is created
-            file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/citconfig.txt')
-
-            if file_exists == True:
-                
-                os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/citconfig.txt")
-
-            # checks if the versionconfig file exists, if it doesn't one is created
-            file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/versionconfig.txt')
-
-            if file_exists == True:
-                
-                os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/versionconfig.txt")
-
-            # creates config file
-            config = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/citconfig.txt', 'x')
-            config.close()
-
-            # writes file locations into config file
-            config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/citconfig.txt", "a")
-            config.write(values["-TEXTURES-"])
-            config.close()
-
-            # checks if the versionconfig file exists, if it doesn't one is created
-            config = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/versionconfig.txt', 'x')
-            config.close()
-            
-            # writes the selected version to the versionconfig file
-            config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/versionconfig.txt", "a")
-            config.write(values["-DROPDOWN-"])
-            config.close()
-
             # runs CIT function
-            CIT()
+            CIT(values["-TEXTURES-"], values["-DROPDOWN-"])
 
             # breaks code (hence closing window)
             break
