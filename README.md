@@ -7,8 +7,7 @@
   follow the steps given and you'll have totems plus installed on your desktop in no time!
   
 # Usage
-<img width="467" alt="image" src="https://user-images.githubusercontent.com/67003539/180599741-d53691aa-2414-4f85-9071-8e54625ae6d6.png">
-Once you've started Totems+ you will first need to select an integration type. Totems Plus currently supports 2 integration types:
+<img width="465" alt="image" src="https://user-images.githubusercontent.com/67003539/181488475-39c79365-2505-422e-8bfd-7a5422f03142.png">
 
 - Optifine Custom Item Textures (OFCIT) *(Legacy)*
 
@@ -23,7 +22,9 @@ These 2 integrations can be selected by toggling the by deafult "gold" button (w
 
 Next You will need to upload your totem files. We currently except the ".jpg , .png , .tga" file formats as that is what is compatible with Minecraft (We are also working on providing animated or ".gif" support in the future (#12)). We reccommend having all your totems in one place/folder and selecting them all for upload at once.
 
-After you've uploaded all your files and selected your integration type hit the "compile" button to progress
+Finally select the version of Minecraft you wish to create your packs for, we currently supports all versions from 1.14
+
+After you've uploaded all your files, selected your integration type and chosen your version hit the "compile" button to progress
 
 # OFCIT
 
@@ -51,7 +52,7 @@ Place a totem into an anvil amd rename it to one of your strintgs and BOOM custo
 
 # MCCMD
 
-<img width="351" alt="image" src="https://user-images.githubusercontent.com/67003539/180610633-260e97b7-e3e0-4932-a571-af61826769df.png">
+<img width="318" alt="image" src="https://user-images.githubusercontent.com/67003539/181488983-88f0d9bf-86d9-41f1-9952-bed7b7485586.png">
 
 The integration begins by prompting you to select a world from your minecraft saves folder. Select the world you wish to create the datapack for and hit confirm.
 
