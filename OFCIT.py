@@ -6,13 +6,8 @@
 ###################################################################
 
 # imports the libaries used within Totems+ 
-import os
-import shutil
-import getpass
-from tkinter import Image
+import os, shutil, getpass, PySimpleGUI as sg
 from PIL import Image
-from tkinter.constants import S
-import PySimpleGUI as sg
 
 # outlines the versions and there pack formats
 packFormat4 = ["1.14","1.14.1","1.14.2","1.14.3","1.14.4"]

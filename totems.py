@@ -90,41 +90,9 @@ def main():
 
         # if compile and toggle false then
         elif event == 'Compile' and down == False:
-            
-            # checks if the cmdconfig file exists, if it doesn't one is created
-            file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/cmdconfig.txt')
-
-            if file_exists == True:
-                
-                os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/cmdconfig.txt")
-
-            # checks if the versionconfig file exists, if it doesn't one is created
-            file_exists = os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/versionconfig.txt')
-
-            if file_exists == True:
-                
-                os.remove("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/versionconfig.txt")
-            
-            # creates config file
-            config = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/cmdconfig.txt', 'x')
-            config.close()
-
-            # writes file locations into config file
-            config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/cmdconfig.txt", "a")
-            config.write(values["-TEXTURES-"])
-            config.close()
-
-            # creates versionconfig file
-            config = open('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/versionconfig.txt', 'x')
-            config.close()
-            
-            # writes the selected version to the versionconfig file
-            config = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/versionconfig.txt", "a")
-            config.write(values["-DROPDOWN-"])
-            config.close()
 
             # runs CMD function
-            CMD()
+            CMD(values["-TEXTURES-"], values["-DROPDOWN-"])
 
             # breaks code (hence closing window)
             break
