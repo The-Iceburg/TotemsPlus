@@ -7,7 +7,6 @@
 
 # imports the libaries used within totems+
 import os
-import getpass
 
 # defines the function function
 def FUN(worldLocation, nameList, inGameName, inGameLore, loreList):

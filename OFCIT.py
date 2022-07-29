@@ -173,10 +173,8 @@ def CIT(textureList, version):
             # adds the needed meta to the totem_of_undying.properties file
             totemProperties.writelines(["type=item\n",
             "matchItems=totem_of_undying\n",
-            "texture="])
-            totemProperties.write(textureListSplit[-1] + "\n")
-            totemProperties.write("nbt.display.Name=ipattern:")
-            totemProperties.write(values["itemName"])
+            "texture=" + textureListSplit[-1] + "\n",
+            "nbt.display.Name=ipattern:" + values["itemName"]])
             totemProperties.close()
 
             # copys the image into the resource pack
