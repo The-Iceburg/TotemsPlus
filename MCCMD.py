@@ -111,7 +111,7 @@ def CMD(textureList, version):
             if cmdconfirm == 'OK':
 
                 # updates the tooltip
-                window.Element('tooltip').update('Fill out the details for each totem as they cycle in the top right.')
+                window.Element('tooltip').update('Fill out the details for each totem as they cycle in the top right.\nIt should be noted totems may appear blurred/streched here but wont in Minecraft')
 
                 # transforms the texture list into a list
                 textureList = textureList.split(";")

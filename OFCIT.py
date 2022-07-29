@@ -77,7 +77,7 @@ def CIT(textureList, version):
             ' ', font=('Helvetica', 10), justification='left'),
         ],
         [
-            sg.Text('Rename your different textures to what you wish to rename them in-game\n', key='tooltip')
+            sg.Text('Rename your different textures to what you wish to rename them in-game\nIt should be noted totems may appear blurred/streched here but wont in Minecraft', key='tooltip')
         ],
         [
             sg.Text('Name:  '),
