@@ -112,12 +112,13 @@ def CMD(textureList, version):
 
                 # updates the tooltip
                 window.Element('tooltip').update('Fill out the details for each totem as they cycle in the top right.')
-                
-                # set counter to 0
-                counter = 0
 
                 # transforms the texture list into a list
                 textureList = textureList.split(";")
+
+                # if the include original box is checked then the original totem is added to the list
+                if values['inc-orig'] == True:
+                    textureList.append("img/totem_of_undying.png")
                 
                 # if the directory resized already exists, then delete it
                 if os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/resized'):
@@ -300,10 +301,6 @@ def CMD(textureList, version):
                 '      "entries": [\n'])
                 evokerJSON.close()
 
-                # if the include original box is checked then the original totem is added to the list
-                if values['inc-orig'] == True:
-                    textureList.append("img/totem_of_undying.png")
-
                 # creates new lists for transfer of data to other files
                 nameList = []
                 loreList = []
@@ -315,7 +312,7 @@ def CMD(textureList, version):
                 window.Element('-IMAGE-').update(filename=pathList[0])
 
                 # sets the counter to 1
-                counter = 1
+                counter = 0
 
         # else if the next button and the length of the texture list isn't equal to the counter + 1
         elif event == 'next' and len(textureList) != counter + 1:
@@ -399,7 +396,8 @@ def CMD(textureList, version):
             inclorelist.append(values["loreCheck"])
 
             # cycles the image to the next in the list
-            window.Element('-IMAGE-').update(filename=pathList[counter])
+            window.Element('-IMAGE-').update(filename=pathList[counter + 1])
+
             # clears the text boxes
             window.Element('itemName').update('')
             window.Element('itemWeight').update('1')
@@ -442,7 +440,7 @@ def CMD(textureList, version):
             evokerJSON.writelines(['        {\n',
             '          "type": "minecraft:item",\n',
             '          "name": "minecraft:totem_of_undying",\n',
-            '		  "weight": ' + values['itemWeight'] +',\n',
+            '		  "weight": ' + str(values['itemWeight']) +',\n',
             '		  "functions": [\n',
             '            {\n',
             '              "function": "minecraft:set_nbt",\n'])

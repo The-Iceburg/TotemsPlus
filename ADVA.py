@@ -187,7 +187,7 @@ def ADV(worldLocation, nameList, name):
     for i in range(len(nameList)):
 
         # creates the collect totem advancement
-        collecttotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/collect' + nameList[counter].lower().replace(" ","_") + '.json', 'w+')
+        collecttotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/collect' + nameList[i].lower().replace(" ","_") + '.json', 'w+')
 
         # writes the varied meta to the file
         collecttotem.writelines(['{\n',
@@ -228,16 +228,13 @@ def ADV(worldLocation, nameList, name):
         '}'])
         collecttotem.close()
 
-        # increases the counter by 1
-        counter += 1
-
     #####
 
     # cycles throught the name list
     for i in range(len(nameList)):
 
         # creates the use totem advancement
-        usetotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/use' + nameList[counter].lower().replace(" ","_") + '.json', 'w+')
+        usetotem = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/use' + nameList[i].lower().replace(" ","_") + '.json', 'w+')
  
         # writes the varied meta to the file
         usetotem.writelines(['{\n',

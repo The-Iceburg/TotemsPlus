@@ -36,15 +36,15 @@ def DOC(worldLocation, nameList, weightList, inGameName, inGameLore, loreList):
         doc.write(nameList[i] + ':   /give @s minecraft:totem_of_undying{')
         
         # writes the rest of the command dependent on if the in-game box was checked for lore or name
-        if inGameName[i] == "True" and inGameLore[i] == "True":
+        if inGameName[i] == True and inGameLore[i] == True:
 
             doc.write('''display:{Name:'[{"text":"''' + nameList[i] + '''"}]',Lore:['[{"text":"''' + loreList[i]+ '''"}]']},CustomModelData:''' + str(910340 + i) +'} 1\n')
 
-        elif inGameName[i] == "True":
+        elif inGameName[i] == True:
 
             doc.write('''display:{Name:'[{"text":"''' + nameList[i] + '''"}]'},CustomModelData:''' + str(910340 + i) +'} 1\n')
 
-        elif inGameLore[i] == "True":
+        elif inGameLore[i] == True:
 
             doc.write('''display:{Lore:['[{"text":"''' + loreList[i] + '''"}]']},CustomModelData:''' + str(910340 + i) +'} 1\n')
 
