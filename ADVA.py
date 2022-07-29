@@ -120,7 +120,11 @@ def ADV(worldLocation, nameList, name):
         '                ]\n',
         '            }\n',
         '        },'])
-    
+
+    # re opens file in correct mode
+    collectall.close()
+    collectall = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/collectall.json', 'a')
+
     # removes the last "," cuz json
     fsize = get_size(collectall)
     collectall.truncate(fsize - 1)
@@ -129,6 +133,7 @@ def ADV(worldLocation, nameList, name):
     collectall.writelines(['\n    },\n',
     '    "parent": "totemsplus:root"\n',
     '}'])
+    collectall.close()
 
     #####
 
@@ -172,6 +177,10 @@ def ADV(worldLocation, nameList, name):
         '            }\n',
         '        },'])
 
+    # re opens file in correct mode
+    useall.close()
+    useall = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/useall.json', 'a')
+
     # removes the last "," cuz json
     fsize = get_size(useall)
     useall.truncate(fsize - 1)
@@ -180,6 +189,7 @@ def ADV(worldLocation, nameList, name):
     useall.writelines(['\n    },\n',
     '    "parent": "totemsplus:root"\n',
     '}'])
+    useall.close()
 
     #####
 
