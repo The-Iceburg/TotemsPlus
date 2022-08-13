@@ -6,12 +6,11 @@
 ###################################################################
 
 # imports the libaries used within totems+
-from email.utils import format_datetime
 from PIL import Image
 import os, shutil, getpass
 
 # defines the texture convereter subroutine
-def ANIM(imageLocation, packName, integrationType, rename):
+def ANI(imageLocation, packName, integrationType, rename):
 
     # opens the image as an object python/PIL can interact with
     imageObject = Image.open(imageLocation)
@@ -43,42 +42,52 @@ def ANIM(imageLocation, packName, integrationType, rename):
     if os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/giftexture'):
         shutil.rmtree('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/giftexture')
 
-    # make the resized folder
+    # make the giftexture folder
     os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/giftexture")
 
+    # derrives the file name ([-1])
     locationList = imageLocation.split("/")
 
-    # saves the new image
+    # saves the new image in the appropraite location
     new.save("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/giftexture/" + locationList[-1])
 
     # sets frametime to a temporary constant (it will be variable in the future)
     FRAMETIME = 1
 
+    # if the integration type is MCCMD
     if integrationType == "MCCMD":
 
+        # creates the .mcmeta in the appropriate location for the integration type (MCCMD)
         file = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/textures/totems/" + locationList[-1] + ".mcmeta", "w+")
 
+        # writes the appropriate data to the file
         file.writelines(['{\n',
         '  "animation": {\n'])
         file.write('    "frametime": ' + FRAMETIME + '\n')
         file.writelines(['  }\n',
         '}'])
 
+        # saves / closes the file
         file.close()
 
+    # if the integration type is OFCIT
     elif integrationType == "OFCIT":
 
+        # creates the .mcmeta in the appropriate location for the integration type (OFCIT)
         file = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/optifine/cit/totems/" + str(rename.lower()) + "/" + locationList[-1] + ".mcmeta", "w+")
 
+        # writes the appropriate data to the file
         file.writelines(['{\n',
         '  "animation": {\n'])
         file.write('    "frametime": ' + FRAMETIME + '\n')
         file.writelines(['  }\n',
         '}'])
 
+        # saves / closes the file
         file.close()
 
+    # returns the new / appropriate location for the gif texture
     return "C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/giftexture" + locationList[-1]
 
 # runs the subroutine for testing purposes
-ANIM("img/test.gif")
+ANI("img/test.gif")
