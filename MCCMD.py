@@ -11,6 +11,7 @@ from PIL import Image
 from DOC import DOC
 from FUNC import FUN
 from ADVA import ADV
+from ANIM import ANI
 
 # outlines the versions and there pack formats
 resourcepackFormat4 = ["1.14","1.14.1","1.14.2","1.14.3","1.14.4"]

@@ -8,6 +8,7 @@
 # imports the libaries used within Totems+ 
 import os, shutil, getpass, PySimpleGUI as sg
 from PIL import Image
+from ANIM import ANI
 
 # outlines the versions and there pack formats
 packFormat4 = ["1.14","1.14.1","1.14.2","1.14.3","1.14.4"]
