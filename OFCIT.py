@@ -178,8 +178,17 @@ def CIT(textureList, version):
             "nbt.display.Name=ipattern:" + values["itemName"]])
             totemProperties.close()
 
-            # copys the image into the resource pack
-            shutil.copy(textureList[counter], "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/optifine/cit/totems/" + str(rename.lower()))
+            # if the file is a .gif file
+            if textureList[counter].endswith('.gif'):
+
+                # copys the new gif texture to the pack
+                shutil.copy(ANI(textureList[counter], name, "MCCMD", rename), "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/optifine/cit/totems/" + str(rename.lower()))
+
+            # else
+            else:
+
+                # copys the image into the resource pack
+                shutil.copy(textureList[counter], "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/optifine/cit/totems/" + str(rename.lower()))
 
             # cycles the image and clears the text box
             window.Element('-IMAGE-').update(filename=pathList[counter + 1])

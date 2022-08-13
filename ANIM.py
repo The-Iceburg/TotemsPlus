@@ -15,29 +15,37 @@ def ANI(imageLocation, packName, integrationType, rename):
     # opens the image as an object python/PIL can interact with
     imageObject = Image.open(imageLocation)
 
+    # if the gif width and height are equal then
     if imageObject.size[1] == imageObject.size[0]:
 
+        # sets the location of the copied
         width = 0
 
+        # sets the height of the new image to the height of the original x the no. of frames
         height2 = imageObject.size[1] * imageObject.n_frames
 
         # creates the new image using the calacuated height
         new = Image.new(mode="RGB", size=(imageObject.size[0], height2), color='#ffffff')
 
+    # if the width of the gif is greater than the height then
     if imageObject.size[0] > imageObject.size[1]:
 
         # calacuates the buffer zone required for the image to be centeral
         width = -abs(round((imageObject.size[0] - imageObject.size[1]) / 2))
 
+        # calculates the height of the new image to the height of the original x no. of frames
         height2 = imageObject.size[1] * imageObject.n_frames
 
         # creates the new image using the calacuated height
         new = Image.new(mode="RGB", size=(imageObject.size[1], height2), color='#ffffff')
 
+    # if the width of the gif is less than the height then
     if imageObject.size[0] < imageObject.size[1]:
-
+        
+        # sets the location of the copied
         width = 0
 
+        # calculates the height of the new image to the height of the original x no. of frames
         height2 = imageObject.size[0] * imageObject.n_frames
 
         # creates the new image using the calacuated height
@@ -49,28 +57,34 @@ def ANI(imageLocation, packName, integrationType, rename):
         # selects said frame
         imageObject.seek(frame)
 
+        # if the gif width and height are equal then
         if imageObject.size[1] == imageObject.size[0]:
 
             # calacutes the height at which the image needs to be pasted 
             # depends on how far down the new image you are
             height = frame * imageObject.size[1]
 
+        # if the width of the gif is greater than the height then
         elif imageObject.size[0] > imageObject.size[1]:
 
             # calacutes the height at which the image needs to be pasted 
             # depends on how far down the new image you are
             height = frame * imageObject.size[1]
 
+        # if the width of the gif is less than the height then
         elif imageObject.size[0] < imageObject.size[1]:
 
+            # if its the first frame then
             if frame == 0:
-
+                
+                # sets the height of the copied image to an appropriate place for a mc texture
                 height = frame * imageObject.size[1] - round(imageObject.size[0] - imageObject.size[1] / 2)
-
+            
+            # else / otherwise
             else:
-
+                
+                # sets the height of the copied image to an appropriate place for a mc texture
                 height = frame * imageObject.size[1] - ( 2 * round(imageObject.size[0] - imageObject.size[1] / 2))
-
 
         # pastes the image using the calculated buffer and height
         new.paste(imageObject, (width, height))
@@ -125,6 +139,3 @@ def ANI(imageLocation, packName, integrationType, rename):
 
     # returns the new / appropriate location for the gif texture
     return "C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/giftexture" + locationList[-1]
-
-# runs the subroutine for testing purposes
-ANI("img/test2.gif", "Totems+ CMD", "MCCMD", None)

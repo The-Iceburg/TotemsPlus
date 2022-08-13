@@ -341,9 +341,18 @@ def CMD(textureList, version):
             '	}\n',
             '}\n'])
             individualTotem.close()
+            
+            # if the file is a .gif file
+            if textureList[counter].endswith('.gif'):
 
-            # copys the image into the resource pack
-            shutil.copy(textureList[counter], "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
+                # copys the new gif texture to the pack
+                shutil.copy(ANI(textureList[counter], name, "MCCMD", rename), "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
+
+            # else
+            else:
+
+                # copys the image into the resource pack
+                shutil.copy(textureList[counter], "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
 
             # writes the repetative data to the evoker.josn file (with comma)
             evokerJSON = open(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities/evoker.json", "a")
