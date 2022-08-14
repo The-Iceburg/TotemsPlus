@@ -12,8 +12,10 @@ import os, shutil, getpass
 # defines the texture convereter subroutine
 def ANI(imageLocation, packName, integrationType, rename):
 
+    
     # opens the image as an object python/PIL can interact with
     imageObject = Image.open(imageLocation)
+    
 
     # if the gif width and height are equal then
     if imageObject.size[1] == imageObject.size[0]:
@@ -98,9 +100,10 @@ def ANI(imageLocation, packName, integrationType, rename):
 
     # derrives the file name ([-1])
     locationList = imageLocation.split("/")
-
+    llfilename = locationList[-1].replace(".gif", ".png")
+    
     # saves the new image in the appropraite location
-    new.save("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/giftexture/" + locationList[-1])
+    new.save("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/giftexture/" + llfilename)
 
     # sets frametime to a temporary constant (it will be variable in the future)
     FRAMETIME = 1
@@ -109,7 +112,7 @@ def ANI(imageLocation, packName, integrationType, rename):
     if integrationType == "MCCMD":
 
         # creates the .mcmeta in the appropriate location for the integration type (MCCMD)
-        file = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/textures/totems/" + locationList[-1] + ".mcmeta", "w+")
+        file = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/textures/totems/" + llfilename + ".mcmeta", "w+")
 
         # writes the appropriate data to the file
         file.writelines(['{\n',
@@ -125,7 +128,7 @@ def ANI(imageLocation, packName, integrationType, rename):
     elif integrationType == "OFCIT":
 
         # creates the .mcmeta in the appropriate location for the integration type (OFCIT)
-        file = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/optifine/cit/totems/" + str(rename.lower()) + "/" + locationList[-1] + ".mcmeta", "w+")
+        file = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/optifine/cit/totems/" + str(rename.lower()) + "/" + llfilename + ".mcmeta", "w+")
 
         # writes the appropriate data to the file
         file.writelines(['{\n',
@@ -138,4 +141,4 @@ def ANI(imageLocation, packName, integrationType, rename):
         file.close()
 
     # returns the new / appropriate location for the gif texture
-    return "C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/giftexture" + locationList[-1]
+    return "C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/giftexture/" + llfilename

@@ -153,6 +153,7 @@ def CMD(textureList, version):
 
                     # opens the new image path
                     openIMG = Image.open(IMGpath)
+                    
 
                     # resizes the image, and saves with a new name
                     resizedIMG = openIMG.resize((128,128))
@@ -332,19 +333,21 @@ def CMD(textureList, version):
 
             # deduces the file name from its location
             textureListSplit = textureList[counter].split("/")
-                
+            TLSfilename = textureListSplit[-1].replace(".gif", ".png")
+            
             # adds needed meta data to the individual totem file
             individualTotem.writelines(['{\n',
             '	"parent": "minecraft:item/generated",\n',
             '	"textures": {\n',
-            '	  "layer0": "minecraft:totems/' + textureListSplit[-1] + '"',
+            '	  "layer0": "minecraft:totems/' + TLSfilename + '"',
             '	}\n',
             '}\n'])
             individualTotem.close()
             
             # if the file is a .gif file
             if textureList[counter].endswith('.gif'):
-
+                
+                
                 # copys the new gif texture to the pack
                 shutil.copy(ANI(textureList[counter], name, "MCCMD", rename), "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
 
@@ -433,12 +436,13 @@ def CMD(textureList, version):
 
             # deduces the file name from its location
             textureListSplit = textureList[counter].split("/")
-                
+            TLSfilename = textureListSplit[-1].replace(".gif", ".png")
+            
             # adds needed meta data to the individual totem file
             individualTotem.writelines(['{\n',
             '	"parent": "minecraft:item/generated",\n',
             '	"textures": {\n',
-            '	  "layer0": "minecraft:totems/' + textureListSplit[-1] + '"',
+            '	  "layer0": "minecraft:totems/' + TLSfilename + '"',
             '	}\n',
             '}\n'])
             individualTotem.close()

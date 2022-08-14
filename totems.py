@@ -1,6 +1,7 @@
 ###################################################################
 #                             Totems+                             #
 # A new and unique way to integrate custom totems into Minecraft! #
+
 #    Learn More here:https://github.com/The-Iceburg/TotemsPlus    #
 #        Created By The Totems+ Team - Ormatist + Dockuin         #
 ###################################################################
@@ -14,7 +15,7 @@ from MCCMD import CMD
 sg.theme('DarkTeal10')
 
 # declares the accepted texture file types
-textureFileTypes = [("JPEG, PNG, TGA (.jpg , .png , .tga)", ".jpg , .png , .tga")]
+textureFileTypes = [("JPEG, PNG, TGA, GIF (.jpg , .png , .tga , .gif)", ".jpg , .png , .tga , .gif")]
 
 # checks if the Totems+ roaming folder exists, if it doesn't one is created
 if not os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+'):
