@@ -112,7 +112,7 @@ def CMD(textureList, version):
             if cmdconfirm == 'OK':
 
                 # updates the tooltip
-                window.Element('tooltip').update('Fill out the details for each totem as they cycle in the top right.\nIt should be noted totems may appear blurred/streched here but wont in Minecraft')
+                window.Element('tooltip').update('Fill out the details for each totem as they cycle in the top right.\nIt should be noted totems may appear blurred/streched here but\n wont in Minecraft. .GIF files also wont play in this release')
 
                 # transforms the texture list into a list
                 textureList = textureList.split(";")
@@ -154,7 +154,6 @@ def CMD(textureList, version):
                     # opens the new image path
                     openIMG = Image.open(IMGpath)
                     
-
                     # resizes the image, and saves with a new name
                     resizedIMG = openIMG.resize((128,128))
                     fileName1 = "resize_" + str(splitList[-1]) 
