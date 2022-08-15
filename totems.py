@@ -1,7 +1,6 @@
 ###################################################################
 #                             Totems+                             #
 # A new and unique way to integrate custom totems into Minecraft! #
-
 #    Learn More here:https://github.com/The-Iceburg/TotemsPlus    #
 #        Created By The Totems+ Team - Ormatist + Dockuin         #
 ###################################################################
