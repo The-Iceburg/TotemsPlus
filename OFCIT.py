@@ -8,6 +8,7 @@
 # imports the libaries used within Totems+ 
 import os, shutil, getpass, PySimpleGUI as sg
 from PIL import Image
+from ANIM import ANI
 
 # outlines the versions and there pack formats
 packFormat4 = ["1.14","1.14.1","1.14.2","1.14.3","1.14.4"]
@@ -77,7 +78,7 @@ def CIT(textureList, version):
             ' ', font=('Helvetica', 10), justification='left'),
         ],
         [
-            sg.Text('Rename your different textures to what you wish to rename them in-game\nIt should be noted totems may appear blurred/streched here but wont in Minecraft', key='tooltip')
+            sg.Text('Rename your different textures to what you wish to rename them in-game\nIt should be noted totems may appear blurred/streched here but\n wont in Minecraft. .GIF files also wont play in this release', key='tooltip')
         ],
         [
             sg.Text('Name:  '),
@@ -177,8 +178,17 @@ def CIT(textureList, version):
             "nbt.display.Name=ipattern:" + values["itemName"]])
             totemProperties.close()
 
-            # copys the image into the resource pack
-            shutil.copy(textureList[counter], "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/optifine/cit/totems/" + str(rename.lower()))
+            # if the file is a .gif file
+            if textureList[counter].endswith('.gif'):
+
+                # copys the new gif texture to the pack
+                shutil.copy(ANI(textureList[counter], name, "MCCMD", rename), "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/optifine/cit/totems/" + str(rename.lower()))
+
+            # else
+            else:
+
+                # copys the image into the resource pack
+                shutil.copy(textureList[counter], "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/optifine/cit/totems/" + str(rename.lower()))
 
             # cycles the image and clears the text box
             window.Element('-IMAGE-').update(filename=pathList[counter + 1])

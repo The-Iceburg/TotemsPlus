@@ -11,6 +11,7 @@ from PIL import Image
 from DOC import DOC
 from FUNC import FUN
 from ADVA import ADV
+from ANIM import ANI
 
 # outlines the versions and there pack formats
 resourcepackFormat4 = ["1.14","1.14.1","1.14.2","1.14.3","1.14.4"]
@@ -111,7 +112,7 @@ def CMD(textureList, version):
             if cmdconfirm == 'OK':
 
                 # updates the tooltip
-                window.Element('tooltip').update('Fill out the details for each totem as they cycle in the top right.\nIt should be noted totems may appear blurred/streched here but wont in Minecraft')
+                window.Element('tooltip').update('Fill out the details for each totem as they cycle in the top right.\nIt should be noted totems may appear blurred/streched here but\n wont in Minecraft. .GIF files also wont play in this release')
 
                 # transforms the texture list into a list
                 textureList = textureList.split(";")
@@ -152,7 +153,7 @@ def CMD(textureList, version):
 
                     # opens the new image path
                     openIMG = Image.open(IMGpath)
-
+                    
                     # resizes the image, and saves with a new name
                     resizedIMG = openIMG.resize((128,128))
                     fileName1 = "resize_" + str(splitList[-1]) 
@@ -331,18 +332,29 @@ def CMD(textureList, version):
 
             # deduces the file name from its location
             textureListSplit = textureList[counter].split("/")
-                
+            TLSfilename = textureListSplit[-1].replace(".gif", ".png")
+            
             # adds needed meta data to the individual totem file
             individualTotem.writelines(['{\n',
             '	"parent": "minecraft:item/generated",\n',
             '	"textures": {\n',
-            '	  "layer0": "minecraft:totems/' + textureListSplit[-1] + '"',
+            '	  "layer0": "minecraft:totems/' + TLSfilename + '"',
             '	}\n',
             '}\n'])
             individualTotem.close()
+            
+            # if the file is a .gif file
+            if textureList[counter].endswith('.gif'):
+                
+                
+                # copys the new gif texture to the pack
+                shutil.copy(ANI(textureList[counter], name, "MCCMD", rename), "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
 
-            # copys the image into the resource pack
-            shutil.copy(textureList[counter], "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
+            # else
+            else:
+
+                # copys the image into the resource pack
+                shutil.copy(textureList[counter], "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
 
             # writes the repetative data to the evoker.josn file (with comma)
             evokerJSON = open(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities/evoker.json", "a")
@@ -423,17 +435,28 @@ def CMD(textureList, version):
 
             # deduces the file name from its location
             textureListSplit = textureList[counter].split("/")
-                
+            TLSfilename = textureListSplit[-1].replace(".gif", ".png")
+            
             # adds needed meta data to the individual totem file
             individualTotem.writelines(['{\n',
             '	"parent": "minecraft:item/generated",\n',
             '	"textures": {\n',
-            '	  "layer0": "minecraft:totems/' + textureListSplit[-1] + '"',
+            '	  "layer0": "minecraft:totems/' + TLSfilename + '"',
             '	}\n',
             '}\n'])
             individualTotem.close()
 
-            shutil.copy(textureList[counter], "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
+            # if the file is a .gif file
+            if textureList[counter].endswith('.gif'):
+                
+                # copys the new gif texture to the pack
+                shutil.copy(ANI(textureList[counter], name, "MCCMD", rename), "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
+
+            # else
+            else:
+
+                # copys the image into the resource pack
+                shutil.copy(textureList[counter], "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
                 
             # writes the repetative data to the evoker.josn file (without comma)
             evokerJSON = open(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities/evoker.json", "a")
