@@ -7,7 +7,7 @@
 
 # imports the libaries used within Totems+ 
 import os, shutil, getpass, PySimpleGUI as sg
-from PIL import Image
+from PIL import Image, ImageSequence
 from DOC import DOC
 from FUNC import FUN
 from ADVA import ADV
@@ -131,33 +131,46 @@ def CMD(textureList, version):
                 # new list to hold the new file names
                 pathList = []
 
+                # the path for the resized folder
+                targetIMG = "C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/resized"
+
                 # for loop for each image
                 for i in range(len(textureList)):
 
-                    # the first image gets opened
-                    origIMG = str(open(textureList[i]))
-
-                    # removes the leading and prior words
-                    origIMG = origIMG.replace("<_io.TextIOWrapper name='", "")
-                    origIMG = origIMG.replace("' mode='r' encoding='cp1252'>", "")
-
                     # finds only the names
                     splitList = textureList[i].split("/")
-
-                    # the path for the resized folder
-                    targetIMG = "C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/resized"
-
-                    # copies the images to the resized folder
-                    shutil.copy(origIMG, targetIMG)
-                    IMGpath = targetIMG + "/" + splitList[-1]
-
-                    # opens the new image path
-                    openIMG = Image.open(IMGpath)
-                    
-                    # resizes the image, and saves with a new name
-                    resizedIMG = openIMG.resize((128,128))
+                    # makes a new file name
                     fileName1 = "resize_" + str(splitList[-1]) 
-                    resizedIMG.save(fileName1)
+
+                    # Run indented code if it is a GIF
+                    if textureList[i].endswith(".gif") == True:
+                        origIMG = Image.open(textureList[i])
+                        size = 128, 128
+                        frames = ImageSequence.Iterator(origIMG)
+                        def thumbnails(frames):
+                            for frame in frames:
+                                thumbnail = frame.copy()
+                                thumbnail = thumbnail.resize(size)
+                                thumbnail.thumbnail(size, Image.ANTIALIAS)
+                                yield thumbnail
+                        frames = thumbnails(frames)
+
+                        resizedGIF = next(frames)
+                        resizedGIF.info = origIMG.info
+                        resizedGIF.save(fileName1, save_all=True, append_images=list(frames), loop=0)
+
+
+                    # Run Code if it is not a GIF
+                    elif textureList[i].endswith(".gif") == False:
+
+                        # copies the images to the resized folder
+                        shutil.copy(textureList[i], targetIMG)
+                        IMGpath = targetIMG + "/" + splitList[-1]
+
+                        # opens and resizes the image, saves with a new name
+                        openIMG = Image.open(IMGpath)
+                        resizedIMG = openIMG.resize((128,128))
+                        resizedIMG.save(fileName1)
 
                     # moves to the resized folder and saves the path to the path list 
                     shutil.move(fileName1, targetIMG)
@@ -311,7 +324,6 @@ def CMD(textureList, version):
 
                 # cycles the image to the first image
                 window.Element('-IMAGE-').update(filename=pathList[0])
-
                 # sets the counter to 1
                 counter = 0
 
