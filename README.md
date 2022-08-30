@@ -23,7 +23,7 @@ The in-depth usage guide for Totems+ can be found on the [Wiki](https://github.c
 
 These 2 integrations can be selected by toggling the by deafult "gold" button (which is a dark teal if MCCMD is selected). Whichever intergration is selected when the "Compile" button is pressed will be chosen.
 
-Next You will need to upload your totem files. We currently except the ".jpg , .png , .tga, .gif" file formats as that is what is compatible with Minecraft (We are also working on providing animated or ".gif" support in the future (#12)). We reccommend having all your totems in one place/folder and selecting them all for upload at once.
+Next You will need to upload your totem files. We currently except the ".jpg , .png , .tga, .gif" file formats as that is what is compatible with Minecraft. We reccommend having all your totems in one place/folder and selecting them all for upload at once.
 
 Finally select the version of Minecraft you wish to create your packs for, we currently supports all versions from 1.14
 After you've uploaded all your files, selected your integration type and chosen your version hit the "compile" button to progress
