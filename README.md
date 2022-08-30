@@ -13,4 +13,12 @@
 # Documentation
 # Structure
 # Feedback
-# License
+# 📜 License
+
+Totems+ is currently licensed under an [MIT License](https://opensource.org/licenses/MIT).
+
+To read up on what this gives you permissions to do vist the [LICENSE](https://github.com/The-Iceburg/TotemsPlus/blob/main/LICENSE) file.
+
+This license type is subject to change in the future before presuming allways visit this section of the readme or the [LICENSE](https://github.com/The-Iceburg/TotemsPlus/blob/main/LICENSE) file.
+
+
