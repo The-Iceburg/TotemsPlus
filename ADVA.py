@@ -36,13 +36,22 @@ def ADV(worldLocation, nameList, name):
 
     ######
 
+    # opens the totem.json file in the resource pack
     with open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/item/totem_of_undying.json", "r") as f:
+
+        # reads all lines in file
         contents = f.readlines()
 
+    # aads the needed string to the list in the appropriaste place
     contents.insert(7, '''	  {"predicate": {"custom_model_data":910339}, "model": "totems/totemsplus"},\n''')
 
+    # reopens the totem.json file in different mode
     with open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/item/totem_of_undying.json", "w") as f:
+
+        # joins the content list into one string
         contents = "".join(contents)
+
+        # writes the updated content to the file
         f.write(contents)
     
     shutil.copy("img/totemsplus.png", "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")

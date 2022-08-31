@@ -5,10 +5,6 @@
 #        Created By The Totems+ Team - Ormatist + Dockuin         #
 ###################################################################
 
-# imports the libaries used within Totems+
-import os
-import getpass
-
 # defines the DOC function
 def DOC(worldLocation, nameList, weightList, inGameName, inGameLore, loreList):
 
