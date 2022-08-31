@@ -36,6 +36,27 @@ def ADV(worldLocation, nameList, name):
 
     ######
 
+    with open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/item/totem_of_undying.json", "r") as f:
+        contents = f.readlines()
+
+    contents.insert(7, '''	  {"predicate": {"custom_model_data":910339}, "model": "totems/totemsplus"},\n''')
+
+    with open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/item/totem_of_undying.json", "w") as f:
+        contents = "".join(contents)
+        f.write(contents)
+    
+    shutil.copy("img/totemsplus.png", "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
+
+    modelfile = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/totems/totemsplus.json", "w+")
+    
+    modelfile.writelines(['{\n',
+    '	"parent": "minecraft:item/generated",\n',
+    '	"textures": {\n',
+    '	  "layer0": "minecraft:totems/totemsplus"',
+    '	}\n',
+    '}\n'])
+    modelfile.close()
+
     # creates the root advancement
     root = open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/root.json', 'w+')
 
@@ -53,8 +74,9 @@ def ADV(worldLocation, nameList, name):
     '            "color": "yellow"\n',
     '        },\n',
     '        "icon": {\n',
-    '            "item": "minecraft:totem_of_undying"\n',
-    '        },\n',
+    '            "item": "minecraft:totem_of_undying",\n'])
+    root.write('            "nbt": "{CustomModelData:' + str(910339) + '}"',)
+    root.writelines(['        },\n',
     '        "frame": "goal",\n',
     '        "show_toast": true,\n',
     '        "announce_to_chat": true,\n',

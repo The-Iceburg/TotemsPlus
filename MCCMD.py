@@ -358,7 +358,6 @@ def CMD(textureList, version):
             # if the file is a .gif file
             if textureList[counter].endswith('.gif'):
                 
-                
                 # copys the new gif texture to the pack
                 shutil.copy(ANI(textureList[counter], name, "MCCMD", rename), "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
 
