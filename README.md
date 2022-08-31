@@ -11,22 +11,15 @@ Totems+ is a new and unique way to integrate custom totems into Minecraft!
 
 It utilises python to generate resource/data packs automatically which enchance the Totem of Undying in Minecraft by not only adding new features but also allowing you to upload custom textures for your totems.
 
-# 🏃 Usage
+# 🏃 Integrations
 
-The in-depth usage guide for Totems+ can be found on the [Wiki](https://github.com/The-Iceburg/TotemsPlus/wiki) but here's a breif description:
+The in-depth usage guide for Totems+ can be found on the [Wiki](https://github.com/The-Iceburg/TotemsPlus/wiki) but here's our current supported integrations
 
 - Optifine Custom Item Textures (OFCIT) *(Legacy)*
   This allows for you to rename a totem in an anvil and have its texture change. This intergration exsists as it is purely client side (just a texture pack) so no world/server install is required. However it should be noted that we've moved it into a legacy state meaning it will recive no major updates or new features for the forseeable future. Addintionaly Optifine is manditory for this install or it wont work. You can download the latset version of optifine from its official website here: https://optifine.net/downloads
   
 - Minecraft Custom Model Data (MCCMD)
   This allows for a fully immersive experience were your custom totems are dropped by the evoker with custom weighting, names, lore and more. This integration is both client and world side requiring both a datapack and texture pack to use. This is the intergration we actively work on maintaining and creating more content and features for.
-
-These 2 integrations can be selected by toggling the by deafult "gold" button (which is a dark teal if MCCMD is selected). Whichever intergration is selected when the "Compile" button is pressed will be chosen.
-
-Next You will need to upload your totem files. We currently except the ".jpg , .png , .tga, .gif" file formats as that is what is compatible with Minecraft. We reccommend having all your totems in one place/folder and selecting them all for upload at once.
-
-Finally select the version of Minecraft you wish to create your packs for, we currently supports all versions from 1.14
-After you've uploaded all your files, selected your integration type and chosen your version hit the "compile" button to progress
 
 # 🪛 Setup
 
