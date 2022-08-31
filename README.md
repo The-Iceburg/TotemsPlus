@@ -16,9 +16,11 @@ It utilises python to generate resource/data packs automatically which enchance 
 The in-depth usage guide for Totems+ can be found on the [Wiki](https://github.com/The-Iceburg/TotemsPlus/wiki) but here's our current supported integrations
 
 - Optifine Custom Item Textures (OFCIT) *(Legacy)*
+
   This allows for you to rename a totem in an anvil and have its texture change. This intergration exsists as it is purely client side (just a texture pack) so no world/server install is required. However it should be noted that we've moved it into a legacy state meaning it will recive no major updates or new features for the forseeable future. Addintionaly Optifine is manditory for this install or it wont work. You can download the latset version of optifine from its official website here: https://optifine.net/downloads
   
 - Minecraft Custom Model Data (MCCMD)
+
   This allows for a fully immersive experience were your custom totems are dropped by the evoker with custom weighting, names, lore and more. This integration is both client and world side requiring both a datapack and texture pack to use. This is the intergration we actively work on maintaining and creating more content and features for.
 
 # 🪛 Setup
