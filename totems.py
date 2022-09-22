@@ -92,7 +92,7 @@ def main():
             # visual toggle the toggle
             window.Element('-TOGGLE-').Update(['Minecraft RTX','Minecraft CMD','Optifine CIT'][integration], button_color=(('white', ['red','teal','orange'][integration])))
 
-        # if compile and toggle false then
+        # if compile and integration type is 1 then
         elif event == 'Compile' and integration == 1:
 
             # runs CMD function
@@ -101,7 +101,7 @@ def main():
             # breaks code (hence closing window)
             break
 
-        # if compile and toggle true then
+        # if compile and integration type is 2 then
         elif event == 'Compile' and integration == 2:
 
             # runs CIT function
@@ -110,10 +110,13 @@ def main():
             # breaks code (hence closing window)
             break
 
+        # if compile and integration type is 0 then
         elif event == 'Compile' and integration == 0:
 
+            # runs RTX functuion
             RTX(values["-TEXTURES-"], values["-DROPDOWN-"])
 
+            # breaks code (hence closing window)
             break
 
     # closes window if called

@@ -140,10 +140,10 @@ def ANI(imageLocation, packName, integrationType, rename):
         # saves / closes the file
         file.close()
 
-    # if the integration type is OFCIT
+    # if the integration type is MCRTX
     elif integrationType == "MCRTX":
 
-        # creates the .mcmeta in the appropriate location for the integration type (OFCIT)
+        # creates the .mcmeta in the appropriate location for the integration type (MCRTX)
         file = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/textures/item/totem_of_undying.png.mcmeta", "w+")
 
         # writes the appropriate data to the file
