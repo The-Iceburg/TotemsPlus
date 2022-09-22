@@ -9,6 +9,7 @@
 import os.path, PySimpleGUI as sg, getpass
 from OFCIT import CIT
 from MCCMD import CMD
+from MCRTX import RTX
 
 # sets window theme
 sg.theme('DarkTeal10')
@@ -42,7 +43,7 @@ def main():
             ' \n' +
             'Minecraft CMD - Allows for custom totems using custom model data and adds\n' + 
             '                    these with a given weight to the evoker loot_tabel.'),
-            sg.Button('Minecraft RT', size=(15,1), button_color=('white','red'), key='-TOGGLE-')
+            sg.Button('Minecraft RTX', size=(15,1), button_color=('white','red'), key='-TOGGLE-')
         ],
         [
             sg.Text("⚫ Select your totem image files here:")
@@ -89,7 +90,7 @@ def main():
                 integration = 0
 
             # visual toggle the toggle
-            window.Element('-TOGGLE-').Update(['Minecraft RT','Minecraft CMD','Optifine CIT'][integration], button_color=(('white', ['red','teal','orange'][integration])))
+            window.Element('-TOGGLE-').Update(['Minecraft RTX','Minecraft CMD','Optifine CIT'][integration], button_color=(('white', ['red','teal','orange'][integration])))
 
         # if compile and toggle false then
         elif event == 'Compile' and integration == 1:
@@ -111,7 +112,7 @@ def main():
 
         elif event == 'Compile' and integration == 0:
 
-            print("Running Minecraft Re-Texture Integration")
+            RTX(values["-TEXTURES-"], values["-DROPDOWN-"])
 
             break
 

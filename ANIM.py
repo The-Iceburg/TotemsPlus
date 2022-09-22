@@ -140,5 +140,21 @@ def ANI(imageLocation, packName, integrationType, rename):
         # saves / closes the file
         file.close()
 
+    # if the integration type is OFCIT
+    elif integrationType == "MCRTX":
+
+        # creates the .mcmeta in the appropriate location for the integration type (OFCIT)
+        file = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/textures/item/totem_of_undying.png.mcmeta", "w+")
+
+        # writes the appropriate data to the file
+        file.writelines(['{\n',
+        '  "animation": {\n'])
+        file.write('    "frametime": ' + str(FRAMETIME) + '\n')
+        file.writelines(['  }\n',
+        '}'])
+
+        # saves / closes the file
+        file.close()
+
     # returns the new / appropriate location for the gif texture
     return "C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/giftexture/" + llfilename
