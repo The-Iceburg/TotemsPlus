@@ -169,7 +169,6 @@ def CIT(textureList, version):
 
             if result == "OK":
                 shutil.rmtree("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name)
-                break
         
         # else if the next button and the length of the texture list isn't equal to the counter + 1
         elif event == 'next' and len(textureList) != int(counter + 1):
