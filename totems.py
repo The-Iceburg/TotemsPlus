@@ -42,7 +42,7 @@ def main():
             ' \n' +
             'Minecraft CMD - Allows for custom totems using custom model data and adds\n' + 
             '                    these with a given weight to the evoker loot_tabel.'),
-            sg.Button('Optifine CIT', size=(15,1), button_color=('white','orange'), key='-TOGGLE-')
+            sg.Button('Minecraft RT', size=(15,1), button_color=('white','red'), key='-TOGGLE-')
         ],
         [
             sg.Text("⚫ Select your totem image files here:")
@@ -67,7 +67,7 @@ def main():
     window = sg.Window("Totems+", layout, icon="img/totems.ico")
 
     # sets the toggle preset
-    down = True
+    integration = 0
 
     # while window (GUI) is open
     while True:
@@ -83,13 +83,16 @@ def main():
         elif event == '-TOGGLE-':
 
             # program toggle the toggle
-            down = not down
+            integration += 1
+
+            if integration == 3:
+                integration = 0
 
             # visual toggle the toggle
-            window.Element('-TOGGLE-').Update(('Minecraft CMD','Optifine CIT')[down], button_color=(('white', ('teal','orange')[down])))
+            window.Element('-TOGGLE-').Update(['Minecraft RT','Minecraft CMD','Optifine CIT'][integration], button_color=(('white', ['red','teal','orange'][integration])))
 
         # if compile and toggle false then
-        elif event == 'Compile' and down == False:
+        elif event == 'Compile' and integration == 1:
 
             # runs CMD function
             CMD(values["-TEXTURES-"], values["-DROPDOWN-"])
@@ -98,12 +101,18 @@ def main():
             break
 
         # if compile and toggle true then
-        elif event == 'Compile' and down == True:
+        elif event == 'Compile' and integration == 2:
 
             # runs CIT function
             CIT(values["-TEXTURES-"], values["-DROPDOWN-"])
 
             # breaks code (hence closing window)
+            break
+
+        elif event == 'Compile' and integration == 0:
+
+            print("Running Minecraft Re-Texture Integration")
+
             break
 
     # closes window if called
