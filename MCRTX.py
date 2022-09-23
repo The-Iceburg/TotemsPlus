@@ -8,7 +8,7 @@
 # imports the libaries used within Totems+ 
 import os.path, getpass, shutil, PySimpleGUI as sg
 from ANIM import ANI
-from RESIZE import RES
+from RESZ import RES
 
 # outlines the versions and there pack formats
 packFormat4 = ["1.14","1.14.1","1.14.2","1.14.3","1.14.4"]
@@ -110,9 +110,23 @@ def RTX(textureList, version):
     # sets the base name (for if it isn't changed)
     name = "Totems+ RTX"
 
-    # checks if the resource pack exists and if it does user is prompted to suggest a new name
-    if os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/.minecraft/resourcepacks/Totems+ RTX'):
-        name = sg.popup_get_text("An MCRTX Integration resource pack allready exists\nPlease choose a different name for this one:", title = "Duplicate Pack")
+    # finds all the resourcepacks you already have 
+    dirList = os.listdir('C:/Users/' + getpass.getuser() + '/AppData/Roaming/.minecraft/resourcepacks')
+    
+    # starts a constant repeating loop
+    repeatLoop = True
+    while repeatLoop:
+        
+        # takes the range of values
+        for i in range(len(dirList)):
+            
+            # checks if the name is already in use and popup for rename
+            if name == dirList[i]:
+                name = sg.popup_get_text("An MCRTX Integration resource pack already exists\nPlease choose a different name for this one:", title = "Duplicate Pack")
+                break
+        # else if the name is unique, end the loop
+        else:
+            repeatLoop = False
 
     # pre-makes the resource pack directory in the minecraft resource pack folder
     os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name)

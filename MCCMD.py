@@ -11,7 +11,7 @@ from DOC import DOC
 from FUNC import FUN
 from ADVA import ADV
 from ANIM import ANI
-from RESIZE import RES
+from RESZ import RES
 
 # outlines the versions and there pack formats
 resourcepackFormat4 = ["1.14","1.14.1","1.14.2","1.14.3","1.14.4"]
@@ -143,9 +143,23 @@ def CMD(textureList, version):
                 # sets the deafult foleder name
                 name = "Totems+ CMD"
 
-                # checks if the folder exists and if itdoes user is prompted to choose their own name
-                if os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/.minecraft/resourcepacks/Totems+ CMD'):
-                    name = sg.popup_get_text("An MCCMD Integration resource pack allready exists\nPlease choose a different name for this one:", title = "Duplicate Pack")
+                # finds all the resourcepacks you already have
+                dirList = os.listdir('C:/Users/' + getpass.getuser() + '/AppData/Roaming/.minecraft/resourcepacks')
+
+                # starts a constant repeating loop                
+                repeatLoop = True
+                while repeatLoop:
+
+                    # takes the range of values
+                    for i in range(len(dirList)):
+
+                        # checks if the name is already in use and popup for rename
+                        if name == dirList[i]:
+                            name = sg.popup_get_text("An MCCMD Integration resource pack already exists\nPlease choose a different name for this one:", title = "Duplicate Pack")
+                            break
+                    # else if the name is unique, end the loop
+                    else:
+                        repeatLoop = False
 
                 # pre-makes the resource pack directory in the minecraft resource pack folder
                 os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name)

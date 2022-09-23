@@ -70,6 +70,12 @@ def main():
     # sets the toggle preset
     integration = 0
 
+
+    if not os.path.exists("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft"):
+        sg.popup_error(".minecraft folder does not exist - program cannot run without minecraft installed", title = "Folder not Found", icon="img/totems.ico")
+        exit()
+
+
     # while window (GUI) is open
     while True:
 
