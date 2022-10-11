@@ -7,9 +7,9 @@
 
 # imports the libaries used within Totems+ 
 import os.path, PySimpleGUI as sg, getpass
-from OFCIT import CIT
-from MCCMD import CMD
-from MCRTX import RTX
+from integrations.MCCMD import CMD
+from integrations.OFCIT import CIT
+from integrations.MCRTX import RTX
 
 # sets window theme
 sg.theme('DarkTeal10')

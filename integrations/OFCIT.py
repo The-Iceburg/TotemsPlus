@@ -7,8 +7,8 @@
 
 # imports the libaries used within Totems+ 
 import os, shutil, getpass, PySimpleGUI as sg
-from ANIM import ANI
-from RESZ import RES
+from addons.ANIM import ANI
+from addons.RESZ import RES
 
 # outlines the versions and there pack formats
 packFormat4 = ["1.14","1.14.1","1.14.2","1.14.3","1.14.4"]
