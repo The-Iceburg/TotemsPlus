@@ -6,7 +6,7 @@
 ###################################################################
 
 # imports the libaries used within Totems+ 
-import os, shutil, getpass, PySimpleGUI as sg
+import os, shutil, getpass, PySimpleGUI as sg, json
 from addons.DOC import DOC
 from addons.FUNC import FUN
 from addons.ADVA import ADV
@@ -14,13 +14,25 @@ from addons.ANIM import ANI
 from addons.RESZ import RES
 
 # outlines the versions and there pack formats
-resourcepackFormat4 = ["1.14","1.14.1","1.14.2","1.14.3","1.14.4"]
-resourcepackFormat5 = ["1.15","1.15.1","1.15.2","1.16","1.16.1"]
-resourcepackFormat6 = ["1.16.2","1.16.3","1.16.4","1.16.5"]
-datapackFormat4 = ["1.14","1.14.1","1.14.2","1.14.3","1.14.4"]
-datapackFormat5 = ["1.15","1.15.1","1.15.2","1.16","1.16.1"]
-datapackFormat6 = ["1.16.2","1.16.3","1.16.4","1.16.5"]
-datapackFormat8 = ["1.18","1.18.1"]
+resourcePackformatCodes = {"1.14": 4, "1.14.1": 4, "1.14.2": 4,"1.14.3": 4,"1.14.4": 4,
+                           "1.15": 5, "1.15.1": 5,"1.15.2": 5, "1.16": 5,"1.16.1": 5,
+                           "1.16.2": 6, "1.16.3": 6, "1.16.4": 6, "1.16.5": 6,
+                           "1.17": 7, "1.17.1": 7,
+                           "1.18": 8, "1.18.1": 8, "1.18.2": 8,
+                           "1.19": 9, "1.19.1": 9, "1.19.2": 9}
+dataPackformatCodes = {"1.14": 4, "1.14.1": 4, "1.14.2": 4,"1.14.3": 4,"1.14.4": 4,
+                       "1.15": 5, "1.15.1": 5,"1.15.2": 5, "1.16": 5,"1.16.1": 5,
+                       "1.16.2": 6, "1.16.3": 6, "1.16.4": 6, "1.16.5": 6,
+                       "1.17": 7, "1.17.1": 7,
+                       "1.18": 8, "1.18.1": 8,
+                       "1.18.2": 9,
+                       "1.19": 10, "1.19.1": 10, "1.19.2": 10}
+
+packMeta = {"pack" : {"pack_format": 0, "description": ""}}
+
+totemJSON = {"parent" : "minecraft:item/generated", "textures": { "layer0": "minecraft:item/totem_of_undying"},"overrides":[]}
+
+evokerJSON = {"type": "minecraft:entity", "pools": [ { "rolls": 1.0, "bonus_rolls": 0.0, "entries": [] }, { "rolls": 1.0, "bonus_rolls": 0.0, "entries": [ { "type": "minecraft:item", "functions": [ { "function": "minecraft:set_count", "count": { "type": "minecraft:uniform", "min": 0.0, "max": 1.0 }, "add": False }, { "function": "minecraft:looting_enchant", "count": { "type": "minecraft:uniform", "min": 0.0, "max": 1.0 } } ], "name": "minecraft:emerald" } ], "conditions": [ { "condition": "minecraft:killed_by_player" } ] } ] }
 
 # defines the CMD function
 def CMD(textureList, version):
@@ -157,60 +169,26 @@ def CMD(textureList, version):
                         if name == dirList[i]:
                             name = sg.popup_get_text("An MCCMD Integration resource pack already exists\nPlease choose a different name for this one:", title = "Duplicate Pack")
                             break
+                        
                     # else if the name is unique, end the loop
                     else:
                         repeatLoop = False
 
                 # pre-makes the resource pack directory in the minecraft resource pack folder
-                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name)
-                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets")
-                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft")
-                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models")
+                os.makedirs("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
+                os.makedirs("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/totems")
                 os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/item")
-                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/totems")
-                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures")
-                os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
 
                 # copys the pack.png file into place
                 shutil.copy("img/pack.png", "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name)
 
-                # creates the pack.mcmeta file
-                packMeta = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/pack.mcmeta", "w+")
+                # creates & opens the pack.mcmeta file
+                with open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/pack.mcmeta", "w+") as packMetaFile:
 
-                # derives the packformat code from
-                if version in resourcepackFormat4:
-                    packformat = 4
-                elif version in resourcepackFormat5:
-                    packformat = 5
-                elif version in resourcepackFormat6:
-                    packformat = 6
-                elif version.startswith("1.17"):
-                    packformat = 7
-                elif version.startswith("1.18"):
-                    packformat = 8
-                elif version.startswith("1.19"):
-                    packformat = 9
-
-                # adds the needed meta data to the pack.mcmeta file
-                packMeta.writelines(['{',
-                '  "pack": {',
-                '    "pack_format": ' + str(packformat) + ',',
-                '	"description": "Version: ' + version + '\n',
-                'Made By: The Totems+ Team"',
-                '  }',
-                '}'])
-                packMeta.close()
-
-                # creates the totem_of_undying.json file
-                totemJSON = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/item/totem_of_undying.json", "w+")
-                totemJSON.writelines(['{\n',
-                '  "parent": "minecraft:item/generated",\n',
-                '  "textures": {\n',
-                '    "layer0": "minecraft:item/totem_of_undying"\n',
-                '  },\n',
-                '"overrides":\n',
-                '['])
-                totemJSON.close()
+                    # adds the needed meta data to the pack.mcmeta file
+                    packMeta["pack"]["pack_format"] = resourcePackformatCodes[version]
+                    packMeta["pack"]["description"] = (f"Version: {version}\nMade By: The Totems+ Team")
+                    packMetaFile.write(json.dumps(packMeta))
 
                 # sets the variable worldLocation to the avlues in the world selection box
                 worldLocation = values["WORLD"]
@@ -224,96 +202,47 @@ def CMD(textureList, version):
                         shutil.rmtree(worldLocation + "/datapacks/Totems+ CMD")
 
                 # makes datapack directories
-                os.mkdir(worldLocation + "/datapacks/Totems+ CMD")
-                os.mkdir(worldLocation + "/datapacks/Totems+ CMD/data")
-                os.mkdir(worldLocation + "/datapacks/Totems+ CMD/data/minecraft")
-                os.mkdir(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables")
-                os.mkdir(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities")
+                os.makedirs(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities")
 
                 # copys the pack.png file into place
                 shutil.copy("img/pack.png", worldLocation + "/datapacks/Totems+ CMD")
 
                 # creates the pack.mcmeta file
-                packMeta = open(worldLocation + "/datapacks/Totems+ CMD/pack.mcmeta", "w+")
+                with open(worldLocation + "/datapacks/Totems+ CMD/pack.mcmeta", "w+") as packMetaFile:
 
-                # derives the packformat code from
-                if version in datapackFormat4:
-                    datapackformat = 4
-                elif version in datapackFormat5:
-                    datapackformat = 5
-                elif version in datapackFormat6:
-                    datapackformat = 6
-                elif version.startswith("1.17"):
-                    datapackformat = 7
-                elif version in datapackFormat8:
-                    datapackformat = 8
-                elif version == "1.18.2":
-                    datapackformat = 9
-                elif version.startswith("1.19"):
-                    datapackformat = 10
-
-                # adds the needed meta data to the pack.mcmeta file
-                packMeta.writelines(['{\n',
-                '  "pack": {\n',
-                '    "pack_format": ' + str(datapackformat) + ',\n',
-                '	"description": "Version: ' + version + '\n',
-                'Made By: The Totems+ Team"\n',
-                '  }\n',
-                '}'])
-                packMeta.close()
-
-                # creates the evoker.json loot_table file
-                evokerJSON = open(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities/evoker.json", "w+")
-
-                # adds non-repatative starting data to the evoker.json file
-                evokerJSON.writelines(['{\n',
-                '  "type": "minecraft:entity",\n',
-                '  "pools": [\n',
-                '    {\n',
-                '      "rolls": ' + str(values['rolls']) + '.0,\n',
-                '      "bonus_rolls": ' + str(values['bonusrolls']) + '.0,\n',
-                '      "entries": [\n'])
-                evokerJSON.close()
+                    # writes nesesary info to the pack.mcmeta file for the datapack
+                    packMeta["pack"]["pack_format"] = dataPackformatCodes[version]
+                    packMeta["pack"]["description"] = (f"Version: {version}\nMade By: The Totems+ Team")
+                    packMetaFile.write(json.dumps(packMeta))
 
                 # creates new lists for transfer of data to other files
-                nameList = []
-                loreList = []
-                weightList = []
-                incnamelist = []
-                inclorelist = []
+                nameList, loreList, weightList, incnamelist, inclorelist = [], [], [], [], []
 
                 # cycles the image to the first image
                 window.Element('-IMAGE-').update(filename=pathList[0])
+
                 # sets the counter to 1
                 counter = 0
 
         # else if the next button and the length of the texture list isn't equal to the counter + 1
-        elif event == 'next' and len(textureList) != counter + 1:
+        elif event == 'next':
 
             # asks for the rename value for each file and replaceing any " " with "_"
             rename = values["itemName"].replace(" ", "_")
 
-            # adds new CustomModel line to the totem_of_undying.json file (with comma)
-            totemJSON = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/item/totem_of_undying.json", "a")
-            totemJSON.writelines("\n")
-            totemJSON.write('	  {"predicate": {"custom_model_data":' + str(910340 + counter) +'}, "model": "totems/'+ str(rename.lower()) +'"},')
-            totemJSON.close()
+            # adds new CustomModel line to the totem_of_undying.json file (with comma
+            totemJSON["overrides"].append({"predicate": {"custom_model_data": (910340 + counter)}, "model": (f"totems/{rename.lower()}")})
 
             # creates a file for the individual totem
-            individualTotem = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/totems/" + str(rename.lower()) + ".json", "w+")
+            with open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/totems/" + str(rename.lower()) + ".json", "w+") as individualTotemFile:
 
-            # deduces the file name from its location
-            textureListSplit = textureList[counter].split("/")
-            TLSfilename = textureListSplit[-1].replace(".gif", ".png")
-            
-            # adds needed meta data to the individual totem file
-            individualTotem.writelines(['{\n',
-            '	"parent": "minecraft:item/generated",\n',
-            '	"textures": {\n',
-            '	  "layer0": "minecraft:totems/' + TLSfilename + '"',
-            '	}\n',
-            '}\n'])
-            individualTotem.close()
+                # deduces the file name from its location
+                textureListSplit = textureList[counter].split("/")
+                TLSfilename = textureListSplit[-1].replace(".gif", ".png")
+
+                # writes appropeiate data to the json file
+                individualTotem = {"parent": "minecraft:item/generated", "textures": {"layer0": (f"minecraft:{TLSfilename}")}}
+                individualTotemFile.write(json.dumps(individualTotem))
             
             # if the file is a .gif file
             if textureList[counter].endswith('.gif'):
@@ -327,49 +256,18 @@ def CMD(textureList, version):
                 # copys the image into the resource pack
                 shutil.copy(textureList[counter], "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
 
-            # writes the repetative data to the evoker.josn file (with comma)
-            evokerJSON = open(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities/evoker.json", "a")
-            evokerJSON.writelines(['        {\n',
-            '          "type": "minecraft:item",\n',
-            '          "name": "minecraft:totem_of_undying",\n',
-            '		  "weight": ' + str(values['itemWeight']) +',\n',
-            '		  "functions": [\n',
-            '            {\n',
-            '              "function": "minecraft:set_nbt",\n'])
-            evokerJSON.write('              "tag": "' + '{' + 'CustomModelData:' + str(910340 + counter) + '}' + '"\n')
-            evokerJSON.write('            }')
+            customModelDataKey = '"' + '{' + 'CustomModelData:' + str(910340 + counter) + '}' + '"'
+            evokerJSON["pools"]["entries"].append({"type": "minecraft:item", "name": "minecraft:totem_of_undying", "weight": values['itemWeight'], "functions": [ { "function": "minecraft:set_nbt", "tag": customModelDataKey } ] })
 
             # if the name is chosen to be in-game then
             if values['in-game']:
                 
-                # sets the item name to value the user entered
-                evokerJSON.writelines([',\n',
-                '			{\n',
-                '              "function": "minecraft:set_name",\n',
-                '              "entity": "this",\n',
-                '              "name": "' + values["itemName"] + '"\n',
-                '			}'])
+                evokerJSON["pools"]["entries"][counter]["functions"].append({"function": "minecraft:set_name", "entity": "this", "name": values['itemName']})
 
             # if the lore is chosen to be in-game then
             if values['loreCheck']:
 
-                # sets the lore to value the user entered
-                evokerJSON.writelines([',\n',
-                '			{\n',
-                '              "function": "minecraft:set_lore",\n',
-                '              "entity": "this",\n',
-                '              "lore": [\n',
-                '                {\n',
-                '                  "text": "' + values['lore'] + '"\n',
-                '                }\n',
-                '              ]\n',
-                '            }'])
-
-            # writes final info to evoker loot_tabel
-            evokerJSON.writelines(['\n',
-            '          ]\n',
-            '        },\n'])
-            evokerJSON.close()
+                evokerJSON["pools"]["entries"][counter]["functions"].append({"function": "minecraft:set_lore", "entity": "this", "lore": [ { "text": values['lore']}]})
 
             # adds nessesary info to lists for file transfer later
             nameList.append(values["itemName"])
@@ -389,167 +287,38 @@ def CMD(textureList, version):
             # increases counter by 1
             counter += 1
 
-        # else if the next button and the length of the texture list is equal to the counter + 1
-        elif event == 'next' and len(textureList) == counter + 1:
+            if len(textureList) == counter + 1:
 
-            # asks for the rename value for each file and replaceing any " " with "_"
-            rename = values["itemName"].replace(" ", "_")
+                # finishes the totem_of_undying.json file
+                with open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/item/totem_of_undying.json", "w+") as totemJSONFile:
+                    totemJSONFile.write(json.dumps(totemJSON))
 
-            # adds new CustomModel line to the totem_of_undying.json file (without comma)
-            totemJSON = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/item/totem_of_undying.json", "a")
-            totemJSON.write("\n")
-            totemJSON.write('	  {"predicate": {"custom_model_data":' + str(910340 + counter) + '}, "model": "totems/'+ str(rename.lower()) +'"}\n')
-            totemJSON.close()
+                with open(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities/evoker.json", "w+") as evokerJSONFile:
+                    evokerJSONFile.write(json.dumps(evokerJSON))
 
-            # creates a file for the individual totem
-            individualTotem = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/totems/" + str(rename.lower()) + ".json", "w+")
+                # if the documentation box remains checked
+                if values['documentation'] == True:
 
-            # deduces the file name from its location
-            textureListSplit = textureList[counter].split("/")
-            TLSfilename = textureListSplit[-1].replace(".gif", ".png")
-            
-            # adds needed meta data to the individual totem file
-            individualTotem.writelines(['{\n',
-            '	"parent": "minecraft:item/generated",\n',
-            '	"textures": {\n',
-            '	  "layer0": "minecraft:totems/' + TLSfilename + '"',
-            '	}\n',
-            '}\n'])
-            individualTotem.close()
+                    # runs the documentation subroutine
+                    DOC(worldLocation, nameList, weightList, incnamelist, inclorelist, loreList)
 
-            # if the file is a .gif file
-            if textureList[counter].endswith('.gif'):
-                
-                # copys the new gif texture to the pack
-                shutil.copy(ANI(textureList[counter], name, "MCCMD", rename), "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
+                # if the functions box remains checked
+                if values['functions'] == True:
 
-            # else
-            else:
+                    # runs FUN subroutine
+                    FUN(worldLocation, nameList, incnamelist, inclorelist, loreList)
 
-                # copys the image into the resource pack
-                shutil.copy(textureList[counter], "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
-                
-            # writes the repetative data to the evoker.josn file (without comma)
-            evokerJSON = open(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities/evoker.json", "a")
-            evokerJSON.writelines(['        {\n',
-            '          "type": "minecraft:item",\n',
-            '          "name": "minecraft:totem_of_undying",\n',
-            '		  "weight": ' + str(values['itemWeight']) +',\n',
-            '		  "functions": [\n',
-            '            {\n',
-            '              "function": "minecraft:set_nbt",\n'])
-            evokerJSON.write('              "tag": "' + '{' + 'CustomModelData:' + str(910340 + counter) +'}' + '"\n')
-            evokerJSON.write('            }')
+                # if advancements is checked
+                if values['advancements'] == True:
 
-            # if the name is chosen to be in-game then
-            if values['in-game'] == True:
+                    # writes adv subroutine
+                    ADV(worldLocation, nameList, name)
 
-                # sets the item name to value the user entered
-                evokerJSON.write(',')
-                evokerJSON.writelines(['\n',
-                '			{\n',
-                '              "function": "minecraft:set_name",\n',
-                '              "entity": "this",\n',
-                '              "name": "' + values["itemName"] + '"\n',
-                '			}'])
+                # prints completion message to user
+                sg.popup_ok("Pack creation complete! Load up Minecraft and your Totems+ pack will appear in your resourcepack folder!", title = "Pack Completion", icon="img/totems.ico")
 
-            # if the lore is chosen to be in-game then
-            if values['loreCheck'] == True:
-
-                # sets the lore to value the user entered
-                evokerJSON.write(',')
-                evokerJSON.writelines(['\n',
-                '			{\n',
-                '              "function": "minecraft:set_lore",\n',
-                '              "entity": "this",\n',
-                '              "lore": [\n',
-                '                {\n',
-                '                  "text": "' + values['lore'] + '"\n',
-                '                }\n',
-                '              ]\n',
-                '            }'])
-
-            # adds nessesary info to lists for file transfer later
-            nameList.append(values["itemName"])
-            loreList.append(values["lore"])
-            weightList.append(values["itemWeight"])
-            incnamelist.append(values["in-game"])
-            inclorelist.append(values["loreCheck"])
-
-            # adds non-repatative ending data to the evoker.json file
-            evokerJSON.writelines(['\n',
-            '          ]\n',
-            '        }\n',
-            '      ]\n',
-            '    },\n',
-            '    {\n',
-            '      "rolls": 1.0,\n',
-            '      "bonus_rolls": 0.0,\n',
-            '      "entries": [\n',
-            '        {\n',
-            '          "type": "minecraft:item",\n',
-            '          "functions": [\n',
-            '            {\n',
-            '              "function": "minecraft:set_count",\n',
-            '              "count": {\n',
-            '                "type": "minecraft:uniform",\n',
-            '                "min": 0.0,\n',
-            '                "max": 1.0\n',
-            '              },\n',
-            '              "add": false\n',
-            '            },\n',
-            '            {\n',
-            '              "function": "minecraft:looting_enchant",\n',
-            '              "count": {\n',
-            '                "type": "minecraft:uniform",\n',
-            '                "min": 0.0,\n',
-            '                "max": 1.0\n',
-            '              }\n',
-            '            }\n',
-            '          ],',
-            '          "name": "minecraft:emerald"\n',
-            '        }\n',
-            '      ],\n',
-            '      "conditions": [\n',
-            '        {\n',
-            '          "condition": "minecraft:killed_by_player"\n',
-            '        }\n',
-            '      ]\n',
-            '    }\n',
-            '  ]\n',
-            '}'])
-            evokerJSON.close()
-
-            # finishes the totem_of_undying.json file
-            totemJSON = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/item/totem_of_undying.json", "a")
-            totemJSON.writelines([']\n',
-            '}'])
-            totemJSON.close()
-
-            # if the documentation box remains checked
-            if values['documentation'] == True:
-
-                # runs the documentation subroutine
-                DOC(worldLocation, nameList, weightList, incnamelist, inclorelist, loreList)
-
-            # if the functions box remains checked
-            if values['functions'] == True:
-                
-                # runs FUN subroutine
-                FUN(worldLocation, nameList, incnamelist, inclorelist, loreList)
-
-            # if advancements is checked
-            if values['advancements'] == True:
-
-                # writes adv subroutine
-                ADV(worldLocation, nameList, name)
-
-            # prints completion message to user
-            sg.popup_ok("Pack creation complete! Load up Minecraft and your Totems+ pack will appear in your resourcepack folder!", title = "Pack Completion", icon="img/totems.ico")
-            
-            # breaks the loop (hence closing all windows)
-            break
+                # breaks the loop (hence closing all windows)
+                break
 
     # closes window if called
     window.close()
-    
