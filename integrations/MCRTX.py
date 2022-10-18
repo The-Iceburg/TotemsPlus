@@ -19,7 +19,7 @@ packFormatCodes = {"1.14": 4, "1.14.1": 4, "1.14.2": 4,"1.14.3": 4,"1.14.4": 4,
                    "1.19": 9, "1.19.1": 9, "1.19.2": 9}
 
 # outlines the pack meta information
-packMeta = {"pack" : {"pack_format": 0, "description": "Made By: The Totems+ Team"}}
+packMeta = {"pack" : {"pack_format": 0, "description": ""}}
 
 # defines the RTX function
 def RTX(textureList, version):
@@ -140,6 +140,7 @@ def RTX(textureList, version):
 
         # adds the needed meta data to the pack.mcmeta file
         packMeta["pack"]["pack_format"] = packFormatCodes[version]
+        packMeta["pack"]["description"] = (f"Version: {version}\nMade By: The Totems+ Team")
         packMetaFile.write(json.dumps(packMeta))
 
     # if the file is a .gif file
