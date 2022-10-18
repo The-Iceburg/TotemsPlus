@@ -6,14 +6,18 @@
 ###################################################################
 
 # imports the libaries used within Totems+ 
-import os.path, getpass, shutil, PySimpleGUI as sg
+import os.path, getpass, shutil, PySimpleGUI as sg, json
 from addons.ANIM import ANI
 from addons.RESZ import RES
 
-# outlines the versions and there pack formats
-packFormat4 = ["1.14","1.14.1","1.14.2","1.14.3","1.14.4"]
-packFormat5 = ["1.15","1.15.1","1.15.2","1.16","1.16.1"]
-packFormat6 = ["1.16.2","1.16.3","1.16.4","1.16.5"]
+packFormatCodes = {("1.14","1.14.1","1.14.2","1.14.3","1.14.4"): 4,
+("1.15","1.15.1","1.15.2","1.16","1.16.1"): 5,
+("1.16.2","1.16.3","1.16.4","1.16.5"): 6,
+("1.17", "1.17.1"): 7,
+("1.18", "1.18.1", "1.18.2"): 8,
+("1.19", "1.19.1", "1.19.2"): 9}
+
+packMeta = {"pack" : {"pack_format": 0, "description": "Made By: The Totems+ Team"}}
 
 # defines the RTX function
 def RTX(textureList, version):
@@ -129,41 +133,17 @@ def RTX(textureList, version):
             repeatLoop = False
 
     # pre-makes the resource pack directory in the minecraft resource pack folder
-    os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name)
-    os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets")
-    os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft")
-    os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures")
-    os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/item")
+    os.makedirs("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/item")
 
     # copys the pack.png file into place
     shutil.copy("img/pack.png", "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name)
 
     # creates & opens the pack.mcmeta file
-    packMeta = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/pack.mcmeta", "w+")
+    with open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/pack.mcmeta", "w+") as packMetaFile:
 
-    # derrives the resource pack format code from the version
-    if version in packFormat4:
-        packFormat = 4
-    elif version in packFormat5:
-        packFormat = 5
-    elif version in packFormat6:
-        packFormat = 6
-    elif version.startswith("1.17"):
-        packFormat = 7
-    elif version.startswith("1.18"):
-        packFormat = 8
-    elif version.startswith("1.19"):
-        packFormat = 9
-
-    # adds the needed meta data to the pack.mcmeta file
-    packMeta.writelines(['{\n',
-    '  "pack": {\n',
-    '    "pack_format": ' + str(packFormat) + ',\n',
-    '	"description": "Version: ' + version + '\n',
-    'Made By: The Totems+ Team"\n',
-    '  }\n',
-    '}'])
-    packMeta.close()
+        # adds the needed meta data to the pack.mcmeta file
+        packMeta["pack"]["pack_format"] = packFormatCodes[version]
+        packMetaFile.write(json.dumps(packMeta))
 
      # if the file is a .gif file
     if textureList[0].endswith('.gif'):
