@@ -10,6 +10,7 @@ import os.path, getpass, shutil, PySimpleGUI as sg, json
 from addons.ANIM import ANI
 from addons.RESZ import RES
 
+# outlines the versions corresponding pack format code
 packFormatCodes = {("1.14","1.14.1","1.14.2","1.14.3","1.14.4"): 4,
 ("1.15","1.15.1","1.15.2","1.16","1.16.1"): 5,
 ("1.16.2","1.16.3","1.16.4","1.16.5"): 6,
@@ -17,6 +18,7 @@ packFormatCodes = {("1.14","1.14.1","1.14.2","1.14.3","1.14.4"): 4,
 ("1.18", "1.18.1", "1.18.2"): 8,
 ("1.19", "1.19.1", "1.19.2"): 9}
 
+# outlines the pack meta information
 packMeta = {"pack" : {"pack_format": 0, "description": "Made By: The Totems+ Team"}}
 
 # defines the RTX function
@@ -57,24 +59,19 @@ def RTX(textureList, version):
         # creates the window
         window = sg.Window("CIT", layout, icon="img/totems.ico")
 
-         # while window (GUI) is open
+        # while window (GUI) is open
         while True:
 
             # read all events/actions
-            event, values = window.read()
+            event = window.read()
 
             # if window closed break while loop and end code
             if event == sg.WIN_CLOSED:
-                break
+                exit()
             
-            # if the cancel button is pressed
+            # if the cancel button is pressed closes the window
             if event == 'cancel':
-
-                # a confirmation window is displayed and if the user agrees all files are removed
-                result = sg.popup_ok_cancel("Are you sure?")
-
-                if result == "OK":
-                    break
+                exit()
 
             # if the next button
             if event == 'next':
@@ -132,7 +129,7 @@ def RTX(textureList, version):
         else:
             repeatLoop = False
 
-    # pre-makes the resource pack directory in the minecraft resource pack folder
+    # makes the resource pack directory in the minecraft resource pack folder
     os.makedirs("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/item")
 
     # copys the pack.png file into place
@@ -145,7 +142,7 @@ def RTX(textureList, version):
         packMeta["pack"]["pack_format"] = packFormatCodes[version]
         packMetaFile.write(json.dumps(packMeta))
 
-     # if the file is a .gif file
+    # if the file is a .gif file
     if textureList[0].endswith('.gif'):
 
         # copys the new gif texture to the pack
@@ -153,6 +150,7 @@ def RTX(textureList, version):
 
     # else
     else:
+
         # copys the image into the resource pack
         shutil.copy(textureList[0], "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/item")
 
