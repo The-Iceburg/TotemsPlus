@@ -6,7 +6,7 @@
 ###################################################################
 
 # imports the libaries used within Totems+ 
-import os.path, getpass, shutil, PySimpleGUI as sg, json
+import os.path, getpass, shutil, json, PySimpleGUI as sg
 from addons.ANIM import ANI
 from addons.RESZ import RES
 
