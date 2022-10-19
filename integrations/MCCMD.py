@@ -241,7 +241,7 @@ def CMD(textureList, version):
                 TLSfilename = textureListSplit[-1].replace(".gif", ".png")
 
                 # writes appropeiate data to the json file
-                individualTotem = {"parent": "minecraft:item/generated", "textures": {"layer0": (f"minecraft:{TLSfilename}")}}
+                individualTotem = {"parent": "minecraft:item/generated", "textures": {"layer0": (f"minecraft:totems/{TLSfilename}")}}
                 individualTotemFile.write(json.dumps(individualTotem))
             
             # if the file is a .gif file
@@ -268,6 +268,13 @@ def CMD(textureList, version):
             if values['loreCheck']:
 
                 evokerJSON["pools"][0]["entries"][counter]["functions"].append({"function": "minecraft:set_lore", "entity": "this", "lore": [ { "text": values['lore']}]})
+
+            # adds nessesary info to lists for file transfer later
+            nameList.append(values["itemName"])
+            weightList.append(values["itemWeight"])
+            loreList.append(values["lore"])
+            incnamelist.append(values["in-game"])
+            inclorelist.append(values["loreCheck"])
 
             # increases counter by 1
             counter += 1
@@ -306,13 +313,6 @@ def CMD(textureList, version):
 
                 # breaks the loop (hence closing all windows)
                 break
-
-            # adds nessesary info to lists for file transfer later
-            nameList.append(values["itemName"])
-            weightList.append(values["itemWeight"])
-            loreList.append(values["lore"])
-            incnamelist.append(values["in-game"])
-            inclorelist.append(values["loreCheck"])
 
             # cycles the image to the next in the list
             window.Element('-IMAGE-').update(filename=pathList[counter])
