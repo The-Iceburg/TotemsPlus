@@ -296,7 +296,7 @@ def CMD(textureList, version):
                 # if advancements is checked
                 if values['advancements'] == True:
 
-                    totemJSON["overrides"].append({"predicate": {"custom_model_data": 910339}, "model": "totems/totemsplus"})
+                    totemJSON["overrides"].insert(0, {"predicate": {"custom_model_data": 910339}, "model": "totems/totemsplus"})
 
                     # writes adv subroutine
                     ADV(worldLocation, nameList, name)
