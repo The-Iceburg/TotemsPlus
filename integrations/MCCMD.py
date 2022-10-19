@@ -256,45 +256,23 @@ def CMD(textureList, version):
                 # copys the image into the resource pack
                 shutil.copy(textureList[counter], "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/textures/totems")
 
-            customModelDataKey = '"' + '{' + 'CustomModelData:' + str(910340 + counter) + '}' + '"'
-            evokerJSON["pools"]["entries"].append({"type": "minecraft:item", "name": "minecraft:totem_of_undying", "weight": values['itemWeight'], "functions": [ { "function": "minecraft:set_nbt", "tag": customModelDataKey } ] })
+            customModelDataKey = '{' + 'CustomModelData:' + str(910340 + counter) + '}'
+            evokerJSON["pools"][0]["entries"].append({"type": "minecraft:item", "name": "minecraft:totem_of_undying", "weight": values['itemWeight'], "functions": [ { "function": "minecraft:set_nbt", "tag": str(customModelDataKey) } ] })
 
             # if the name is chosen to be in-game then
             if values['in-game']:
                 
-                evokerJSON["pools"]["entries"][counter]["functions"].append({"function": "minecraft:set_name", "entity": "this", "name": values['itemName']})
+                evokerJSON["pools"][0]["entries"][counter]["functions"].append({"function": "minecraft:set_name", "entity": "this", "name": values['itemName']})
 
             # if the lore is chosen to be in-game then
             if values['loreCheck']:
 
-                evokerJSON["pools"]["entries"][counter]["functions"].append({"function": "minecraft:set_lore", "entity": "this", "lore": [ { "text": values['lore']}]})
-
-            # adds nessesary info to lists for file transfer later
-            nameList.append(values["itemName"])
-            weightList.append(values["itemWeight"])
-            loreList.append(values["lore"])
-            incnamelist.append(values["in-game"])
-            inclorelist.append(values["loreCheck"])
-
-            # cycles the image to the next in the list
-            window.Element('-IMAGE-').update(filename=pathList[counter + 1])
-
-            # clears the text boxes
-            window.Element('itemName').update('')
-            window.Element('itemWeight').update('1')
-            window.Element('lore').update('')
+                evokerJSON["pools"][0]["entries"][counter]["functions"].append({"function": "minecraft:set_lore", "entity": "this", "lore": [ { "text": values['lore']}]})
 
             # increases counter by 1
             counter += 1
 
-            if len(textureList) == counter + 1:
-
-                # finishes the totem_of_undying.json file
-                with open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/item/totem_of_undying.json", "w+") as totemJSONFile:
-                    totemJSONFile.write(json.dumps(totemJSON))
-
-                with open(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities/evoker.json", "w+") as evokerJSONFile:
-                    evokerJSONFile.write(json.dumps(evokerJSON))
+            if len(textureList) == counter:
 
                 # if the documentation box remains checked
                 if values['documentation'] == True:
@@ -311,14 +289,38 @@ def CMD(textureList, version):
                 # if advancements is checked
                 if values['advancements'] == True:
 
+                    totemJSON["overrides"].append({"predicate": {"custom_model_data": 910339}, "model": "totems/totemsplus"})
+
                     # writes adv subroutine
                     ADV(worldLocation, nameList, name)
+
+                # finishes the totem_of_undying.json file
+                with open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/models/item/totem_of_undying.json", "w+") as totemJSONFile:
+                    totemJSONFile.write(json.dumps(totemJSON))
+
+                with open(worldLocation + "/datapacks/Totems+ CMD/data/minecraft/loot_tables/entities/evoker.json", "w+") as evokerJSONFile:
+                    evokerJSONFile.write(json.dumps(evokerJSON))
 
                 # prints completion message to user
                 sg.popup_ok("Pack creation complete! Load up Minecraft and your Totems+ pack will appear in your resourcepack folder!", title = "Pack Completion", icon="img/totems.ico")
 
                 # breaks the loop (hence closing all windows)
                 break
+
+            # adds nessesary info to lists for file transfer later
+            nameList.append(values["itemName"])
+            weightList.append(values["itemWeight"])
+            loreList.append(values["lore"])
+            incnamelist.append(values["in-game"])
+            inclorelist.append(values["loreCheck"])
+
+            # cycles the image to the next in the list
+            window.Element('-IMAGE-').update(filename=pathList[counter])
+
+            # clears the text boxes
+            window.Element('itemName').update('')
+            window.Element('itemWeight').update('1')
+            window.Element('lore').update('')
 
     # closes window if called
     window.close()
