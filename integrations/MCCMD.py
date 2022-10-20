@@ -71,12 +71,11 @@ def CMD(textureList, version):
         ],
         [
             sg.Text('Weight:'),
-            sg.Spin(values=[i for i in range(1, 100)], initial_value=1, size=(25, 1), disabled=True, key='itemWeight'),
+            sg.Spin(values=[i for i in range(1, 100)], initial_value=1, size=(25, 1), disabled=True, key='itemWeight')
         ],
         [
             sg.Text('Lore:    '),
-            sg.InputText(size=(25, 1), disabled=True, key='lore'),
-            sg.Checkbox('Lore', default=False, disabled=True, key='loreCheck',tooltip='Add custom lore to the totem item in-game')
+            sg.InputText(size=(25, 1), disabled=True, key='lore')
         ],
         [
             sg.Checkbox('Documentation', default=True, disabled=True, key='documentation',tooltip='Generates a custom documentation file!'),
@@ -149,7 +148,6 @@ def CMD(textureList, version):
                 window.Element('functions').update(disabled=False)
                 window.Element('in-game').update(disabled=False)
                 window.Element('lore').update(disabled=False)
-                window.Element('loreCheck').update(disabled=False)
                 window.Element('advancements').update(disabled=False)
 
                 # sets the deafult foleder name
@@ -265,7 +263,7 @@ def CMD(textureList, version):
                 evokerJSON["pools"][0]["entries"][counter]["functions"].append({"function": "minecraft:set_name", "entity": "this", "name": values['itemName']})
 
             # if the lore is chosen to be in-game then
-            if values['loreCheck']:
+            if values['lore'] != None:
 
                 evokerJSON["pools"][0]["entries"][counter]["functions"].append({"function": "minecraft:set_lore", "entity": "this", "lore": [ { "text": values['lore']}]})
 
@@ -274,7 +272,6 @@ def CMD(textureList, version):
             weightList.append(values["itemWeight"])
             loreList.append(values["lore"])
             incnamelist.append(values["in-game"])
-            inclorelist.append(values["loreCheck"])
 
             # increases counter by 1
             counter += 1
@@ -285,13 +282,13 @@ def CMD(textureList, version):
                 if values['documentation'] == True:
 
                     # runs the documentation subroutine
-                    DOC(worldLocation, nameList, weightList, incnamelist, inclorelist, loreList)
+                    DOC(worldLocation, nameList, weightList, incnamelist, loreList)
 
                 # if the functions box remains checked
                 if values['functions'] == True:
 
                     # runs FUN subroutine
-                    FUN(worldLocation, nameList, incnamelist, inclorelist, loreList)
+                    FUN(worldLocation, nameList, incnamelist, loreList)
 
                 # if advancements is checked
                 if values['advancements'] == True:
