@@ -9,7 +9,7 @@
 import os
 
 # defines the function function
-def FUN(worldLocation, nameList, inGameName, inGameLore, loreList):
+def FUN(worldLocation, nameList, inGameName, loreList):
 
     # creates the function directory
     os.makedirs(worldLocation + "/datapacks/Totems+ CMD/data/totemsplus/functions")
@@ -24,13 +24,13 @@ def FUN(worldLocation, nameList, inGameName, inGameLore, loreList):
             mcfunction.write('give @s minecraft:totem_of_undying{')
 
             # writes the rest of the command dependent on if the in-game box was checked for name and if lore has a vaue
-            if inGameName[i] == True and loreList[i] != None:
+            if inGameName[i] == True and loreList[i] != "":
                 mcfunction.write('''display:{Name:'[{"text":"''' + nameList[i] + '''"}]',Lore:['[{"text":"''' + loreList[i]+ '''"}]']},CustomModelData:''' + str(910340 + i) +'} 1\n')
 
             elif inGameName[i] == True:
                 mcfunction.write('''display:{Name:'[{"text":"''' + nameList[i] + '''"}]'},CustomModelData:''' + str(910340 + i) +'} 1\n')
 
-            elif loreList[i] != None:
+            elif loreList[i] != "":
                 mcfunction.write('''display:{Lore:['[{"text":"''' + loreList[i] + '''"}]']},CustomModelData:''' + str(910340 + i) +'} 1\n')
 
             else:
@@ -46,13 +46,13 @@ def FUN(worldLocation, nameList, inGameName, inGameLore, loreList):
             mcfunction.write('give @s minecraft:totem_of_undying{')
 
             # writes the rest of the command dependent on if the in-game box was checked for name and if lore has a value
-            if inGameName[i] == "True" and inGameLore[i] == "True":
+            if inGameName[i] == "True" and loreList[i] != "":
                 mcfunction.write('''display:{Name:'[{"text":"''' + nameList[i] + '''"}]',Lore:['[{"text":"''' + loreList[i]+ '''"}]']},CustomModelData:''' + str(910340 + i) +'} 1\n')
 
             elif inGameName[i] == "True":
                 mcfunction.write('''display:{Name:'[{"text":"''' + nameList[i] + '''"}]'},CustomModelData:''' + str(910340 + i) +'} 1\n')
 
-            elif inGameLore[i] == "True":
+            elif loreList[i] != "":
                 mcfunction.write('''display:{Lore:['[{"text":"''' + loreList[i] + '''"}]']},CustomModelData:''' + str(910340 + i) +'} 1\n')
 
             else:
