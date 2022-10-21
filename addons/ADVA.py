@@ -6,9 +6,7 @@
 ###################################################################
 
 # imports the libaries used within totems+
-import os
-import getpass
-import shutil
+import os, getpass, shutil
 
 # defines the get size subroutine
 def get_size(fileobject):

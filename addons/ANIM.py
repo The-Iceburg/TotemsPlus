@@ -7,16 +7,17 @@
 
 # imports the libaries used within totems+
 from PIL import Image
-import os, shutil, getpass
+import os, shutil, getpass, json
+
+# outlines the mcmeta file
+mcMeta = {"animation": {"frametime" : 0 }}
 
 # defines the texture convereter subroutine
 def ANI(imageLocation, packName, integrationType, rename):
 
-    
     # opens the image as an object python/PIL can interact with
     imageObject = Image.open(imageLocation)
     
-
     # if the gif width and height are equal then
     if imageObject.size[1] == imageObject.size[0]:
 
@@ -112,49 +113,31 @@ def ANI(imageLocation, packName, integrationType, rename):
     if integrationType == "MCCMD":
 
         # creates the .mcmeta in the appropriate location for the integration type (MCCMD)
-        file = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/textures/totems/" + llfilename + ".mcmeta", "w+")
-
-        # writes the appropriate data to the file
-        file.writelines(['{\n',
-        '  "animation": {\n'])
-        file.write('    "frametime": ' + str(FRAMETIME) + '\n')
-        file.writelines(['  }\n',
-        '}'])
-
-        # saves / closes the file
-        file.close()
+        with open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/textures/totems/" + llfilename + ".mcmeta", "w+") as mcMetaFile:
+            
+            # writes nessesary info to the file
+            mcMeta["animation"]["frametime"] = FRAMETIME
+            mcMetaFile.write(json.dumps(mcMeta))
 
     # if the integration type is OFCIT
     elif integrationType == "OFCIT":
 
         # creates the .mcmeta in the appropriate location for the integration type (OFCIT)
-        file = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/optifine/cit/totems/" + str(rename.lower()) + "/" + llfilename + ".mcmeta", "w+")
-
-        # writes the appropriate data to the file
-        file.writelines(['{\n',
-        '  "animation": {\n'])
-        file.write('    "frametime": ' + str(FRAMETIME) + '\n')
-        file.writelines(['  }\n',
-        '}'])
-
-        # saves / closes the file
-        file.close()
+        with open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/optifine/cit/totems/" + str(rename.lower()) + "/" + llfilename + ".mcmeta", "w+") as mcMetaFile:
+            
+            # writes nessesary info to the file
+            mcMeta["animation"]["frametime"] = FRAMETIME
+            mcMetaFile.write(json.dumps(mcMeta))
 
     # if the integration type is MCRTX
     elif integrationType == "MCRTX":
 
         # creates the .mcmeta in the appropriate location for the integration type (MCRTX)
-        file = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/textures/item/totem_of_undying.png.mcmeta", "w+")
+        with open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/textures/item/totem_of_undying.png.mcmeta", "w+") as mcMetaFile:
 
-        # writes the appropriate data to the file
-        file.writelines(['{\n',
-        '  "animation": {\n'])
-        file.write('    "frametime": ' + str(FRAMETIME) + '\n')
-        file.writelines(['  }\n',
-        '}'])
-
-        # saves / closes the file
-        file.close()
+            # writes nessesary info to the file
+            mcMeta["animation"]["frametime"] = FRAMETIME
+            mcMetaFile.write(json.dumps(mcMeta))
 
     # returns the new / appropriate location for the gif texture
     return "C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/giftexture/" + llfilename
