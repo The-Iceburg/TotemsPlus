@@ -2,7 +2,7 @@
 
   You can download & install the latest version of Totems+ here:
 
-  [Totems+ v1.3.0](https://www.mediafire.com/file/lgybnu8a3t60m4i/Totems++Installer.exe/file)
+  [Totems+ v1.4.0](https://www.mediafire.com/file/9assdno3kiww5kq/Totems++Installer.exe/file)
   
 # 
 # 🟠 Introduction
