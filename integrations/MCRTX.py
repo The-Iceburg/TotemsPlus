@@ -57,13 +57,13 @@ def RTX(textureList, version):
         ]
 
         # creates the window
-        window = sg.Window("CIT", layout, icon="img/totems.ico")
+        window = sg.Window("RTX", layout, icon="img/totems.ico")
 
         # while window (GUI) is open
         while True:
 
             # read all events/actions
-            event = window.read()
+            event, values = window.read()
 
             # if window closed break while loop and end code
             if event == sg.WIN_CLOSED:
