@@ -52,7 +52,7 @@ def ADV(worldLocation, nameList, name):
 
             nbt = "{CustomModelData:" + str(910340 + i) + "}"
 
-            collectAll["criteria"][f"Collect{nameList[i]}"] = { "trigger": "minecraft:inventory_changed", "conditions": { "item": [ { "item": "minecraft:totem_of_undying", "nbt": nbt } ] } }
+            collectAll["criteria"][f"Collect{nameList[i]}"] = { "trigger": "minecraft:inventory_changed", "conditions": { "items": [ { "item": "minecraft:totem_of_undying", "nbt": nbt } ] } }
 
         collectAllFile.write(json.dumps(collectAll))
 
@@ -66,7 +66,7 @@ def ADV(worldLocation, nameList, name):
 
             nbt = "{CustomModelData:" + str(910340 + i) + "}"
 
-            useAll["criteria"][f"Use{nameList[i]}"] = { "trigger": "minecraft:inventory_changed", "conditions": { "item": { "item": "minecraft:totem_of_undying", "nbt": nbt } } }
+            useAll["criteria"][f"Use{nameList[i]}"] = { "trigger": "minecraft:used_totem", "conditions": { "item": { "item": "minecraft:totem_of_undying", "nbt": nbt } } }
 
         useAllFile.write(json.dumps(useAll))
 
@@ -79,7 +79,7 @@ def ADV(worldLocation, nameList, name):
         with open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/collect' + nameList[i].lower().replace(" ","_") + '.json', 'w+') as collectTotemFile:
 
             nbt = "{CustomModelData:" + str(910340 + i) + "}"
-            collectTotem = { "__comment": "Made by the Totems+ Team", "display": { "title": { "text": (f"Collect {nameList[i]}"), "color": "gold", "bold": True }, "description" : { "text": (f"Collect {nameList[i]} to add to your collection!"), "color": "yellow" }, "icon": { "item": "minecraft:totem_of_undying", "nbt": nbt }, "frame": "task", "show_toast": True, "announce_to_chat": True, "hidden": False }, "criteria": { "totemget": { "trigger": "minecraft:inventory_changed", "conditions": { "items": [ { "items": [ { "item": "minecraft:totem_of_undying", "nbt": nbt } ] } ] } } }, "parent": "totemsplus:collectall" }
+            collectTotem = { "__comment": "Made by the Totems+ Team", "display": { "title": { "text": (f"Collect {nameList[i]}"), "color": "gold", "bold": True }, "description" : { "text": (f"Collect {nameList[i]} to add to your collection!"), "color": "yellow" }, "icon": { "item": "minecraft:totem_of_undying", "nbt": nbt }, "frame": "task", "show_toast": True, "announce_to_chat": True, "hidden": False }, "criteria": { "totemget": { "trigger": "minecraft:inventory_changed", "conditions": { "items": [ { "item": "minecraft:totem_of_undying", "nbt": nbt } ] } } }, "parent": "totemsplus:collectall" }
 
             collectTotemFile.write(json.dumps(collectTotem))
     #####
@@ -87,7 +87,7 @@ def ADV(worldLocation, nameList, name):
     # cycles throught the name list
     for i in range(len(nameList)):
 
-        # creates the use totem advancement
+        # creates the use totem advancement+
         with open(worldLocation + '/datapacks/Totems+ CMD/data/totemsplus/advancements/use' + nameList[i].lower().replace(" ","_") + '.json', 'w+') as useTotemFile:
  
             nbt = "{CustomModelData:" + str(910340 + i) + "}"
