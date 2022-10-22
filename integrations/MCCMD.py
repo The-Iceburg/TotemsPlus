@@ -150,6 +150,9 @@ def CMD(textureList, version):
                 window.Element('lore').update(disabled=False)
                 window.Element('advancements').update(disabled=False)
 
+                evokerJSON["pools"][0]["rolls"] = values['rolls']
+                evokerJSON["pools"][0]["bonus_rolls"] = values['bonusrolls']
+
                 # sets the deafult foleder name
                 name = "Totems+ CMD"
 
@@ -214,7 +217,7 @@ def CMD(textureList, version):
                     packMetaFile.write(json.dumps(packMeta))
 
                 # creates new lists for transfer of data to other files
-                nameList, loreList, weightList, incnamelist, inclorelist = [], [], [], [], []
+                nameList, loreList, weightList, incnamelist = [], [], [], []
 
                 # cycles the image to the first image
                 window.Element('-IMAGE-').update(filename=pathList[0])
@@ -263,7 +266,7 @@ def CMD(textureList, version):
                 evokerJSON["pools"][0]["entries"][counter]["functions"].append({"function": "minecraft:set_name", "entity": "this", "name": values['itemName']})
 
             # if the lore is chosen to be in-game then
-            if values['lore'] != None:
+            if values['lore'] != "":
 
                 evokerJSON["pools"][0]["entries"][counter]["functions"].append({"function": "minecraft:set_lore", "entity": "this", "lore": [ { "text": values['lore']}]})
 
