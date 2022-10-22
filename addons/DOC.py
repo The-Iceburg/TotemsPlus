@@ -6,70 +6,63 @@
 ###################################################################
 
 # defines the DOC function
-def DOC(worldLocation, nameList, weightList, inGameName, inGameLore, loreList):
+def DOC(worldLocation, nameList, weightList, inGameName, loreList):
 
     # creates the documentation file
-    doc = open(worldLocation + "/datapacks/Totems+ CMD/documentation.txt", 'w+')
+    with open(worldLocation + "/datapacks/Totems+ CMD/documentation.txt", 'w+') as doc:
 
-    doc.write('Totems+ Custom Datapack Documentation\n')
-    doc.write('\n')
-    doc.write('List of Totems:\n')
-    
-    # cycles through the name list
-    for i in range(len(nameList)):
+        doc.write('Totems+ Custom Datapack Documentation\n')
+        doc.write('\n')
+        doc.write('List of Totems:\n')
 
-        # writes the totem name and their associated CMD value
-        doc.write('Totem Name: ' + nameList[i] + '   Custom Model Data ID: ' + str(910340 + i) +'\n')
+        # cycles through the name list
+        for i in range(len(nameList)):
 
-    # writes a new line and heading
-    doc.writelines(['\n',
-    'Give Commands:\n'])
+            # writes the totem name and their associated CMD value
+            doc.write('Totem Name: ' + nameList[i] + '   Custom Model Data ID: ' + str(910340 + i) +'\n')
 
-    # cycles through the name list
-    for i in range(len(nameList)):
-        
-        # writes universal info
-        doc.write(nameList[i] + ':   /give @s minecraft:totem_of_undying{')
-        
-        # writes the rest of the command dependent on if the in-game box was checked for lore or name
-        if inGameName[i] == True and inGameLore[i] == True:
+        # writes a new line and heading
+        doc.writelines(['\n',
+        'Give Commands:\n'])
 
-            doc.write('''display:{Name:'[{"text":"''' + nameList[i] + '''"}]',Lore:['[{"text":"''' + loreList[i]+ '''"}]']},CustomModelData:''' + str(910340 + i) +'} 1\n')
+        # cycles through the name list
+        for i in range(len(nameList)):
 
-        elif inGameName[i] == True:
+            # writes universal info
+            doc.write(nameList[i] + ':   /give @s minecraft:totem_of_undying{')
 
-            doc.write('''display:{Name:'[{"text":"''' + nameList[i] + '''"}]'},CustomModelData:''' + str(910340 + i) +'} 1\n')
+            # writes the rest of the command dependent on if the in-game box was checked for lore or name
+            if inGameName[i] == True and loreList[i] != "":
+                doc.write('''display:{Name:'[{"text":"''' + nameList[i] + '''"}]',Lore:['[{"text":"''' + loreList[i]+ '''"}]']},CustomModelData:''' + str(910340 + i) +'} 1\n')
 
-        elif inGameLore[i] == True:
+            elif inGameName[i] == True:
+                doc.write('''display:{Name:'[{"text":"''' + nameList[i] + '''"}]'},CustomModelData:''' + str(910340 + i) +'} 1\n')
 
-            doc.write('''display:{Lore:['[{"text":"''' + loreList[i] + '''"}]']},CustomModelData:''' + str(910340 + i) +'} 1\n')
+            elif loreList[i] != "":
+                doc.write('''display:{Lore:['[{"text":"''' + loreList[i] + '''"}]']},CustomModelData:''' + str(910340 + i) +'} 1\n')
 
-        else:
+            else:
+                doc.write('CustomModelData:' + str(910340 + i) +'} 1\n')
 
-            doc.write('CustomModelData:' + str(910340 + i) +'} 1\n')
+        # writes a new line and title
+        doc.writelines(['\n',
+        'Totem Drop Chance\n'])
 
-    # writes a new line and title
-    doc.writelines(['\n',
-    'Totem Drop Chance\n'])
+        # defines total
+        total = 0
 
-    # defines total
-    total = 0
+        # cycles through totems
+        for i in range(len(nameList)):
 
-    # cycles through totems
-    for i in range(len(nameList)):
+            # finds sum of weights
+            total += int(weightList[i])
 
-        # finds sum of weights
-        total += int(weightList[i])
+        # cycles through totems
+        for i in range(len(nameList)):
 
-    # cycles through totems
-    for i in range(len(nameList)):
+            # calculates the drop chance
+            dropChance = (int(weightList[i]) / total) * 100
+            dropChance = round(dropChance, 2)
 
-        # calculates the drop chance
-        dropChance = (int(weightList[i]) / total) * 100
-        dropChance = round(dropChance, 2)
-
-        # writes the drop chance to the file
-        doc.write(nameList[i] + ':   ' + str(dropChance) + '%\n')
-
-    # closes the documenation file
-    doc.close()
+            # writes the drop chance to the file
+            doc.write(f'{nameList[i]}:   {dropChance}%\n')

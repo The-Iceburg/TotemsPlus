@@ -7,16 +7,28 @@
 
 # imports the libaries used within totems+
 from PIL import Image
-import os, shutil, getpass
+import os, shutil, getpass, json
+
+# outlines the mcmeta file
+mcMeta = {"animation": {"frametime" : 0 }}
 
 # defines the texture convereter subroutine
 def ANI(imageLocation, packName, integrationType, rename):
 
-    
     # opens the image as an object python/PIL can interact with
     imageObject = Image.open(imageLocation)
-    
 
+     # derrives the file name ([-1])
+    locationList = imageLocation.split("/")
+    llfilename = locationList[-1].replace(".gif", ".png")
+
+     # if the directory resized already exists, then delete it
+    if os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/giftexture'):
+        shutil.rmtree('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/giftexture')
+
+    # make the giftexture folder
+    os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/giftexture")
+    
     # if the gif width and height are equal then
     if imageObject.size[1] == imageObject.size[0]:
 
@@ -28,6 +40,18 @@ def ANI(imageLocation, packName, integrationType, rename):
 
         # creates the new image using the calacuated height
         new = Image.new(mode="RGB", size=(imageObject.size[0], height2), color='#ffffff')
+
+        # for each frame
+        for frame in range(0,imageObject.n_frames):
+
+            # selects the frame
+            imageObject.seek(frame)
+
+            # calculates the height at which to paste into the new image
+            height = frame * imageObject.size[1]
+
+            # pastes the image
+            new.paste(imageObject, (width, height))
 
     # if the width of the gif is greater than the height then
     if imageObject.size[0] > imageObject.size[1]:
@@ -41,6 +65,18 @@ def ANI(imageLocation, packName, integrationType, rename):
         # creates the new image using the calacuated height
         new = Image.new(mode="RGB", size=(imageObject.size[1], height2), color='#ffffff')
 
+        # for each frame
+        for frame in range(0,imageObject.n_frames):
+
+            # selects the frame
+            imageObject.seek(frame)
+
+            # calculates the height at which to paste into the new image
+            height = frame * imageObject.size[1]
+
+            # pastes the image
+            new.paste(imageObject, (width, height))
+
     # if the width of the gif is less than the height then
     if imageObject.size[0] < imageObject.size[1]:
         
@@ -53,54 +89,20 @@ def ANI(imageLocation, packName, integrationType, rename):
         # creates the new image using the calacuated height
         new = Image.new(mode="RGB", size=(imageObject.size[0], height2), color='#ffffff')
 
-    # for each frame in the gif
-    for frame in range(0,imageObject.n_frames):
+        # for each frame
+        for frame in range(0,imageObject.n_frames):
 
-        # selects said frame
-        imageObject.seek(frame)
+            # gets the first frame
+            imageObject.seek(frame)
 
-        # if the gif width and height are equal then
-        if imageObject.size[1] == imageObject.size[0]:
+            # calculates the buffer space
+            buffer = (imageObject.size[1] - imageObject.size[0]) / 2
 
-            # calacutes the height at which the image needs to be pasted 
-            # depends on how far down the new image you are
-            height = frame * imageObject.size[1]
+            # calculates the height to paste the new image at
+            height = frame * imageObject.size[0]
 
-        # if the width of the gif is greater than the height then
-        elif imageObject.size[0] > imageObject.size[1]:
-
-            # calacutes the height at which the image needs to be pasted 
-            # depends on how far down the new image you are
-            height = frame * imageObject.size[1]
-
-        # if the width of the gif is less than the height then
-        elif imageObject.size[0] < imageObject.size[1]:
-
-            # if its the first frame then
-            if frame == 0:
-                
-                # sets the height of the copied image to an appropriate place for a mc texture
-                height = frame * imageObject.size[1] - round(imageObject.size[0] - imageObject.size[1] / 2)
-            
-            # else / otherwise
-            else:
-                
-                # sets the height of the copied image to an appropriate place for a mc texture
-                height = frame * imageObject.size[1] - ( 2 * round(imageObject.size[0] - imageObject.size[1] / 2))
-
-        # pastes the image using the calculated buffer and height
-        new.paste(imageObject, (width, height))
-
-     # if the directory resized already exists, then delete it
-    if os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/giftexture'):
-        shutil.rmtree('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+/giftexture')
-
-    # make the giftexture folder
-    os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/giftexture")
-
-    # derrives the file name ([-1])
-    locationList = imageLocation.split("/")
-    llfilename = locationList[-1].replace(".gif", ".png")
+            # pastes the cropped image to the new image
+            new.paste(imageObject.crop((0, buffer, imageObject.size[0], imageObject.size[1] - buffer)), (width, height))
     
     # saves the new image in the appropraite location
     new.save("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/giftexture/" + llfilename)
@@ -112,49 +114,31 @@ def ANI(imageLocation, packName, integrationType, rename):
     if integrationType == "MCCMD":
 
         # creates the .mcmeta in the appropriate location for the integration type (MCCMD)
-        file = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/textures/totems/" + llfilename + ".mcmeta", "w+")
-
-        # writes the appropriate data to the file
-        file.writelines(['{\n',
-        '  "animation": {\n'])
-        file.write('    "frametime": ' + str(FRAMETIME) + '\n')
-        file.writelines(['  }\n',
-        '}'])
-
-        # saves / closes the file
-        file.close()
+        with open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/textures/totems/" + llfilename + ".mcmeta", "w+") as mcMetaFile:
+            
+            # writes nessesary info to the file
+            mcMeta["animation"]["frametime"] = FRAMETIME
+            mcMetaFile.write(json.dumps(mcMeta))
 
     # if the integration type is OFCIT
     elif integrationType == "OFCIT":
 
         # creates the .mcmeta in the appropriate location for the integration type (OFCIT)
-        file = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/optifine/cit/totems/" + str(rename.lower()) + "/" + llfilename + ".mcmeta", "w+")
-
-        # writes the appropriate data to the file
-        file.writelines(['{\n',
-        '  "animation": {\n'])
-        file.write('    "frametime": ' + str(FRAMETIME) + '\n')
-        file.writelines(['  }\n',
-        '}'])
-
-        # saves / closes the file
-        file.close()
+        with open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/optifine/cit/totems/" + str(rename.lower()) + "/" + llfilename + ".mcmeta", "w+") as mcMetaFile:
+            
+            # writes nessesary info to the file
+            mcMeta["animation"]["frametime"] = FRAMETIME
+            mcMetaFile.write(json.dumps(mcMeta))
 
     # if the integration type is MCRTX
     elif integrationType == "MCRTX":
 
         # creates the .mcmeta in the appropriate location for the integration type (MCRTX)
-        file = open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/textures/item/totem_of_undying.png.mcmeta", "w+")
+        with open("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + packName + "/assets/minecraft/textures/item/totem_of_undying.png.mcmeta", "w+") as mcMetaFile:
 
-        # writes the appropriate data to the file
-        file.writelines(['{\n',
-        '  "animation": {\n'])
-        file.write('    "frametime": ' + str(FRAMETIME) + '\n')
-        file.writelines(['  }\n',
-        '}'])
-
-        # saves / closes the file
-        file.close()
+            # writes nessesary info to the file
+            mcMeta["animation"]["frametime"] = FRAMETIME
+            mcMetaFile.write(json.dumps(mcMeta))
 
     # returns the new / appropriate location for the gif texture
     return "C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/giftexture/" + llfilename
