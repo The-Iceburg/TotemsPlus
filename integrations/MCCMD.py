@@ -150,8 +150,8 @@ def CMD(textureList, version):
                 window.Element('lore').update(disabled=False)
                 window.Element('advancements').update(disabled=False)
 
-                evokerJSON["pools"][0]["rolls"] = values['rolls']
-                evokerJSON["pools"][0]["bonus_rolls"] = values['bonusrolls']
+                evokerJSON["pools"][0]["rolls"] = int(values['rolls'])
+                evokerJSON["pools"][0]["bonus_rolls"] = int(values['bonusrolls'])
 
                 # sets the deafult foleder name
                 name = "Totems+ CMD"
