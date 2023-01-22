@@ -1,6 +1,6 @@
 # ![banner](https://user-images.githubusercontent.com/67003539/180610304-3dbce80c-c368-4fd4-aa59-124e04875284.png)
 
-  You can download & install the latest version of Totems+ here:
+  You can download & install the latest release of Totems+ here:
 
   [Totems+ v1.4.0](https://www.mediafire.com/file/9assdno3kiww5kq/Totems++Installer.exe/file)
   
@@ -9,7 +9,7 @@
 
 Totems+ is a new and unique way to integrate custom totems into Minecraft! 
 
-It utilises python to generate resource/data packs automatically which enchance the Totem of Undying in Minecraft by not only adding new features but also allowing you to upload custom textures for your totems.
+It utilises python to generate resource/data packs automatically which enchance the Totem of Undying item in Minecraft by not only adding new features but also allowing you to upload custom textures for your totems.
 
 # 🏃 Integrations
 
@@ -22,10 +22,14 @@ The in-depth usage guide for Totems+ can be found on the [Wiki](https://github.c
 - Minecraft Custom Model Data (MCCMD)
 
   This allows for a fully immersive experience were your custom totems are dropped by the evoker with custom weighting, names, lore and more. This integration is both client and world side requiring both a datapack and texture pack to use. This is the intergration we actively work on maintaining and creating more content and features for.
+  
+- Minecraft Retexture (MCRTX)
+
+  This is the most basic of all our intergrations simply allowing you to retexture the original totem in Minecraft.
 
 # 🪛 Setup
 
-  1. First download the latest version of the Totems+ Installer [here](https://www.mediafire.com/file/6s8gqlti3z5i627/Totems++Installer.exe/file) and run it
+  1. First download the latest version of the Totems+ Installer [here](https://www.mediafire.com/file/9assdno3kiww5kq/Totems++Installer.exe/file) and run it
   2. Next select the destination for the programs install (by deafult this will be in the program files x86 however you can always change this if you wish)
   3. Finally you can choose if you wish to run the additional tasks including:
      - Start Menu Folder 
@@ -51,9 +55,25 @@ The in-depth usage guide for Totems+ can be found on the [Wiki](https://github.c
 
     - [Animations](https://github.com/The-Iceburg/TotemsPlus/wiki/Animations)
 
+    - [Resize](https://github.com/The-Iceburg/TotemsPlus/wiki/Resiz)
+
   - [MCCMD](https://github.com/The-Iceburg/TotemsPlus/wiki/Minecraft-Custom-Model-Data)
 
-    - [Documentation](https://github.com/The-Iceburg/TotemsPlus/wiki/Documentation), [Functions](https://github.com/The-Iceburg/TotemsPlus/wiki/Functions), [Animations](https://github.com/The-Iceburg/TotemsPlus/wiki/Animations), [Advancements](https://github.com/The-Iceburg/TotemsPlus/wiki/Advancements)
+    - [Documentation](https://github.com/The-Iceburg/TotemsPlus/wiki/Documentation)
+
+    - [Functions](https://github.com/The-Iceburg/TotemsPlus/wiki/Functions)
+
+    - [Animations](https://github.com/The-Iceburg/TotemsPlus/wiki/Animations)
+
+    - [Advancements](https://github.com/The-Iceburg/TotemsPlus/wiki/Advancements)
+
+    - [Resize](https://github.com/The-Iceburg/TotemsPlus/wiki/Resize)
+
+  - [MCRTX](https://github.com/The-Iceburg/TotemsPlus/wiki/MCRTX)
+
+    - [Animations](https://github.com/The-Iceburg/TotemsPlus/wiki/Animations)
+
+    - [Resize](https://github.com/The-Iceburg/TotemsPlus/wiki/Resize)
 
 # 🏛️ Structure
 
@@ -76,6 +96,8 @@ The in-depth usage guide for Totems+ can be found on the [Wiki](https://github.c
   
   - `CONSTANT = 0`
   - `variableOne = 0`
+  
+  When working with JSON make sure to make use of python dictionaries and json.dumps to avoid room for errors
 
 # 📣 Feedback
 
