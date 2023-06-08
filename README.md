@@ -1,4 +1,4 @@
-# ![banner](https://user-images.githubusercontent.com/67003539/180610304-3dbce80c-c368-4fd4-aa59-124e04875284.png)
+# ![totemsplusbanner](https://github.com/The-Iceburg/TotemsPlus/assets/67003539/64e3c706-c757-47b1-8660-31b70b181c3a)
 
   You can download & install the latest release of Totems+ here:
 
