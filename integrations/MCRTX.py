@@ -16,13 +16,23 @@ packFormatCodes = {"1.14": 4, "1.14.1": 4, "1.14.2": 4,"1.14.3": 4,"1.14.4": 4,
                    "1.16.2": 6, "1.16.3": 6, "1.16.4": 6, "1.16.5": 6,
                    "1.17": 7, "1.17.1": 7,
                    "1.18": 8, "1.18.1": 8, "1.18.2": 8,
-                   "1.19": 9, "1.19.1": 9, "1.19.2": 9}
+                   "1.19": 9, "1.19.1": 9, "1.19.2": 9,
+                   "1.19.3":12, "1.19.4":13, "1.20":15, "1.20.1": 15}
 
 # outlines the pack meta information
 packMeta = {"pack" : {"pack_format": 0, "description": ""}}
 
 # defines the RTX function
-def RTX(textureList, version):
+def RTX(textureList, version): 
+
+    # Subroutine to define which image is displayed
+    def displayImage(texture):
+        # cycles the image to the first image
+            if texture.endswith(".gif"):
+                window.Element('-IMAGE-').update_animation(source=texture, time_between_frames=100)
+            else:
+                window.Element('-IMAGE-').update(texture)
+
 
     # makes texttureList an actual list
     textureList = textureList.split(";")
@@ -46,7 +56,7 @@ def RTX(textureList, version):
                 ' ', font=('Helvetica', 10), justification='left'),
             ],
             [
-                sg.Text('Select which Totem Texture you want te replace the original\nIt should be noted totems may appear blurred/streched here but\n wont in Minecraft. .GIF files also wont play in this release', key='tooltip')
+                sg.Text('Select which Totem Texture you want te replace the original\nIt should be noted totems may appear blurred/streched here but\nwont in Minecraft.', key='tooltip')
             ],
             [
                 sg.Button('Select Texture', key='choose'),
@@ -63,7 +73,7 @@ def RTX(textureList, version):
         while True:
 
             # read all events/actions
-            event, values = window.read()
+            event, values = window.read(timeout=25)
 
             # if window closed break while loop and end code
             if event == sg.WIN_CLOSED:
@@ -83,8 +93,7 @@ def RTX(textureList, version):
                 if index == len(textureList):
                     index = 0
 
-                # updates the displayed image
-                window.Element('-IMAGE-').update(filename=pathList[index])
+            
 
             # if the back button
             if event == 'back':
@@ -96,8 +105,7 @@ def RTX(textureList, version):
                 if index == -1:
                     index = len(textureList) - 1
 
-                # updates the displayed image
-                window.Element('-IMAGE-').update(filename=pathList[index])
+            displayImage(pathList[index])
 
             # if the choose button
             if event == 'choose':

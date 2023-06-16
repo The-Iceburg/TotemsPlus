@@ -19,14 +19,16 @@ resourcePackformatCodes = {"1.14": 4, "1.14.1": 4, "1.14.2": 4,"1.14.3": 4,"1.14
                            "1.16.2": 6, "1.16.3": 6, "1.16.4": 6, "1.16.5": 6,
                            "1.17": 7, "1.17.1": 7,
                            "1.18": 8, "1.18.1": 8, "1.18.2": 8,
-                           "1.19": 9, "1.19.1": 9, "1.19.2": 9}
+                           "1.19": 9, "1.19.1": 9, "1.19.2": 9,
+                           "1.19.3":12, "1.19.4":13, "1.20":15, "1.20.1": 15}
 dataPackformatCodes = {"1.14": 4, "1.14.1": 4, "1.14.2": 4,"1.14.3": 4,"1.14.4": 4,
                        "1.15": 5, "1.15.1": 5,"1.15.2": 5, "1.16": 5,"1.16.1": 5,
                        "1.16.2": 6, "1.16.3": 6, "1.16.4": 6, "1.16.5": 6,
                        "1.17": 7, "1.17.1": 7,
                        "1.18": 8, "1.18.1": 8,
                        "1.18.2": 9,
-                       "1.19": 10, "1.19.1": 10, "1.19.2": 10}
+                       "1.19": 10, "1.19.1": 10, "1.19.2": 10, "1.19.3":10,
+                       "1.19.4":12, "1.20":15, "1.20.1": 15}
 
 packMeta = {"pack" : {"pack_format": 0, "description": ""}}
 
@@ -36,8 +38,19 @@ evokerJSON = {"type": "minecraft:entity", "pools": [ { "rolls": 1.0, "bonus_roll
 
 # defines the CMD function
 def CMD(textureList, version):
+    
+    # Sets up the image display so it does not activate instantly
+    displayUnlock = False
 
-    # defines how the main window will be displayed/layed-out
+    # Subroutine to define which image is displayed
+    def displayImage(texture):
+            # Checks if texture is static or dynamic and updates displayed texture appropriately
+            if texture.endswith(".gif"):
+                window.Element('-IMAGE-').update_animation(source=texture, time_between_frames=100)
+            else:
+                window.Element('-IMAGE-').update(texture)
+
+    # defines how the main window will be displayed/laid-out
     layout = [
         [
             sg.Image(filename='img/windowlogo.png', key='-IMAGE-'),
@@ -89,13 +102,13 @@ def CMD(textureList, version):
     ]
 
     # creates the window
-    window = sg.Window("CMD", layout, icon="img/totems.ico")
+    window = sg.Window("CMD", layout=layout, icon="img/totems.ico")
 
     # while window (GUI) is open
     while True:
 
         # read all events/actions
-        event, values = window.read()
+        event, values = window.read(timeout=25)
 
         # if window closed break while loop and end code
         if event == sg.WIN_CLOSED:
@@ -122,8 +135,11 @@ def CMD(textureList, version):
             # if they agree then
             if cmdconfirm == 'OK':
 
+                # Once confirmed, allow for images to be displayed
+                displayUnlock = True
+                
                 # updates the tooltip
-                window.Element('tooltip').update('Fill out the details for each totem as they cycle in the top right.\nIt should be noted totems may appear blurred/streched here but\n wont in Minecraft. .GIF files also wont play in this release')
+                window.Element('tooltip').update('Fill out the details for each totem as they cycle in the top right.\nIt should be noted totems may appear blurred/streched here but\nwont in Minecraft.')
 
                 # transforms the texture list into a list
                 textureList = textureList.split(";")
@@ -219,10 +235,7 @@ def CMD(textureList, version):
                 # creates new lists for transfer of data to other files
                 nameList, loreList, weightList, incnamelist = [], [], [], []
 
-                # cycles the image to the first image
-                window.Element('-IMAGE-').update(filename=pathList[0])
-
-                # sets the counter to 1
+                # sets the counter to 0
                 counter = 0
 
         # else if the next button and the length of the texture list isn't equal to the counter + 1
@@ -313,14 +326,16 @@ def CMD(textureList, version):
 
                 # breaks the loop (hence closing all windows)
                 break
-
-            # cycles the image to the next in the list
-            window.Element('-IMAGE-').update(filename=pathList[counter])
+            
 
             # clears the text boxes
             window.Element('itemName').update('')
             window.Element('itemWeight').update('1')
             window.Element('lore').update('')
+
+        # display the texture on the GUI at the end of each loop
+        if displayUnlock == True:
+            displayImage(pathList[counter])
 
     # closes window if called
     window.close()

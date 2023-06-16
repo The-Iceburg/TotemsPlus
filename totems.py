@@ -54,10 +54,10 @@ def main():
             sg.FilesBrowse(file_types=textureFileTypes),
         ],
         [
-            sg.Text("(Remember they will need to be in the following formats: .jpg , .png , .tga)\n" + "\n" + "⚫ Select which version of minecraft you wish to create the packs for:")
+            sg.Text("(Remember they will need to be in the following formats: .jpg , .png , .tga, .gif)\n" + "\n" + "⚫ Select which version of minecraft you wish to create the packs for:")
         ],
         [
-            sg.DropDown(["1.14","1.14.1","1.14.2","1.14.3","1.14.4","1.15","1.15.1","1.15.2","1.16","1.16.1","1.16.2","1.16.3","1.16.4","1.16.5","1.17","1.17.1","1.18","1.18.1","1.18.2","1.19","1.19.1","1.19.2"],default_value="1.19.2",key="-DROPDOWN-")
+            sg.DropDown(["1.14","1.14.1","1.14.2","1.14.3","1.14.4","1.15","1.15.1","1.15.2","1.16","1.16.1","1.16.2","1.16.3","1.16.4","1.16.5","1.17","1.17.1","1.18","1.18.1","1.18.2","1.19","1.19.1","1.19.2","1.19.3","1.19.4","1.20","1.20.1"], default_value="1.20.1",key="-DROPDOWN-")
         ],
         [
             sg.Text("⚫ Finally hit Compile and follow any further instructions to generate your pack(s):"),sg.Button("Compile")
@@ -79,7 +79,7 @@ def main():
     while True:
 
         # read all events/actions
-        event, values = window.read()
+        event, values = window.read(timeout=25)
 
         # if window closed break while loop and end code
         if event == sg.WIN_CLOSED:
