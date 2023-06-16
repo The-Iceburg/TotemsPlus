@@ -39,26 +39,23 @@ def RES(textureList):
             # opens the original image
             origIMG = Image.open(textureList[i])
 
-            # sets the resize value
-            size = 128, 128
-
-            # absolutly no clue
+            # Converts the gif into its separate frames
             frames = ImageSequence.Iterator(origIMG)
 
             # defines the thumbnails function taking an argument of frames
             def thumbnails(frames):
 
-                # for rach frame in frames
+                # for each frame in frames
                 for frame in frames:
 
                     # sets the thumbnail to the frame
                     thumbnail = frame.copy()
 
                     # resizes the thumbnail to the predefined size
-                    thumbnail = thumbnail.resize(size)
+                    thumbnail = thumbnail.resize((128,128))
 
-                    # sets the physicall image thumbnail
-                    thumbnail.thumbnail(size, Image.ANTIALIAS)
+                    # sets the physical image thumbnail
+                    thumbnail.thumbnail((128,128), Image.ANTIALIAS)
 
                     # returns object
                     yield thumbnail
@@ -66,10 +63,10 @@ def RES(textureList):
             # sets frames to the product of itself in the thumbnails subroutine
             frames = thumbnails(frames)
 
-            # sets resized gif to profuct of frames in next
+            # gets the next frame of the gif
             resizedGIF = next(frames)
 
-            # coppys meta data
+            # copies meta data
             resizedGIF.info = origIMG.info
 
             # saves the image appropriately

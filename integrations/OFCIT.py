@@ -16,12 +16,23 @@ packFormatCodes = {"1.14": 4, "1.14.1": 4, "1.14.2": 4,"1.14.3": 4,"1.14.4": 4,
                    "1.16.2": 6, "1.16.3": 6, "1.16.4": 6, "1.16.5": 6,
                    "1.17": 7, "1.17.1": 7,
                    "1.18": 8, "1.18.1": 8, "1.18.2": 8,
-                   "1.19": 9, "1.19.1": 9, "1.19.2": 9}
+                   "1.19": 9, "1.19.1": 9, "1.19.2": 9,
+                   "1.19.3":12, "1.19.4":13, "1.20":15}
 
 packMeta = {"pack" : {"pack_format": 0, "description": ""}}
 
 # defines the CIT function
 def CIT(textureList, version):
+
+    # Subroutine to define which image is displayed
+    def displayImage(texture):
+            # Checks if texture is static or dynamic and updates displayed texture appropriately // Clears item name
+            if texture.endswith(".gif"):
+                window.Element('-IMAGE-').update_animation(source=texture, time_between_frames=100)
+            else:
+                window.Element('-IMAGE-').update(texture)
+            
+    
 
     # sets the counter to 0
     counter = 0
@@ -34,7 +45,7 @@ def CIT(textureList, version):
     # defines how the main window will be displayed/layed-out
     layout = [ 
         [
-            sg.Image(filename=pathList[0], key='-IMAGE-'),
+            sg.Image(filename='img/windowlogo.png', key='-IMAGE-'),
             sg.Text("You've selected Totems+ CIT Integration!\n" + 
             'This integration will generate:\n' + 
             'A Custom Resource Pack\n' + 
@@ -42,7 +53,7 @@ def CIT(textureList, version):
             ' ', font=('Helvetica', 10), justification='left'),
         ],
         [
-            sg.Text('Rename your different textures to what you wish to rename them in-game\nIt should be noted totems may appear blurred/streched here but\n wont in Minecraft. .GIF files also wont play in this release', key='tooltip')
+            sg.Text('Rename your different textures to what you wish to rename them in-game\nIt should be noted totems may appear blurred/streched here but\nwont in Minecraft.', key='tooltip')
         ],
         [
             sg.Text('Name:  '),
@@ -97,7 +108,10 @@ def CIT(textureList, version):
     while True:
 
         # read all events/actions
-        event, values = window.read()
+        event, values = window.read(timeout=25)
+
+        # Display image at the start of each loop
+        displayImage(pathList[counter])
 
         # if window closed break while loop and end code
         if event == sg.WIN_CLOSED:
@@ -111,6 +125,7 @@ def CIT(textureList, version):
 
             if result == "OK":
                 shutil.rmtree("C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name)
+                break
         
         # else if the next button and the length of the texture list isn't equal to the counter + 1
         elif event == 'next' and len(textureList) != int(counter + 1):
@@ -144,8 +159,7 @@ def CIT(textureList, version):
                 # copys the image into the resource pack
                 shutil.copy(textureList[counter], "C:/Users/" + getpass.getuser() + "/AppData/Roaming/.minecraft/resourcepacks/" + name + "/assets/minecraft/optifine/cit/totems/" + str(rename.lower()))
 
-            # cycles the image and clears the text box
-            window.Element('-IMAGE-').update(filename=pathList[counter + 1])
+            # Clears the textbox
             window.Element('itemName').update('')
 
             # increases the counter by 1
@@ -160,5 +174,6 @@ def CIT(textureList, version):
             # breaks the loop (hence closing all windows)
             break
         
+
     # closes window if called
     window.close()
