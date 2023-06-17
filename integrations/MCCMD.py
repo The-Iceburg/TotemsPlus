@@ -91,7 +91,8 @@ def CMD(textureList, version):
             sg.InputText(size=(25, 1), disabled=True, key='lore')
         ],
         [
-            sg.Checkbox('Documentation', default=True, disabled=True, key='documentation',tooltip='Generates a custom documentation file!'),
+            sg.Checkbox('Documentation', default=True, disabled=True, key='documentation', enable_events=True, tooltip='Generates a custom documentation file!'),
+            sg.Button('.txt', size=(5,1), disabled=True, button_color=('white','orange'), key='doctype', tooltip='Select the output type of your documentation'),
             sg.Checkbox('Functions', default=True, disabled=True, key='functions',tooltip='Generates functions to access all your totems!'),
             sg.Checkbox('Advancements', default=False, disabled=True, key='advancements',tooltip='Generates advancements to guide your totem experience.')
         ],
@@ -104,6 +105,9 @@ def CMD(textureList, version):
     # creates the window
     window = sg.Window("CMD", layout=layout, icon="img/totems.ico")
 
+    # sets the toggle preset
+    down = True
+
     # while window (GUI) is open
     while True:
 
@@ -113,7 +117,31 @@ def CMD(textureList, version):
         # if window closed break while loop and end code
         if event == sg.WIN_CLOSED:
             break
-        
+
+        # if Toggle pressed
+        elif event == 'doctype':
+
+            # program toggle the toggle
+            down = not down
+
+            # visual toggle the toggle
+            window.Element('doctype').Update(('.json','.txt')[down], button_color=(('white', ('teal','orange')[down])))
+
+        # if the documentation checkbox is edited
+        elif event == 'documentation':
+
+            # if the documentation box is unchecked
+            if values['documentation'] == False:
+
+                # disables the doctype selector button
+                window.Element('doctype').update(disabled=True)
+
+            # else (aka the box is checked)
+            else:
+
+                # enables the doctype selector button
+                window.Element('doctype').update(disabled=False)
+
         # if the cancel button is pressed
         if event == 'cancel':
             
@@ -165,6 +193,7 @@ def CMD(textureList, version):
                 window.Element('in-game').update(disabled=False)
                 window.Element('lore').update(disabled=False)
                 window.Element('advancements').update(disabled=False)
+                window.Element('doctype').update(disabled=False)
 
                 evokerJSON["pools"][0]["rolls"] = int(values['rolls'])
                 evokerJSON["pools"][0]["bonus_rolls"] = int(values['bonusrolls'])
@@ -298,7 +327,7 @@ def CMD(textureList, version):
                 if values['documentation'] == True:
 
                     # runs the documentation subroutine
-                    DOC(worldLocation, nameList, weightList, incnamelist, loreList)
+                    DOC(worldLocation, nameList, weightList, incnamelist, loreList, down)
 
                 # if the functions box remains checked
                 if values['functions'] == True:
@@ -327,7 +356,6 @@ def CMD(textureList, version):
                 # breaks the loop (hence closing all windows)
                 break
             
-
             # clears the text boxes
             window.Element('itemName').update('')
             window.Element('itemWeight').update('1')
