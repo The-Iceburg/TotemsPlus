@@ -29,8 +29,8 @@ class App(customtkinter.CTk):
 
         #########################
 
-        self.logo = ImageTk.PhotoImage(Image.open("img/newwindow.png"))
-        self.logo_label = Label(self, image=self.logo, border=0)
+        self.logo_image = customtkinter.CTkImage(dark_image=Image.open("img/pack.png"), size=(320,320))
+        self.logo_label = customtkinter.CTkLabel(self, image=self.logo_image, text="")
         self.logo_label.grid(row=0, column=0, padx=(20, 0), pady=(20, 5))
 
         #########################
