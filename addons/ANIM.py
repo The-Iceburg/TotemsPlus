@@ -142,9 +142,3 @@ def ANI(imageLocation, packName, integrationType, rename):
 
     # returns the new / appropriate location for the gif texture
     return "C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+/giftexture/" + llfilename
-
-i = "<_io.TextIOWrapper name='D:/Totems+/Totem Textures/3.png' mode='r' encoding='cp1252'>"
-
-split = i.split("'")[1]
-
-print(split)
