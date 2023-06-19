@@ -38,7 +38,7 @@ def CIT(textureList, version):
     counter = 0
 
     # transforms texture list into a list
-    textureList = textureList.split(";")
+    textureList = textureList.split("\n")
 
     pathList = RES(textureList)
 

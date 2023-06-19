@@ -170,7 +170,7 @@ def CMD(textureList, version):
                 window.Element('tooltip').update('Fill out the details for each totem as they cycle in the top right.\nIt should be noted totems may appear blurred/streched here but\nwont in Minecraft.')
 
                 # transforms the texture list into a list
-                textureList = textureList.split(";")
+                textureList = textureList.split("\n")
 
                 # if the include original box is checked then the original totem is added to the list
                 if values['inc-orig'] == True:

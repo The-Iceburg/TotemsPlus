@@ -35,7 +35,7 @@ def RTX(textureList, version):
 
 
     # makes texttureList an actual list
-    textureList = textureList.split(";")
+    textureList = textureList.split("\n")
 
     # sets deafult index to 0
     index = 0
