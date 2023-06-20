@@ -16,10 +16,17 @@ from integrations.MCCMD import CMD ###########################
 from integrations.OFCIT import CIT # Integration Subroutines #
 from integrations.MCRTX import RTX ###########################
 
+import datetime #################
+import os       # Other Modules #
+import getpass  #################
 
 # outlines the deafult appearance of the window
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("green")
+
+# checks if the Totems+ roaming folder exists, if it doesn't one is created
+if not os.path.exists('C:/Users/' + getpass.getuser() + '/AppData/Roaming/Totems+'):
+    os.mkdir("C:/Users/" + getpass.getuser() + "/AppData/Roaming/Totems+")
 
 # outlines the main window class
 class App(customtkinter.CTk):
@@ -200,15 +207,26 @@ class App(customtkinter.CTk):
 
         # The Texture Loader Upload Button
         self.upload = customtkinter.CTkButton(self.textures_frame, text='Upload', command=UploadAction)
-        self.upload.grid(row=0, column=1, padx=(127,20), pady=(5,5))
+        self.upload.grid(row=0, column=1, padx=(127,10), pady=(5,5))
 
         # The Texture Loader File Display
         self.textbox = customtkinter.CTkTextbox(self.textures_frame, width=480)
         self.textbox.grid(row=2, column=0, pady=(5,5), columnspan = 2)
 
         ################################
+        ### ----- ICEBURG LOGO ----- ###
+        ################################
+
+        self.iceburg = ImageTk.PhotoImage(Image.open("img/iceburg.png"))
+        self.iceburg_label = Label(self, image=self.iceburg, border=0, text="The Iceburg")
+        self.iceburg_label.grid(row=3, column=0, padx=(0, 250), pady=(10, 10))
+        today = datetime.date.today()
+        year = today.year
+        ToolTip(self.iceburg_label, msg=("© The Iceburg " + str(year)), delay=0.5, parent_kwargs={"bg": "black", "padx": 0, "pady": 0}, fg="#ffffff", bg="#242424", padx=5, pady=5)
+
+        ################################
         ### ---- COMPILE BUTTON ---- ###
-        ################################ 
+        ################################
 
         # Subroutine which runs upon pressing of the compile button
         def TotemsPlus():
@@ -230,7 +248,7 @@ class App(customtkinter.CTk):
 
         # The Compile Button
         self.compile = customtkinter.CTkButton(self, text="Compile", command=TotemsPlus)
-        self.compile.grid(row=3, column=0, padx=(0, 0), pady=(10, 10), columnspan=2)
+        self.compile.grid(row=3, column=1, padx=(100, 0), pady=(10, 10))
 
         
 if __name__ == "__main__":
