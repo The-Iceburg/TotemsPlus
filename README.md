@@ -75,7 +75,7 @@ The in-depth usage guide for Totems+ can be found on the [Wiki](https://github.c
 
     - [Resize](https://github.com/The-Iceburg/TotemsPlus/wiki/Resize)
 
-# 🏛️ Structure
+# 🏛️ Contribute
 
   If your planning on contributing to Totems+ there are some basic structures we'd love you to follow to make everyones lives easier.
   
